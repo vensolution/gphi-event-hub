@@ -1,0 +1,119 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function hrDoc() { return /databases/$(database)/documents/config/hr; }
+    function hrExists() { return exists(hrDoc()); }
+    function isHR() { return signedIn() && hrExists() && get(hrDoc()).data.uid == request.auth.uid; }
+    function dirDoc(uid) { return get(/databases/$(database)/documents/directory/$(uid)).data; }
+    function isActive() { return signedIn() && exists(/databases/$(database)/documents/directory/$(request.auth.uid)) && dirDoc(request.auth.uid).status == 'active'; }
+
+    // each person's own saved forms
+    match /users/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    // the ONE central HR account (can never be changed from the website)
+    match /config/hr {
+      allow get: if true;
+      allow create: if signedIn() && !hrExists()
+        && request.resource.data.uid == request.auth.uid
+        && dirDoc(request.auth.uid).requestedRole == 'hr';
+      allow update, delete: if false;
+    }
+
+    // account records: people create their own as "pending", only HR can approve
+    match /directory/{uid} {
+      // colleagues can look up other ACTIVE people (to pick them on the OB form)
+      allow get: if signedIn() && (request.auth.uid == uid || isHR()
+        || (resource.data.status == 'active' && dirDoc(request.auth.uid).status == 'active'));
+      allow list: if isHR()
+        || (signedIn() && resource.data.status == 'active' && dirDoc(request.auth.uid).status == 'active');
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.uid == uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.role == 'employee'
+        && request.resource.data.requestedRole in ['employee', 'hr'];
+      allow update: if isHR();
+      allow delete: if false;
+    }
+
+    // department structure: who the Direct manager and Admin are (HR sets this)
+    match /depts/{id} {
+      allow read: if signedIn();
+      allow write: if isHR();
+    }
+
+    // approval requests: Direct manager -> Admin -> HR
+    match /requests/{id} {
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.current == 0
+        && dirDoc(request.auth.uid).status == 'active'
+        && dirDoc(request.auth.uid).deptId == request.resource.data.deptId
+        && request.resource.data.chain.size() == 3
+        && request.resource.data.chain[0].uid == get(/databases/$(database)/documents/depts/$(request.resource.data.deptId)).data.manager
+        && request.resource.data.chain[1].uid == get(/databases/$(database)/documents/depts/$(request.resource.data.deptId)).data.admin
+        && request.resource.data.chain[2].uid == get(hrDoc()).data.uid;
+      allow read: if signedIn()
+        && (resource.data.ownerUid == request.auth.uid || request.auth.uid in resource.data.viewers);
+      allow update: if signedIn() && resource.data.status == 'pending' && (
+        (request.auth.uid == resource.data.chain[resource.data.current].uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['chain', 'current', 'status']))
+        || (request.auth.uid == resource.data.ownerUid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+          && request.resource.data.status == 'cancelled'));
+    }
+
+    // colleague consent: you can only add a colleague to your OB form after they accept
+    match /tags/{id} {
+      allow create: if signedIn()
+        && request.resource.data.fromUid == request.auth.uid
+        && request.resource.data.status == 'pending'
+        && dirDoc(request.auth.uid).status == 'active'
+        && dirDoc(request.resource.data.toUid).status == 'active';
+      allow read: if signedIn()
+        && (resource.data.fromUid == request.auth.uid || resource.data.toUid == request.auth.uid);
+      allow update: if signedIn() && resource.data.status == 'pending' && (
+        (request.auth.uid == resource.data.toUid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'respondedAt'])
+          && request.resource.data.status in ['accepted', 'declined'])
+        || (request.auth.uid == resource.data.fromUid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+          && request.resource.data.status == 'cancelled'));
+    }
+
+    // inventory: any approved employee can read and encode; only HR can delete an item
+    match /stock_items/{id} {
+      allow read: if isActive();
+      allow create, update: if isActive()
+        && request.resource.data.qty >= 0
+        && request.resource.data.totalIn >= 0;
+      allow delete: if isHR();
+    }
+    match /stock_moves/{id} {
+      allow read: if isActive();
+      allow create: if isActive() && request.resource.data.by == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // assets / links: everyone approved can read, add and edit links (edit history is kept in each record); only HR can delete
+    match /asset_links/{id} {
+      allow read: if isActive();
+      allow create: if isActive() && request.resource.data.by == request.auth.uid;
+      allow update: if isActive() && request.resource.data.by == resource.data.by
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'nameKey', 'url', 'updatedAt', 'updatedBy', 'updatedByName', 'history']);
+      allow delete: if isHR();
+    }
+
+    // team schedule: everyone approved can read; the person who encoded it (or HR) can edit or delete
+    match /schedules/{id} {
+      allow read: if isActive();
+      allow create: if isActive() && request.resource.data.by == request.auth.uid;
+      allow update: if isActive() && (resource.data.by == request.auth.uid || isHR())
+        && request.resource.data.by == resource.data.by;
+      allow delete: if isActive() && (resource.data.by == request.auth.uid || isHR());
+    }
+  }
+}
