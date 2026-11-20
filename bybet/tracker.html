@@ -1,0 +1,145 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ByBet Game Tracker</title><link rel="icon" href="logo.webp"><link rel="preconnect" href="https://script.google.com"><link rel="preconnect" href="https://script.googleusercontent.com">
+<script src="config.js"></script>
+<script>const Q=new URLSearchParams(location.search).get('g'),GM=Q?fetch(API+'?g='+encodeURIComponent(Q)).then(r=>r.json()):Promise.resolve({error:'Game not found.'});</script>
+<style>
+[hidden]{display:none!important}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;color:#fff;padding:14px;
+background:radial-gradient(circle at 15% 12%,#fff3,transparent 22%),radial-gradient(circle at 85% 30%,#ffe08a44,transparent 25%),linear-gradient(160deg,#0b4d2a,#17803f 55%,#0a5b2e)}
+.w{max-width:600px;margin:0 auto;text-align:center}.lo{width:170px;max-width:55%;height:auto}
+h1{margin:8px 0 2px;font-size:28px;line-height:1.1;color:#ffd23f;font-weight:800;text-shadow:0 3px 0 #0a3d1f,0 0 10px #0005}
+.m{font-size:14px;opacity:.95;margin-bottom:6px}
+.card{background:#fff;color:#0b3d22;border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 6px 18px #0004;text-align:left}
+label{font-weight:700;font-size:14px}
+input,select{width:100%;padding:11px;margin:4px 0 10px;border:2px solid #17803f55;border-radius:10px;font:inherit;font-size:16px;color:#0b3d22;background:#fff}
+input:focus,select:focus{outline:0;border-color:#ff8a00}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.big{width:100%;padding:14px;border:0;border-radius:12px;background:linear-gradient(#ffd54a,#ff8a00);color:#fff;font:700 22px 'Trebuchet MS',Arial,sans-serif;text-shadow:0 2px 0 #b45309;box-shadow:0 4px 0 #b45309,0 8px 14px #0004;cursor:pointer}
+.big:active{transform:translateY(3px);box-shadow:0 1px 0 #b45309}.big:disabled{opacity:.6}
+.sec{background:#e8f3ec;color:#0b3d22;border:0;border-radius:10px;padding:10px 14px;font:700 15px 'Trebuchet MS',Arial,sans-serif;cursor:pointer}
+#err{color:#d11;background:#fff;border-radius:10px;padding:8px 10px;font-size:14px;margin:10px 0}#err:empty{display:none}
+.pl{background:#e8f3ec;border-radius:12px;padding:10px 12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pl b{font-size:17px}.pl small{display:block;color:#456;font-weight:400}
+.pl a{color:#0b6b34;font-size:14px;text-decoration:underline;cursor:pointer;white-space:nowrap}
+h3{margin:0 0 4px;font-size:20px}.hint{font-size:14px;color:#456;margin-bottom:10px}
+#tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.tl{position:relative;overflow:hidden;padding:16px 10px 12px;border:3px solid #ffc83d;border-radius:16px;background:radial-gradient(circle at 50% 0,#1f9a4d,#0b4d2a 75%);color:#fff;font:700 17px 'Trebuchet MS',Arial,sans-serif;cursor:pointer;min-height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;box-shadow:0 4px 0 #b8860b,0 8px 14px #0003,inset 0 0 0 2px #0a3d1f}
+.tl::before{content:"★ ★ ★";position:absolute;top:3px;left:0;right:0;font-size:9px;letter-spacing:4px;color:#ffd23f99}
+.tl::after{content:"";position:absolute;top:0;left:-70%;width:40%;height:100%;background:linear-gradient(100deg,transparent,#fff4,transparent);transform:skewX(-20deg);animation:sh 3.6s infinite}
+@keyframes sh{0%,60%{left:-70%}100%{left:140%}}
+.tl .ic{font-size:34px;line-height:1;filter:drop-shadow(0 2px 0 #0006)}.tl .nm{text-shadow:0 2px 0 #0a3d1f;line-height:1.15}
+.tl .lf{background:#ffd23f;color:#3b2a00;border-radius:99px;padding:3px 10px;font-size:12px;font-weight:800;box-shadow:0 2px 0 #b8860b}
+.tl .lf.lw{background:#ff5a3c;color:#fff;box-shadow:0 2px 0 #9a2a12}
+.tl:active{transform:translateY(3px);box-shadow:0 1px 0 #b8860b;border-color:#ff8a00}
+.tl.off{background:#2b3a31;border-color:#777;color:#aaa;cursor:not-allowed;box-shadow:none;filter:grayscale(1)}.tl.off::after,.tl.off::before{display:none}.tl.off .lf{background:#555;color:#ddd;box-shadow:none}
+.tl.none{border-style:dashed;background:#f4faf6;color:#0b3d22;box-shadow:0 3px 0 #17803f55}.tl.none::before,.tl.none::after{display:none}.tl.none .nm{text-shadow:none}
+#done{text-align:center}#done .ck{font-size:60px;line-height:1}#done h2{margin:6px 0;color:#0b6b34}#done p{margin:4px 0 14px;font-size:17px}
+.n{font-size:12px;color:#fffd;text-align:center;margin-top:8px}
+#of{background:#ffd23f;color:#3b2a00;border-radius:10px;padding:6px 10px;font-size:13px;margin:6px 0}
+/* confirm popup */
+#md{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}
+#md.on{display:flex}.bx{background:#fff;color:#0b3d22;border-radius:18px;padding:22px;max-width:420px;width:100%;box-shadow:0 10px 40px #0008;text-align:center}
+.bx h3{font-size:22px;margin-bottom:8px}.bx p{font-size:18px;margin:8px 0 14px}.bx .wn{background:#fff3cf;border:2px solid #ffb300;color:#6b4a00;border-radius:10px;padding:8px 10px;font-size:15px;margin-bottom:12px}
+.bx .q{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px;font-size:16px}.bx .q input{width:90px;text-align:center;margin:0}
+.bx .bt{display:grid;grid-template-columns:1fr 1fr;gap:10px}.bx .bt button{padding:14px;border:0;border-radius:12px;font:700 18px 'Trebuchet MS',Arial,sans-serif;cursor:pointer}
+.bx .y{background:linear-gradient(#35c46b,#17803f);color:#fff}.bx .c{background:#e5e7eb;color:#333}.bx button:disabled{opacity:.6}
+</style></head><body><div class="w">
+<img class="lo" src="logo.webp" width="170" height="62" alt="ByBet"><h1>Game Tracker</h1><div class="m" id="s">Loading…</div>
+<div id="of" hidden>📡 You're offline. Reconnect before saving.</div>
+
+<!-- Step 1: player details -->
+<div class="card" id="st1" hidden>
+<label for="tm">Team</label><select id="tm"><option value="">Select team…</option><option>PR Team</option><option>Events Team</option></select>
+<label for="u">bybet username</label><input id="u" autocomplete="off" autocapitalize="none" autocorrect="off">
+<label for="n">Full name</label><input id="n" autocomplete="off">
+<div class="row"><div><label for="a">Age</label><input id="a" type="number" inputmode="numeric" min="1" max="120"></div><div><label for="c">Contact number</label><input id="c" type="tel" inputmode="numeric" maxlength="11" placeholder="e.g. 09171234567"></div></div>
+<div id="err"></div><button class="big" id="sb">SUBMIT</button><div class="hint" id="cnt" style="text-align:center;margin:10px 0 0"></div></div>
+
+<!-- Step 2: tap the merch -->
+<div class="card" id="st2" hidden>
+<div class="pl"><div><b id="pn"></b><small id="pu"></small></div><a id="ed">Edit details</a></div>
+<h3>🏆 Tap the prize they won</h3><div class="hint">Items left are shown on each card. You will be asked to confirm before it is saved.</div>
+<div id="tiles"></div></div>
+
+<!-- Step 3: done -->
+<div class="card" id="done" hidden><div class="ck">✅</div><h2>Saved!</h2><p id="dm"></p><button class="big" id="nx">NEXT PLAYER</button></div>
+</div>
+
+<div id="md"><div class="bx"><h3 id="mt">Are you sure?</h3><div id="mw" class="wn" hidden></div><p id="mp"></p>
+<div class="q" id="mq" hidden><label for="q">Quantity</label><input id="q" type="number" inputmode="numeric" min="1" value="1"></div>
+<div class="bt"><button class="c" id="mc">Cancel</button><button class="y" id="my">Yes, give it</button></div></div></div>
+
+<script>
+const $=i=>document.getElementById(i),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+let M=[],P=null,pick=null,busy=false,count=0;
+const off=()=>{$('of').hidden=navigator.onLine};addEventListener('online',off);addEventListener('offline',off);off();
+const friendly=e=>/out of stock|left of|not in this game/i.test(e)?'Sorry, that item is no longer available. Please pick another one.':e;
+const stage=n=>{['st1','st2','done'].forEach(x=>$(x).hidden=x!=n)};
+
+/* merch tiles: themed prize cards with items remaining */
+function tiles(){
+ $('tiles').innerHTML=M.map((m,i)=>m.rem>0?'<button class="tl" data-i="'+i+'"><span class="nm">'+esc(m.name)+'</span><span class="lf'+(m.rem<=3?' lw':'')+'">'+(m.rem<=3?'Only '+m.rem+' left!':m.rem+' left')+'</span></button>':'<button class="tl off" disabled><span class="nm">'+esc(m.name)+'</span><span class="lf">Sold out</span></button>').join('')+'<button class="tl none" data-i="-1"><span class="ic">🙌</span><span class="nm">No merch</span><small>(participation only)</small></button>'}
+async function refresh(){try{const g=await fetch(API+'?g='+encodeURIComponent(Q)).then(r=>r.json());if(g.merch){M=g.merch;tiles()}}catch(e){}}
+
+GM.then(g=>{
+ if(g.error){$('s').textContent=g.error;return}
+ $('s').textContent=g.name+(g.start?'  ·  '+g.start.replace('T',' ')+(g.end?' → '+g.end.replace('T',' '):''):'');document.title=g.name+' · Tracker';
+ M=g.merch;tiles();stage('st1');$('u').focus()
+}).catch(()=>{$('s').textContent='Could not load the game. Check your connection and reload.'});
+
+/* wake the server as soon as the username is being typed */
+let warmAt=0;
+$('u').addEventListener('input',()=>{if(Date.now()-warmAt<45000||!Q)return;warmAt=Date.now();fetch(API+'?g='+encodeURIComponent(Q)).then(r=>r.json()).then(g=>{if(g&&g.merch){M=g.merch;tiles()}}).catch(()=>{})});
+/* team (set by staff) is remembered on this device */
+try{$('tm').value=localStorage.team||''}catch(e){}
+$('tm').onchange=()=>{try{localStorage.team=$('tm').value}catch(e){}};
+$('c').addEventListener('input',()=>{const v=$('c').value.replace(/\D/g,'').slice(0,11);if(v!==$('c').value)$('c').value=v});
+/* players already registered in this game on this device (instant check): username AND contact number */
+const RK='reg2_'+Q,lget=()=>{try{return JSON.parse(localStorage.getItem(RK))||[]}catch(e){return []}},
+ ladd=(u,c)=>{try{const l=lget();['u:'+u.toLowerCase(),'c:'+c].forEach(k=>{if(!l.includes(k))l.push(k)});localStorage.setItem(RK,JSON.stringify(l))}catch(e){}};
+const dupMsg=f=>'⛔ Already registered'+(f=='contact'?' (this contact number is already in this game).':f=='username'?' (this bybet username is already in this game).':'. This player is already in this game.');
+const rejectDup=f=>{stage('st1');$('err').textContent=dupMsg(f);$('u').focus()};
+/* step 1 -> 2 */
+$('sb').onclick=async()=>{
+ const tm=$('tm').value,u=$('u').value.trim(),n=$('n').value.trim(),a=$('a').value,c=$('c').value.replace(/\D/g,'');
+ if(!tm){$('err').textContent='Please select the team.';return}
+ if(!u||!n||!a||!c){$('err').textContent='Please fill in the username, full name, age and contact number.';return}
+ if(!(+a>0)){$('err').textContent='Please enter a valid age.';return}
+ if(c.length<10||c.length>11){$('err').textContent='Contact number must be 10–11 digits.';return}
+ $('err').textContent='';
+ const L=lget();if(L.includes('u:'+u.toLowerCase())){rejectDup('username');return}if(L.includes('c:'+c)){rejectDup('contact');return}
+ const b=$('sb');b.disabled=true;b.textContent='Checking…';
+ try{ /* needs the optional 'check' action in the Apps Script; if it is not there the page simply continues */
+  const ctl=new AbortController(),tmo=setTimeout(()=>ctl.abort(),7000);
+  const r=await fetch(API,{method:'POST',body:JSON.stringify({action:'check',g:Q,username:u,contact:c}),signal:ctl.signal}).then(x=>x.json());clearTimeout(tmo);
+  if(r&&(r.registered||r.duplicate)){ladd(u,c);b.disabled=false;b.textContent='SUBMIT';rejectDup(r.field);return}
+ }catch(e){}
+ b.disabled=false;b.textContent='SUBMIT';
+ $('c').value=c;P={username:u,fullname:n,age:a,contact:c,team:tm};
+ $('pn').textContent=n;$('pu').textContent='@'+u+' · '+c+' · '+tm;stage('st2');scrollTo(0,0)};
+$('ed').onclick=()=>{stage('st1');$('u').focus()};
+
+/* step 2: tap merch -> confirm popup */
+let onYes=null;
+function modal(o){$('mt').textContent=o.title||'Are you sure?';$('mp').innerHTML=o.body;$('mw').hidden=!o.warn;$('mw').textContent=o.warn||'';$('mq').hidden=!o.qty;$('my').textContent=o.yes||'Yes, give it';$('my').hidden=o.noYes;$('mc').textContent=o.cancel||'Cancel';$('my').disabled=false;onYes=o.onYes;$('md').classList.add('on')}
+const closeM=()=>{$('md').classList.remove('on');onYes=null};
+$('mc').onclick=closeM;$('my').onclick=()=>{if(onYes)onYes()};
+$('tiles').onclick=e=>{const b=e.target.closest('.tl');if(!b||b.disabled)return;const i=+b.dataset.i;pick=i<0?null:M[i];$('q').value=1;
+ modal(pick?{body:'Give <b>'+esc(pick.name)+'</b> to<br><b>'+esc(P.fullname)+'</b> (@'+esc(P.username)+')?',qty:1,onYes:()=>send(false)}
+            :{body:'Record <b>'+esc(P.fullname)+'</b> (@'+esc(P.username)+')<br>with <b>no merch</b>?',yes:'Yes, record',onYes:()=>send(false)})};
+
+async function send(force){
+ if(busy)return;if(!navigator.onLine){modal({title:'No internet',body:'Please reconnect, then try again.',noYes:1,cancel:'OK'});return}
+ const qty=pick?Math.max(1,Math.floor(+$('q').value||1)):0;
+ busy=$('my').disabled=true;
+ try{
+  const r=await fetch(API,{method:'POST',body:JSON.stringify({action:'track',g:Q,...P,merch:pick?pick.name:'',qty:qty,note:'',force:!!force})}).then(x=>x.json());
+  busy=false;
+  if(r.duplicate){closeM();ladd(P.username,P.contact);rejectDup(r.field);return}
+  if(r.error){const f=friendly(r.error);modal({title:'Could not save',body:esc(f),noYes:1,cancel:'OK'});if(f!==r.error)refresh();return}
+  count++;ladd(P.username,P.contact);closeM();M=r.list||M;tiles();
+  $('dm').innerHTML='<b>'+esc(P.fullname)+'</b><br>'+(r.merch=='None'?'No merch':esc(r.merch)+(r.qty>1?' × '+r.qty:''));
+  $('cnt').textContent='Recorded this session: '+count;stage('done');scrollTo(0,0);
+ }catch(e){busy=false;modal({title:'Connection problem',body:'Please check your signal and try again.',noYes:1,cancel:'OK'})}
+}
+$('nx').onclick=()=>{['u','n','a','c'].forEach(i=>$(i).value='');P=null;pick=null;stage('st1');scrollTo(0,0);$('u').focus()};
+</script></body></html>

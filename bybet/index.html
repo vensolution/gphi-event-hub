@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ByBet Spin the Wheel</title><link rel="icon" href="logo.webp"><link rel="preconnect" href="https://script.google.com"><link rel="preconnect" href="https://script.googleusercontent.com">
+<script>const API='https://script.google.com/macros/s/AKfycbwP5UdcCYsuEEsYP6rUoi2jd485zHHsNXT0_n3utdjxTYvBmeCKTPchj2o3EVhaXqsi/exec',Q=new URLSearchParams(location.search).get('e'),EV=Q?fetch(API+'?e='+encodeURIComponent(Q)).then(r=>r.json()):Promise.resolve({error:'Event not found.'});</script>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;color:#fff;padding:14px;
+background:radial-gradient(circle at 15% 12%,#fff3,transparent 22%),radial-gradient(circle at 85% 30%,#ffe08a44,transparent 25%),radial-gradient(circle at 20% 80%,#fff2,transparent 25%),linear-gradient(160deg,#0b4d2a,#17803f 55%,#0a5b2e)}
+.w{max-width:640px;margin:0 auto;text-align:center}.lo{width:200px;max-width:60%;height:auto}
+h1{margin:8px 0 2px;font-size:30px;line-height:1.1;color:#ffd23f;font-weight:800;text-shadow:0 3px 0 #0a3d1f,0 0 10px #0005}
+.m{font-size:14px;opacity:.95;margin-bottom:6px}
+.card{background:#fff;color:#0b3d22;border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 6px 18px #0004;text-align:left}
+#wh{position:relative;width:min(calc(100vw - 56px),580px,68vh);aspect-ratio:1/1;margin:30px auto 10px;border-radius:50%;border:9px solid #ffc107;box-shadow:0 0 0 4px #fff,0 0 28px #ffd54a,0 8px 20px #0006;background:#fff}
+#cv{width:100%;height:100%;border-radius:50%;display:block;will-change:transform}
+#pt{position:absolute;top:-34px;left:50%;margin-left:-22px;border:22px solid transparent;border-top:40px solid #ff5a1f;border-bottom:0;z-index:3;}
+#hub{position:absolute;top:50%;left:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:radial-gradient(#fff,#ffc107);border:4px solid #0b6b34;box-shadow:0 2px 8px #0006;z-index:2}
+#lg{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px}#lg span{background:#fff2;border:1px solid #fff6;border-radius:99px;padding:3px 10px;font-size:12px}
+label{font-weight:700;font-size:14px}input,select{width:100%;padding:11px;margin:4px 0 10px;border:2px solid #17803f55;border-radius:10px;font:inherit;font-size:16px;color:#0b3d22;background:#fff}input:focus,select:focus{outline:0;border-color:#ff8a00}
+#go,#nx,#sb{width:100%;padding:14px;border:0;border-radius:12px;background:linear-gradient(#ffd54a,#ff8a00);color:#fff;font:700 22px 'Trebuchet MS',Arial,sans-serif;text-shadow:0 2px 0 #b45309;box-shadow:0 4px 0 #b45309,0 8px 14px #0004;cursor:pointer}#go:active,#sb:active{transform:translateY(3px);box-shadow:0 1px 0 #b45309}#go:disabled,#sb:disabled{opacity:.6}
+#err{color:#d11;font-size:14px;min-height:18px;text-align:center}.n{font-size:12px;color:#456;text-align:center;margin-top:8px}
+#res{display:none;text-align:center;animation:pop .5s}#res h2{margin:0;font-size:30px;color:#ff8a00}#res b{display:block;font-size:28px;margin:6px 0;color:#0b6b34}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.cf{position:fixed;top:-20px;width:9px;height:15px;z-index:9;animation:fall 2.8s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.ft{font-size:12px;opacity:.9;margin:14px 0 6px}#mu{position:fixed;top:10px;right:10px;z-index:5;border:0;border-radius:50%;width:42px;height:42px;font-size:20px;background:#fffd;cursor:pointer}
+#bk{background:none;border:0;color:#ffd23f;text-decoration:underline;font:inherit;font-size:14px;cursor:pointer;margin:12px 0 0}
+#err2{color:#d11;background:#fff;border-radius:10px;padding:8px 10px;font-size:14px;margin:10px 0}#err2:empty{display:none}
+#of{background:#ffd23f;color:#3b2a00;border-radius:10px;padding:6px 10px;font-size:13px;margin:6px 0}
+</style></head><body><button id="mu" title="Sound">🔊</button><div class="w">
+<img class="lo" src="logo.webp" width="200" height="73" alt="ByBet"><h1 id="t">Spin the Wheel</h1><div class="m" id="s">Loading…</div><div id="of" hidden>📡 You're offline. You can fill in your details, but spinning needs internet.</div>
+<div id="main" hidden>
+<div class="card" id="fm"><label>Team</label><select id="tm"><option value="">Select team…</option><option>PR Team</option><option>Events Team</option></select><label>bybet username</label><input id="u" autocomplete="off"><label>Full name</label><input id="n"><label>Age</label><input id="a" type="number" min="1" inputmode="numeric"><label>Contact number</label><input id="c" type="tel" inputmode="numeric" maxlength="11" placeholder="e.g. 09171234567"><div id="err"></div><button id="sb">SUBMIT</button><div class="n">One spin per person. Your details are used for this event only.</div></div>
+<div id="st2" hidden><div id="wh"><div id="pt"></div><canvas id="cv"></canvas><div id="hub"></div></div><div id="lg"></div><div id="who" style="margin-top:12px;font-size:16px"></div><div id="err2"></div><button id="go" style="margin-top:10px">🎡 SPIN NA!</button><button id="bk">← Edit my details</button></div>
+<div class="card" id="res"><h2>PANALO! 🎉</h2><div>You won</div><b id="pz"></b><div class="n" style="font-size:14px">Show this screen to our staff to claim your prize.</div><button id="nx" hidden style="margin-top:14px">NEXT PLAYER ➜</button></div>
+</div><div class="ft">Play responsibly. Know when to stop.</div></div>
+<script>
+const q=new URLSearchParams(location.search).get('e'),$=i=>document.getElementById(i);
+let P=[],rot=0,busy=false,AC,mute=false;
+const COL=['#16a34a','#f59e0b','#0f766e','#f97316','#22c55e','#eab308','#15803d','#fb923c'],col=i=>COL[i%COL.length];
+/* sounds (synthesized, no files) */
+const ac=()=>{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state=='suspended')AC.resume();return AC};
+function tone(f,t,d,ty,v,f2){if(mute)return;try{const c=ac(),o=c.createOscillator(),g=c.createGain(),s=c.currentTime+t;o.type=ty||'sine';o.frequency.setValueAtTime(f,s);if(f2)o.frequency.exponentialRampToValueAtTime(f2,s+d);g.gain.setValueAtTime(v||.15,s);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(c.destination);o.start(s);o.stop(s+d)}catch(e){}}
+const tick=()=>tone(1100+Math.random()*150,0,.05,'square',.05);
+const start=()=>{tone(250,0,.4,'sawtooth',.07,900);tone(500,.05,.3,'triangle',.08,1200)};
+const fanfare=()=>{[523,659,784,1047,1319,1568].forEach((f,i)=>tone(f,i*.11,.4,'triangle',.18));[2093,2637,3136].forEach((f,i)=>tone(f,.7+i*.08,.5,'sine',.1));tone(130,.66,.7,'sawtooth',.06)};
+$('mu').onclick=()=>{mute=!mute;$('mu').textContent=mute?'🔇':'🔊'};
+function conf(){const k=['#ffc107','#ff8a00','#22c55e','#fff','#0b6b34'];for(let i=0;i<30;i++){const e=document.createElement('i');e.className='cf';e.style.cssText='left:'+Math.random()*100+'vw;background:'+k[i%5]+';animation-delay:'+Math.random()*.8+'s;border-radius:'+(i%3?'2px':'50%');document.body.appendChild(e);setTimeout(()=>e.remove(),4000)}}
+/* wheel */
+function draw(){const c=$('cv'),x=c.getContext('2d'),tot=P.reduce((a,p)=>a+p.w,0);c.width=c.height=1100;let a=-Math.PI/2;
+ P.forEach((p,i)=>{const t=p.w/tot*2*Math.PI;p.a0=a;p.t=t;x.beginPath();x.moveTo(550,550);x.arc(550,550,550,a,a+t);x.fillStyle=col(i);x.fill();x.strokeStyle='#fff';x.lineWidth=5;x.stroke();
+  if(t>.1){x.save();x.translate(550,550);x.rotate(a+t/2);x.textAlign='right';x.font='bold 42px "Trebuchet MS",Arial,sans-serif';x.lineWidth=8;x.strokeStyle='#0a3d1fcc';x.fillStyle='#fff';const s=p.name.slice(0,18);x.strokeText(s,515,15);x.fillText(s,515,15);x.restore()}a+=t});
+ $('lg').innerHTML=P.map(p=>'<span>'+p.name.replace(/</g,'&lt;')+'</span>').join('')}
+function idxAt(r){const th=((360-r%360)%360)*Math.PI/180;for(let i=0;i<P.length;i++){const s=P[i].a0+Math.PI/2;if(th>=s&&th<s+P[i].t)return i}return 0}
+function spinTo(target,cb){const s=rot,t0=performance.now(),D=5600;let last=-1;
+ (function f(now){const k=Math.min(1,(now-t0)/D),e=1-Math.pow(1-k,4);rot=s+(target-s)*e;$('cv').style.transform='rotate('+rot+'deg)';
+  const i=idxAt(rot);if(i!==last){if(last>=0)tick();last=i}k<1?requestAnimationFrame(f):cb()})(t0)}
+function apply(d,fresh){
+ if(d.error){if(fresh){$('s').textContent=d.error;$('main').hidden=true}return}
+ if(busy)return;$('t').textContent=d.name;const f=s=>s.replace('T',' ');
+ if(d.status!='live'){$('s').textContent=d.status=='soon'?'Starts '+f(d.start):'This event has ended.';$('main').hidden=true;return}
+ if(!d.prizes.length){$('s').textContent='All prizes have been claimed.';$('main').hidden=true;return}
+ $('s').textContent='Open until '+f(d.end);P=d.prizes;$('main').hidden=false;draw()}
+let cached;try{cached=JSON.parse(localStorage['ev_'+q]||'null')}catch(e){}
+if(cached&&cached.status=='live')apply(cached,false);else $('s').textContent='Loading…';
+EV.then(d=>{if(!d.error)try{localStorage['ev_'+q]=JSON.stringify(d)}catch(e){}apply(d,true)}).catch(()=>{if(!cached)$('s').textContent='Could not load. Please check your signal and refresh.'});
+const KIOSK=new URLSearchParams(location.search).get('kiosk')=='1';
+if(KIOSK&&navigator.wakeLock)navigator.wakeLock.request('screen').catch(()=>{});
+$('nx').onclick=()=>{pinged=false;['u','n','a','c'].forEach(i=>$(i).value='');$('res').style.display='none';$('nx').hidden=true;$('fm').hidden=false;$('st2').hidden=true;$('go').hidden=$('bk').hidden=false;$('go').disabled=false;busy=false;$('err').textContent=$('err2').textContent=$('who').textContent='';
+ fetch(API+'?e='+encodeURIComponent(q)).then(r=>r.json()).then(d=>apply(d,true)).catch(()=>{});scrollTo(0,0)};
+/* live spin: the wheel starts at once; the server result only decides where it lands */
+const V=1100,RAMP=450;
+const setRot=()=>{$('cv').style.transform='rotate('+rot+'deg)'};
+function liveSpin(resP,fail,done){
+ let t0=performance.now(),prev=t0,res,err,last=-1;
+ resP.then(r=>res=r,e=>err=e||1);
+ const tk=()=>{const i=idxAt(rot);if(i!==last){if(last>=0)tick();last=i}};
+ function ease(target,D,cb){const s=rot,st=performance.now();(function g(now){const k=Math.min(1,(now-st)/D),e=1-Math.pow(1-k,3);rot=s+(target-s)*e;setRot();tk();k<1?requestAnimationFrame(g):cb()})(st)}
+ (function f(now){
+  const dt=Math.min(.05,(now-prev)/1000);prev=now;const spd=Math.min(V,V*(now-t0)/RAMP);
+  if(err||(res&&res.error)){const m=err?'Connection problem. Please check your signal and tap SPIN again.':res.error;ease(rot+spd*.6,1800,()=>fail(m));return}
+  if(res&&spd>=V){
+   let p=P.find(x=>x.name==res.prize);if(!p){P.push({name:res.prize,w:1});draw();p=P[P.length-1]}
+   const c=((p.a0+p.t/2)+Math.PI/2)*180/Math.PI,j=(Math.random()-.5)*p.t*180/Math.PI*.7,ang=(360-c)+j,base=rot+1800,target=base+(((ang-base)%360)+360)%360;
+   ease(target,3*(target-rot)/V*1000,()=>done(res.prize));return}
+  rot+=spd*dt;setRot();tk();requestAnimationFrame(f)})(t0)}
+$('go').onclick=()=>{
+ if(busy)return;if(!navigator.onLine){$('err2').textContent='No internet connection. Please reconnect, then tap SPIN again.';return}
+ ac();const b={action:'spin',e:q,username:$('u').value,fullname:$('n').value,age:$('a').value,contact:$('c').value.replace(/\D/g,''),team:$('tm').value};$('err2').textContent='';
+ busy=$('go').disabled=true;start();
+ const resP=fetch(API,{method:'POST',body:JSON.stringify(b)}).then(r=>r.json());
+ liveSpin(resP,m=>{busy=$('go').disabled=false;if(/already|nakapag|one spin/i.test(m)){$('st2').hidden=true;$('fm').hidden=false;$('err').textContent='⛔ Already registered. '+m;return}$('err2').textContent=m},pz=>{ladd($('u').value.trim(),$('c').value.replace(/\D/g,''));fanfare();conf();$('pz').textContent=pz;$('go').hidden=$('bk').hidden=true;$('res').style.display='block';if(KIOSK)$('nx').hidden=false})};
+/* wake the server while the player fills in the form */
+let pinged=false;const ping=()=>{if(pinged)return;pinged=true;fetch(API+'?ping=1',{cache:'no-store'}).catch(()=>{})};
+$('fm').addEventListener('focusin',ping);$('fm').addEventListener('input',ping);
+/* team (set by staff) is remembered on this device */
+try{$('tm').value=localStorage.team||''}catch(e){}
+$('tm').onchange=()=>{try{localStorage.team=$('tm').value}catch(e){}};
+$('c').addEventListener('input',()=>{const v=$('c').value.replace(/\D/g,'').slice(0,11);if(v!==$('c').value)$('c').value=v});
+/* people who already spun on this device (instant check) */
+const RK='reg_'+q,lget=()=>{try{return JSON.parse(localStorage.getItem(RK))||[]}catch(e){return []}},
+ ladd=(u,c)=>{try{const l=lget();[('u:'+u.toLowerCase()),('c:'+c)].forEach(k=>{if(!l.includes(k))l.push(k)});localStorage.setItem(RK,JSON.stringify(l))}catch(e){}};
+const dupMsg=f=>'⛔ Already registered'+(f=='contact'?' (this contact number has already been used).':f=='username'?' (this bybet username has already been used).':'. This player has already joined this event.');
+$('sb').onclick=async()=>{try{ac()}catch(e){}const t=$('tm').value,u=$('u').value.trim(),n=$('n').value.trim(),a=+$('a').value,c=$('c').value.replace(/\D/g,'');
+ if(!t){$('err').textContent='Please select the team.';return}
+ if(!u||!n||!c||!(a>0)){$('err').textContent='Please fill in all the details.';return}
+ if(c.length<10||c.length>11){$('err').textContent='Contact number must be 10–11 digits.';return}
+ $('err').textContent=$('err2').textContent='';
+ const L=lget();if(L.includes('u:'+u.toLowerCase())){$('err').textContent=dupMsg('username');return}if(L.includes('c:'+c)){$('err').textContent=dupMsg('contact');return}
+ const b=$('sb');b.disabled=true;b.textContent='Checking…';
+ try{ /* uses the optional 'check' action in the Apps Script; if it is not there the page simply continues */
+  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),7000);
+  const r=await fetch(API,{method:'POST',body:JSON.stringify({action:'check',e:q,username:u,contact:c}),signal:ctl.signal}).then(x=>x.json());clearTimeout(tm);
+  if(r&&(r.registered||r.duplicate)){ladd(u,c);b.disabled=false;b.textContent='SUBMIT';$('err').textContent=dupMsg(r.field);return}
+ }catch(e){}
+ b.disabled=false;b.textContent='SUBMIT';
+ $('c').value=c;$('who').textContent='Good luck, '+n+'!';$('fm').hidden=true;$('st2').hidden=false;scrollTo(0,0)};
+$('fm').addEventListener('keydown',e=>{if(e.key=='Enter')$('sb').click()});
+$('bk').onclick=()=>{if(busy)return;$('st2').hidden=true;$('fm').hidden=false;$('err2').textContent=''};
+const ol=()=>{$('of').hidden=navigator.onLine};addEventListener('online',ol);addEventListener('offline',ol);ol();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script></body></html>
