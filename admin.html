@@ -1,0 +1,638 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=e3de3f5b-ec34-4a94-b16c-544d73683e54
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. --><meta name="viewport" content="width=device-width,initial-scale=1"><title>ByBet Admin</title>
+<style>
+:root{--bg:#f3f5f9;--c:#fff;--t:#111827;--m:#6b7280;--a:#2563eb;--ok:#16a34a;--er:#dc2626;--ln:#e5e7eb}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1220;--c:#1a1f35;--t:#eef;--m:#9aa3b5;--ln:#2d3450}}
+[hidden]{display:none!important}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--t);padding:16px;line-height:1.4}
+.w{max-width:960px;margin:0 auto}.card{background:var(--c);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px #0001}
+h2{margin:0 0 4px;font-size:22px}h3{margin:0 0 10px;font-size:17px}
+input,select{padding:11px;border:1px solid #9aa3b566;border-radius:9px;font-size:15px;background:transparent;color:inherit;width:100%}
+label{display:block;font-size:13px;color:var(--m);margin-bottom:3px}
+button,.bb{padding:10px 15px;border:0;border-radius:9px;background:var(--a);color:#fff;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+button.g,.bb.g{background:#9aa3b533;color:inherit}button.gr{background:var(--ok)}
+.m{color:var(--m);font-size:13px}.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.pr{display:grid;grid-template-columns:26px 3fr 1.3fr 1fr auto auto auto;gap:8px;margin-top:8px;align-items:center}.pr.dg{opacity:.4}.pr.ov{outline:2px dashed var(--a)}.hdl{cursor:grab;text-align:center;color:var(--m);font-size:20px;user-select:none;touch-action:none}.mv{padding:8px 10px!important}
+.tr{display:grid;grid-template-columns:3fr 1.3fr auto;gap:8px;margin-top:8px}.tc h3{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.tc small{font-weight:400;color:var(--m);font-size:12px}.mr{display:grid;grid-template-columns:3fr 1fr auto;gap:8px;margin-top:8px}
+@media(max-width:560px){.pr{grid-template-columns:26px 1fr 1fr 1fr;}.pr .n{grid-column:2/-1}.pr .v{grid-column:2/4}.tr{grid-template-columns:1fr 1fr auto}.tr .n{grid-column:1/-1}}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px solid var(--ln);padding:7px 6px;text-align:left}.sc{overflow-x:auto}
+/* tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.tabs button{background:#9aa3b533;color:inherit}.tabs button.on{background:var(--a);color:#fff}
+.sub{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}.sub button{background:#9aa3b522;color:inherit;font-size:13px;padding:8px 12px}.sub button.on{background:var(--a);color:#fff}
+.ms{position:relative}.ms>button{width:100%;text-align:left;background:transparent;color:inherit;border:1px solid #9aa3b566;font-weight:400;font-size:15px;padding:11px}
+.mp{position:absolute;z-index:8;left:0;right:0;top:100%;margin-top:4px;background:var(--c);border:1px solid var(--ln);border-radius:10px;box-shadow:0 6px 18px #0003;padding:6px;max-height:300px;overflow:auto}
+.mp label{display:flex;gap:10px;align-items:flex-start;padding:10px;margin:0;font-size:14px;color:inherit;cursor:pointer;border-radius:8px}.mp label:hover{background:#9aa3b522}.mp input{width:auto;margin-top:2px}
+/* home */
+.hb{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}@media(max-width:620px){.hb{grid-template-columns:1fr}}
+.hb button{background:var(--c);color:var(--t);text-align:left;padding:26px 22px;border-radius:16px;box-shadow:0 2px 8px #0002;border:2px solid transparent;font-weight:400}
+.hb button:hover{border-color:var(--a)}.hb .e{font-size:44px;display:block}.hb b{font-size:22px;display:block;margin:6px 0 4px}.hb span.d{color:var(--m);font-size:14px}
+/* top bar */
+.top{display:flex;align-items:center;gap:12px;margin-bottom:14px;position:sticky;top:0;background:var(--bg);padding:6px 0;z-index:5}.top b{font-size:20px}
+/* list items */
+.it{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--ln)}.it:last-child{border:0}
+.it .bt{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}.lk{font-size:13px;color:var(--a);word-break:break-all}
+.bd{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:middle}
+.live{background:#dcfce7;color:#166534}.soon{background:#fef3c7;color:#92400e}.end{background:#e5e7eb;color:#4b5563}
+.stk{margin-top:6px;font-size:13px}.stk span{display:inline-block;background:#9aa3b522;border-radius:99px;padding:2px 10px;margin:2px 4px 2px 0}.stk .low{background:#fee2e2;color:#b91c1c;font-weight:700}
+.bn{border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:14px}.bn.ok{background:#dcfce7;color:#166534}.bn.er{background:#fee2e2;color:#991b1b}
+.step{display:flex;gap:10px;align-items:center;margin:16px 0 6px}.step i{background:var(--a);color:#fff;border-radius:50%;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;font-weight:700}.step b{font-size:16px}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.it{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:10px}.it>div:first-child{width:100%}.it .bt{justify-content:flex-start;width:100%}
+</style></head><body><div class="w">
+<div class="card" id="login" style="max-width:420px;margin:40px auto"><h2>ByBet Admin</h2><div class="m" style="margin-bottom:12px">Enter your passcode to continue.</div><input id="pw" type="password" placeholder="Passcode"><div style="margin-top:10px"><button id="go">Sign in</button> <span id="lm" class="m"></span></div></div>
+
+<div id="app" hidden>
+<div class="top" id="top" hidden><button class="g" id="home">← Home</button><b id="ttl"></b></div>
+
+<!-- HOME -->
+<div id="v-home"><h2>What do you want to manage?</h2><div class="m">Pick one to get started.</div>
+<div class="hb"><button id="h-wheel"><span class="e">🎡</span><b>Spin the Wheel</b><span class="d">Events, prizes, links and winners</span></button>
+<button id="h-tracker"><span class="e">🎯</span><b>Physical Game Tracker</b><span class="d">Drop games and other physical games: players and merch given</span></button></div></div>
+
+<!-- SPIN THE WHEEL -->
+<div id="v-wheel" hidden>
+<div id="nW" class="bn" hidden></div>
+<div class="tabs"><button id="tb-e" class="on">🎡 Events</button><button id="tb-t">🏷️ Merchandise Tiering</button></div>
+<div id="pe">
+<div class="hd"><div><h2>Events</h2><div class="m">Each event has its own spin link.</div></div><button class="gr" id="newE">+ New event</button></div>
+<div class="card" id="wf" hidden><h3 id="wft">New event</h3>
+<div class="g2"><div><label>Event / stakeholder name</label><input id="name"></div><div><label>Link code (auto if empty)</label><input id="code"></div><div><label>Start</label><input id="st" type="datetime-local"></div><div><label>End</label><input id="en" type="datetime-local"></div></div>
+<div class="step"><i>2</i><b>Prizes</b></div><div style="max-width:420px;margin-bottom:8px"><label>Merchandise Tiering (optional) — tick one or more tiers to fill in the prizes below</label><div class="ms"><button type="button" id="tbtn">Select tiers ▾</button><div class="mp" id="tpn" hidden></div></div></div><div class="m">High Value = rarest, Low Value = most common. Stock is released gradually, and every prize keeps a reserve until the last 10% of the event, so no prize is empty on the wheel before then.</div><div id="pl"></div>
+<div style="margin-top:10px"><button class="g" id="ap">+ Add prize</button></div><div class="m" id="pv" style="margin-top:8px"></div>
+<div style="margin-top:14px"><button id="sv">Save event</button> <button class="g" id="cE">Cancel</button></div></div>
+<div class="card"><input id="evq" type="search" placeholder="🔍 Search events by name, date or link…" style="margin-bottom:10px"><div id="ev"></div></div>
+<div class="card"><h3>Winners</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><select id="fl" style="max-width:300px"></select><input id="spq" type="search" placeholder="🔍 Search winners (name, bybet, contact, prize…)" style="max-width:340px"></div><div class="sc" id="sp" style="margin-top:10px"></div></div>
+</div>
+<div id="pt" hidden><h2>Merchandise Tiering</h2><div class="m">Encode the merchandise name and value under each tier. Changes save automatically on this device and browser only.</div><div class="sub" id="sub"></div><div id="tl"></div></div>
+</div>
+
+<!-- PHYSICAL GAME TRACKER -->
+<div id="v-tracker" hidden>
+<div id="nT" class="bn" hidden></div>
+<div class="hd"><div><h2>Physical games</h2><div class="m">Staff open a game's link to record players and the merch given.</div></div><button class="gr" id="newG">+ New game</button></div>
+<div class="card" id="gf" hidden><h3 id="gft">New game</h3>
+<div class="step" style="margin-top:0"><i>1</i><b>Name your game</b></div>
+<div class="g2"><div><label>Game name</label><input id="gname" placeholder="e.g. Drop Game Day 1"></div><div><label>Link code (auto if empty)</label><input id="gcode"></div><div><label>Start (optional)</label><input id="gst" type="datetime-local"></div><div><label>End (optional)</label><input id="gen" type="datetime-local"></div></div>
+<div class="step"><i>2</i><b>Add your merch</b></div><div class="m">List every item you will give away and how many you have.</div><div id="ml"></div><div style="margin-top:10px"><button class="g" id="am">+ Add merch</button></div>
+<div class="step"><i>3</i><b>Save and share the link</b></div>
+<div><button id="gsv">Save game</button> <button class="g" id="cG">Cancel</button></div></div>
+<div class="card"><input id="gq" type="search" placeholder="🔍 Search games by name, date or link…" style="margin-bottom:10px"><div id="gl"></div></div>
+<div class="card"><h3>Players &amp; merch given</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><select id="gfl" style="max-width:300px"></select><input id="glq" type="search" placeholder="🔍 Search players (name, bybet, contact, merch…)" style="max-width:340px"></div><div id="gsum" style="margin-top:10px"></div><div class="sc" id="glg" style="margin-top:10px"></div></div>
+</div>
+</div></div>
+
+<script src="config.js"></script>
+<script>
+const $=i=>document.getElementById(i),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+const hit=(q,...f)=>{q=(q||'').trim().toLowerCase();return !q||f.some(x=>String(x==null?'':x).toLowerCase().includes(q))};
+let PW=sessionStorage.pw||'',D={events:[],prizes:[],spins:[],games:[],gmerch:[],glog:[]};
+const call=o=>fetch(API,{method:'POST',body:JSON.stringify({pass:PW,...o})}).then(r=>r.json());
+const BASE=location.origin+location.pathname.replace(/admin(\.html)?\/?$/,'').replace(/\/?$/,'/'),wlink=c=>BASE+'?e='+c,tlink=c=>BASE+'tracker.html?g='+c;
+function note(id,t,ok){const e=$(id);e.textContent=t;e.className='bn '+(ok?'ok':'er');e.hidden=!t;if(t&&ok)setTimeout(()=>{if(e.textContent==t)e.hidden=true},9000)}
+const TTL={wheel:'🎡 Spin the Wheel',tracker:'🎯 Physical Game Tracker'};
+function show(){const v=['wheel','tracker'].includes(location.hash.slice(1))?location.hash.slice(1):'home';
+ ['home','wheel','tracker'].forEach(x=>$('v-'+x).hidden=x!=v);$('top').hidden=v=='home';$('ttl').textContent=TTL[v]||''}
+addEventListener('hashchange',()=>{show();scrollTo(0,0)});
+$('h-wheel').onclick=()=>location.hash='wheel';$('h-tracker').onclick=()=>location.hash='tracker';$('home').onclick=()=>{location.hash=''};
+async function load(){const d=await call({action:'list'});if(d.error){$('lm').textContent=d.error;return}sessionStorage.pw=PW;D=Object.assign({games:[],gmerch:[],glog:[]},d);$('login').hidden=true;$('app').hidden=false;render();show()}
+$('go').onclick=()=>{PW=$('pw').value;load()};$('pw').onkeydown=e=>{if(e.key=='Enter')$('go').click()};if(PW)load();
+document.addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(!b)return;const t=b.dataset.copy,done=()=>{const o=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=o,1500)};
+ navigator.clipboard?navigator.clipboard.writeText(t).then(done,()=>{prompt('Copy this link:',t)}):prompt('Copy this link:',t)});
+const badge=(s,e)=>{const n=Date.now(),a=s?new Date(s).getTime():0,b=e?new Date(e).getTime():Infinity;return n<a?'<span class="bd soon">Upcoming</span>':n>b?'<span class="bd end">Ended</span>':'<span class="bd live">Live</span>'};
+const fdt=s=>esc((s||'').replace('T',' '));
+
+/* ---------- Spin the Wheel ---------- */
+const TIERS=['High Value','Medium Value','Low Value'],TW={'High Value':1,'Medium Value':3,'Low Value':9},W=p=>TW[p.value]||1;
+function prow(p={}){const d=document.createElement('div');d.className='pr';d.innerHTML='<span class=hdl title="Drag to reorder" draggable=true>⠿</span><input class=n placeholder="Prize name" value="'+esc(p.name)+'"><select class=v>'+TIERS.map(t=>'<option'+(t==(p.value||'Low Value')?' selected':'')+'>'+t+'</option>').join('')+'</select><input class=q type=number min=1 placeholder="Qty" value="'+esc(p.qty)+'"><button class="g mv" type=button data-m=-1 title="Move up">▲</button><button class="g mv" type=button data-m=1 title="Move down">▼</button><button class=g type=button data-x=1>✕</button>';
+ if(p.src)d.dataset.src=p.src;if(p.keep)d.dataset.keep='1';d.oninput=pv;$('pl').appendChild(d);pv()}
+let DR=null;
+$('pl').onclick=e=>{const b=e.target.closest('button');if(!b)return;const r=b.closest('.pr');if(b.dataset.x){r.remove();pv();return}
+ const m=+b.dataset.m;if(!m)return;const s=m<0?r.previousElementSibling:r.nextElementSibling;if(!s)return;m<0?$('pl').insertBefore(r,s):$('pl').insertBefore(s,r);r.scrollIntoView({block:'nearest'})};
+$('pl').addEventListener('dragstart',e=>{const r=e.target.closest('.pr');if(!r||!e.target.classList.contains('hdl'))return;DR=r;r.classList.add('dg');e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain','p')}catch(x){}});
+$('pl').addEventListener('dragover',e=>{if(!DR)return;e.preventDefault();const r=e.target.closest('.pr');document.querySelectorAll('#pl .ov').forEach(x=>x.classList.remove('ov'));if(r&&r!=DR)r.classList.add('ov')});
+$('pl').addEventListener('drop',e=>{if(!DR)return;e.preventDefault();const r=e.target.closest('.pr');if(r&&r!=DR){const all=[...$('pl').children];all.indexOf(DR)<all.indexOf(r)?$('pl').insertBefore(DR,r.nextSibling):$('pl').insertBefore(DR,r)}});
+$('pl').addEventListener('dragend',()=>{document.querySelectorAll('#pl .dg,#pl .ov').forEach(x=>x.classList.remove('dg','ov'));DR=null});
+const rd=()=>[...document.querySelectorAll('#pl .pr')].map(r=>({name:r.querySelector('.n').value.trim(),value:r.querySelector('.v').value,qty:+r.querySelector('.q').value})).filter(p=>p.name&&p.value&&p.qty>0);
+function pv(){const L=rd(),t=L.reduce((a,p)=>a+W(p),0);$('pv').textContent=L.length?'Base chance: '+L.map(p=>p.name+' '+(100*W(p)/t).toFixed(1)+'%').join(' · '):''}
+$('ap').onclick=()=>prow();
+function openE(v){$('wft').textContent=v?'Edit event':'New event';$('name').value=v?v.name:'';$('code').value=v?v.code:'';$('st').value=v?v.start:'';$('en').value=v?v.end:'';$('pl').innerHTML='';fillTsel();
+ const L=v?D.prizes.filter(p=>p.event==v.code):[];L.length?L.forEach(prow):prow();$('wf').hidden=false;note('nW','');$('wf').scrollIntoView({behavior:'smooth',block:'start'})}
+$('newE').onclick=()=>openE();$('cE').onclick=()=>{$('wf').hidden=true};
+$('sv').onclick=async()=>{const e={code:$('code').value||$('name').value,name:$('name').value.trim(),start:$('st').value,end:$('en').value,prizes:rd()};
+ if(!e.name||!e.start||!e.end||!e.prizes.length)return note('nW','Please enter the name, start, end and at least one prize.');
+ const d=await call({action:'save',event:e});if(d.error)return note('nW',d.error);$('wf').hidden=true;note('nW','✔ Event saved. Link: '+wlink(d.code),1);await load()};
+function render(){
+ $('ev').innerHTML=D.events.slice().reverse().filter(e=>hit($('evq').value,e.name,e.code,e.start,e.end)).map(e=>'<div class="it"><div><b>'+esc(e.name)+'</b>'+badge(e.start,e.end)+'<div class="m">'+fdt(e.start)+' → '+fdt(e.end)+'</div><div class="lk">'+esc(wlink(e.code))+'</div></div><div class="bt"><button data-copy="'+esc(wlink(e.code))+'">Copy link</button><a class="bb g" href="'+esc(wlink(e.code))+'" target="_blank">Open</a><a class="bb g" href="'+esc(wlink(e.code))+'&kiosk=1" target="_blank">Kiosk</a><button class="g" data-e="'+esc(e.code)+'">Edit</button><button class="g" data-rp="'+esc(e.code)+'">Post Event Report</button></div></div>').join('')||'<div class="m">'+($('evq').value?'No matching events.':'No events yet. Click “+ New event” to create one.')+'</div>';
+ const cur=$('fl').value;$('fl').innerHTML='<option value="">All events</option>'+D.events.map(e=>'<option value="'+esc(e.code)+'">'+esc(e.name)+'</option>').join('');$('fl').value=cur;spins();games()}
+function spins(){const f=$('fl').value,L=D.spins.filter(s=>(!f||s.event==f)&&hit($('spq').value,s.fullname,s.username,s.contact,s.team,s.prize,s.age,s.event,s.status)).reverse();
+ $('sp').innerHTML=L.length?'<table><tr><th>Time</th><th>Event</th><th>bybet</th><th>Name</th><th>Age</th><th>Team</th><th>Contact</th><th>Prize</th><th>Status</th></tr>'+L.map(s=>'<tr><td>'+esc(s.time)+'</td><td>'+esc(s.event)+'</td><td>'+esc(s.username)+'</td><td>'+esc(s.fullname)+'</td><td>'+esc(s.age)+'</td><td>'+esc(s.team)+'</td><td>'+esc(s.contact)+'</td><td><b>'+esc(s.prize)+'</b></td><td><button class="g" data-r="'+s.row+'" data-s="'+esc(s.status)+'">'+esc(s.status)+'</button></td></tr>').join('')+'</table>':'<div class="m">No spins yet.</div>'}
+$('fl').onchange=spins;
+$('ev').onclick=e=>{const c=e.target.dataset.e;if(c)openE(D.events.find(x=>x.code==c));
+ const r=e.target.dataset.rp;if(r){const v=D.events.find(x=>x.code==r),L=D.spins.filter(s=>s.event==r);
+  let o=0,u=0,k=0;L.forEach(s=>{const a=parseInt(s.age,10);if(isNaN(a)||a<=0)k++;else if(a>=21)o++;else u++});
+  openPostEventReport({key:'e:'+r,name:v.name,date:String(v.start||'').slice(0,10),total:L.length,over21:o,under21:u,unknown:k})}};
+$('sp').onclick=async e=>{const r=e.target.dataset.r;if(!r)return;const s=e.target.dataset.s=='Released'?'To release':'Released';await call({action:'release',row:r,status:s});load()};
+
+
+/* ---------- Merchandise Tiering (saved in this browser) ---------- */
+const TIERLIST=[
+ {id:'t1mm',name:'Tier 1 (General Giveaways) – Metro Manila',tab:'T1 · Metro Manila'},
+ {id:'t1all',name:'Tier 1 (General Giveaways) – All Areas',tab:'T1 · All Areas'},
+ {id:'t2mm',name:'Tier 2 (High Value Mechanics) – Metro Manila',tab:'T2 · Metro Manila'},
+ {id:'t2reg',name:'Tier 2 (High Value Mechanics) – Regional Areas',sub:'3–5 pcs display per booth',tab:'T2 · Regional'},
+ {id:'t3',name:'Tier 3 (For Display Only)',tab:'T3 · Display'}];
+const TK='bybet_tiers_v1';let CT=TIERLIST[0].id;
+function tload(){try{return JSON.parse(localStorage.getItem(TK))||{}}catch(e){return {}}}
+function tsave(o){try{localStorage.setItem(TK,JSON.stringify(o));return true}catch(e){return false}}
+function trow(it={}){return '<div class="tr"><input class=n placeholder="Merchandise name" value="'+esc(it.name)+'"><select class=v>'+TIERS.map(t=>'<option'+(t==(it.value||'Low Value')?' selected':'')+'>'+t+'</option>').join('')+'</select><button class=g type=button data-x=1>✕</button></div>'}
+function tcommit(){const c=document.querySelector('#tl .tc');if(!c)return true;const T=tload();
+ T[c.dataset.t]=[...c.querySelectorAll('.tr')].map(r=>({name:r.querySelector('.n').value.trim(),value:r.querySelector('.v').value})).filter(i=>i.name);return tsave(T)}
+function tiers(){const T=tload(),t=TIERLIST.find(x=>x.id==CT);
+ $('sub').innerHTML=TIERLIST.map(x=>'<button type=button data-t="'+x.id+'"'+(x.id==CT?' class=on':'')+'>'+esc(x.tab)+' ('+(T[x.id]||[]).length+')</button>').join('');
+ $('tl').innerHTML='<div class="card tc" data-t="'+t.id+'" style="box-shadow:none;border:1px solid var(--ln)"><h3>'+esc(t.name)+(t.sub?' <small>('+esc(t.sub)+')</small>':'')+'</h3><div class="rows">'+(T[t.id]||[]).map(trow).join('')+'</div><div style="margin-top:10px"><button class=g type=button data-a=1>+ Add merchandise</button> <button type=button data-s=1>Save</button> <span class="m ok"></span></div></div>'}
+$('sub').onclick=e=>{const b=e.target.closest('button');if(!b)return;tcommit();CT=b.dataset.t;tiers()};
+$('tl').onclick=e=>{const b=e.target.closest('button');if(!b)return;const c=b.closest('.tc');
+ if(b.dataset.a){c.querySelector('.rows').insertAdjacentHTML('beforeend',trow());c.querySelector('.rows .tr:last-child .n').focus()}
+ else if(b.dataset.x){b.closest('.tr').remove();tcommit();tiers()}
+ else if(b.dataset.s){const ok=tcommit(),s=c.querySelector('.m.ok');tiers();const n=document.querySelector('#tl .m.ok');n.textContent=ok?'✔ Saved':'Could not save (browser storage blocked)';setTimeout(()=>n.textContent='',2500)}};
+$('tl').addEventListener('change',()=>{tcommit();const T=tload(),c=document.querySelector('#tl .tc');document.querySelector('#sub .on').textContent=TIERLIST.find(x=>x.id==CT).tab+' ('+(T[CT]||[]).length+')'});
+/* wheel tabs */
+function wtab(n){if(n!='t'&&!$('pt').hidden)tcommit();$('pe').hidden=n=='t';$('pt').hidden=n!='t';$('tb-e').classList.toggle('on',n!='t');$('tb-t').classList.toggle('on',n=='t');try{sessionStorage.wtab=n}catch(e){}if(n=='t')tiers()}
+$('tb-e').onclick=()=>wtab('e');$('tb-t').onclick=()=>wtab('t');
+if(sessionStorage.wtab=='t')wtab('t');
+/* multi-tier picker in the event form */
+const TSEL=new Set();
+function tlabel(){const n=TSEL.size;$('tbtn').textContent=n?n+' tier'+(n>1?'s':'')+' selected ▾':'Select tiers ▾'}
+function fillTsel(){TSEL.clear();const T=tload();$('tpn').innerHTML=TIERLIST.map(t=>'<label><input type=checkbox value="'+t.id+'"><span>'+esc(t.name)+' <span class="m">('+(T[t.id]||[]).length+' items)</span></span></label>').join('');$('tpn').hidden=true;tlabel()}
+$('tbtn').onclick=e=>{e.stopPropagation();if($('tpn').hidden)fillTsel2();$('tpn').hidden=!$('tpn').hidden};
+function fillTsel2(){const T=tload();$('tpn').innerHTML=TIERLIST.map(t=>'<label><input type=checkbox value="'+t.id+'"'+(TSEL.has(t.id)?' checked':'')+'><span>'+esc(t.name)+' <span class="m">('+(T[t.id]||[]).length+' items)</span></span></label>').join('')}
+document.addEventListener('click',e=>{if(!e.target.closest('.ms'))$('tpn').hidden=true});
+$('tpn').onchange=e=>{const cb=e.target,id=cb.value,L=tload()[id]||[];
+ if(cb.checked){
+  if(!L.length){alert('This tier has no merchandise yet. Add items first under the “Merchandise Tiering” tab.');cb.checked=false;return}
+  TSEL.add(id);
+  L.forEach(i=>{const row=[...$('pl').children].find(r=>r.querySelector('.n').value.trim().toLowerCase()==i.name.toLowerCase());
+   if(row){const s=(row.dataset.src||'').split(',').filter(Boolean);if(!s.length)row.dataset.keep='1';if(!s.includes(id))s.push(id);row.dataset.src=s.join(',')}
+   else prow({name:i.name,value:i.value,src:id})});
+  [...$('pl').children].forEach(r=>{if(!r.querySelector('.n').value.trim()&&!r.dataset.src&&!r.querySelector('.q').value)r.remove()});
+ }else{
+  TSEL.delete(id);
+  [...$('pl').children].forEach(r=>{const s=(r.dataset.src||'').split(',').filter(x=>x&&x!=id);if(!(r.dataset.src||'').split(',').includes(id))return;
+   if(s.length||r.dataset.keep){r.dataset.src=s.join(',')}else r.remove()});
+ }
+ if(!$('pl').children.length)prow();pv();tlabel()};
+fillTsel();
+
+/* ---------- Physical Game Tracker ---------- */
+function mrow(m={}){const d=document.createElement('div');d.className='mr';d.innerHTML='<input class=n placeholder="Merch item (e.g. Cap)" value="'+esc(m.name)+'"><input class=q type=number min=1 placeholder="Qty" value="'+esc(m.qty)+'"><button class=g type=button>✕</button>';d.querySelector('button').onclick=()=>d.remove();$('ml').appendChild(d)}
+const mrd=()=>[...document.querySelectorAll('#ml .mr')].map(r=>({name:r.querySelector('.n').value.trim(),qty:+r.querySelector('.q').value})).filter(m=>m.name&&m.qty>0);
+$('am').onclick=()=>mrow();
+function openG(v){$('gft').textContent=v?'Edit game':'New game';$('gname').value=v?v.name:'';$('gcode').value=v?v.code:'';$('gst').value=v?v.start:'';$('gen').value=v?v.end:'';$('ml').innerHTML='';
+ const L=v?D.gmerch.filter(m=>m.game==v.code):[];L.length?L.forEach(mrow):mrow();$('gf').hidden=false;note('nT','');$('gf').scrollIntoView({behavior:'smooth',block:'start'})}
+$('newG').onclick=()=>openG();$('cG').onclick=()=>{$('gf').hidden=true};
+$('gsv').onclick=async()=>{const g={code:$('gcode').value||$('gname').value,name:$('gname').value.trim(),start:$('gst').value,end:$('gen').value,merch:mrd()};
+ if(!g.name||!g.merch.length)return note('nT','Please enter the game name and at least one merch item with a quantity.');
+ const d=await call({action:'gamesave',game:g});if(d.error)return note('nT',d.error);$('gf').hidden=true;note('nT','✔ Game saved. Tracker link: '+tlink(d.code),1);await load()};
+function games(){
+ $('gl').innerHTML=D.games.slice().reverse().filter(g=>hit($('gq').value,g.name,g.code,g.start,g.end)).map(g=>{const M=D.gmerch.filter(m=>m.game==g.code);
+  return '<div class="it"><div><b>'+esc(g.name)+'</b>'+(g.start||g.end?badge(g.start,g.end):'')+(g.start?'<div class="m">'+fdt(g.start)+(g.end?' → '+fdt(g.end):'')+'</div>':'')+'<div class="lk">'+esc(tlink(g.code))+'</div>'+
+  '<div class="stk">'+(M.map(m=>'<span'+(m.rem<=3?' class="low"':'')+'>'+esc(m.name)+': '+(m.rem<=0?'OUT':m.rem+' left')+'</span>').join('')||'<span>No merch</span>')+'</div></div>'+
+  '<div class="bt"><button data-copy="'+esc(tlink(g.code))+'">Copy link</button><a class="bb g" href="'+esc(tlink(g.code))+'" target="_blank">Open</a><button class="g" data-g="'+esc(g.code)+'">Edit</button><button class="g" data-rpg="'+esc(g.code)+'">Post Event Report</button></div></div>'}).join('')||'<div class="m">'+($('gq').value?'No matching games.':'No games yet. Click “+ New game” to create one.')+'</div>';
+ const cur=$('gfl').value;$('gfl').innerHTML='<option value="">All games</option>'+D.games.map(g=>'<option value="'+esc(g.code)+'">'+esc(g.name)+'</option>').join('');$('gfl').value=cur;glog()}
+function glog(){const f=$('gfl').value,L=D.glog.filter(l=>(!f||l.game==f)&&hit($('glq').value,l.fullname,l.username,l.contact,l.team,l.merch,l.note,l.age,l.game)).reverse();
+ if(f){const M=D.gmerch.filter(m=>m.game==f),P=new Set(D.glog.filter(l=>l.game==f&&!/^VOID/.test(l.note)).map(l=>l.username.toLowerCase()));
+  $('gsum').innerHTML='<div><b>Players recorded:</b> '+P.size+'</div>'+(M.length?'<div class="sc"><table style="margin-top:8px"><tr><th>Merch</th><th>Total</th><th>Given</th><th>Remaining</th></tr>'+M.map(m=>'<tr><td>'+esc(m.name)+'</td><td>'+m.qty+'</td><td>'+m.given+'</td><td><b'+(m.rem<=3?' style="color:#dc2626"':'')+'>'+m.rem+'</b></td></tr>').join('')+'</table></div>':'')}else $('gsum').innerHTML='<div class="m">Pick a game above to see its players and merch totals.</div>';
+ $('glg').innerHTML=L.length?'<table><tr><th>Time</th><th>Game</th><th>bybet</th><th>Name</th><th>Age</th><th>Team</th><th>Contact</th><th>Merch</th><th>Qty</th><th>Note</th><th></th></tr>'+L.map(l=>'<tr><td>'+esc(l.time)+'</td><td>'+esc(l.game)+'</td><td>'+esc(l.username)+'</td><td>'+esc(l.fullname)+'</td><td>'+esc(l.age)+'</td><td>'+esc(l.team)+'</td><td>'+esc(l.contact)+'</td><td><b>'+esc(l.merch)+'</b></td><td>'+l.qty+'</td><td>'+esc(l.note)+'</td><td>'+(/^VOID/.test(l.note)?'':'<button class="g" data-v="'+l.row+'">Void</button>')+'</td></tr>').join('')+'</table>':'<div class="m">No entries yet.</div>'}
+$('gfl').onchange=glog;
+$('gl').onclick=e=>{const c=e.target.dataset.g;if(c)openG(D.games.find(x=>x.code==c));
+ const r=e.target.dataset.rpg;if(r){const v=D.games.find(x=>x.code==r),L=D.glog.filter(l=>l.game==r&&!/^VOID/.test(l.note||'')),seen={};
+  L.forEach(l=>{const k=String(l.username||'').toLowerCase();if(!(k in seen))seen[k]=l});
+  const P=Object.values(seen);let o=0,u=0,k=0;P.forEach(l=>{const a=parseInt(l.age,10);if(isNaN(a)||a<=0)k++;else if(a>=21)o++;else u++});
+  let d=String(v.start||'').slice(0,10);if(!d&&L.length){const t=new Date(L[0].time);if(!isNaN(t))d=t.toLocaleDateString('en-CA')}
+  if(!d)d=new Date().toLocaleDateString('en-CA');
+  openPostEventReport({key:'g:'+r,name:v.name,date:d,total:P.length,over21:o,under21:u,unknown:k,totalLabel:'Total actual participants (players recorded)'})}};
+$('glg').onclick=async e=>{const r=e.target.dataset.v;if(!r||!confirm('Void this entry? The merch goes back into stock.'))return;await call({action:'gamevoid',row:r});load()};
+$('evq').oninput=render;$('spq').oninput=spins;$('gq').oninput=games;$('glq').oninput=glog;
+</script>
+<script>
+/**
+ * POST EVENT REPORT - popup form (details + photos) for the ByBet admin page
+ *
+ * Call it from a button:
+ *   openPostEventReport({ name, date: "YYYY-MM-DD", total, over21, under21, unknown?, totalLabel? });
+ *
+ * "Send" does everything in one go:
+ *   1) report tab in the Google Sheet   2) Drive folder + photos   3) Google Doc (Photo Documentation)
+ */
+
+var PER_CONFIG = {
+  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxMeBzQCaH3THVPtOBR4-uqv5WNVymSBiX87EzagQKi2QuS-smdDdYlCJmatCVchOKj0Q/exec',
+  REVIEWED_BY: 'Joanne Santos',
+  MAX_PX: 1600,        // photos are shrunk to this size before upload (faster, saves data)
+  JPEG_QUALITY: 0.8,
+  MAX_PHOTOS: 20
+};
+
+(function () {
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  function today() { return new Date().toLocaleDateString('en-CA'); }
+  function mdy(iso) { if (!iso) return ''; var p = iso.split('-'); return Number(p[1]) + '/' + Number(p[2]) + '/' + p[0]; }
+  function longDate(iso) { if (!iso) return ''; var p = iso.split('-'); return MONTHS[Number(p[1]) - 1] + ' ' + Number(p[2]) + ', ' + p[0]; }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fileNameOf(ev) {
+    var p = String(ev.date || '').split('-'), d = p.length === 3 ? p[1] + '/' + p[2] + '/' + p[0] : '';
+    var pr = $('per-picMarcomms') && val('picMarcomms') ? 'PR_' : 'EVENTS_';
+    var venue = $('per-venue') ? val('venue') : '';
+    return (pr + d + '_' + ev.name + '_' + venue).toUpperCase().replace(/\s+/g, ' ').trim() + '_POST_EVENT_REPORT';
+  }
+  function draftKey(ev) { return 'per_draft_' + ev.name + '_' + ev.date; }
+
+  var css = [
+    '#per-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;overflow:auto;padding:14px}',
+    '#per-box{background:#fff;color:#111;max-width:740px;margin:0 auto;border-radius:14px;padding:20px;font:14px system-ui,sans-serif}',
+    '#per-box h2{margin:0 0 2px;font-size:19px}',
+    '#per-box .sub{color:#555;margin-bottom:12px}',
+    '#per-box h3{margin:20px 0 8px;font-size:14px;border-bottom:1px solid #ddd;padding-bottom:4px}',
+    '#per-box label{display:block;margin:10px 0 4px;font-weight:600;font-size:13px}',
+    '#per-box input[type=text],#per-box input[type=date],#per-box input[type=number],#per-box textarea{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid #ccc;border-radius:8px;font:inherit}',
+    '#per-box input[disabled]{background:#f1f1f1;color:#555}',
+    '#per-box textarea{min-height:90px}',
+    '#per-box input[type=radio]{width:auto;margin-right:4px}',
+    '#per-box [hidden]{display:none!important}',
+    '#per-box .err{border-color:#dc2626!important;background:#fef2f2!important}',
+    '#per-box .row{display:flex;gap:10px;flex-wrap:wrap}#per-box .row>div{flex:1;min-width:200px}',
+    '#per-box .opts label{display:inline-block;font-weight:400;margin-right:14px}',
+    '#per-box button{padding:10px 16px;border:0;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;background:#e5e7eb;color:#111827}',
+    '#per-box button.pri{background:#2563eb;color:#fff}',
+    '#per-box button.sav{background:#16a34a;color:#fff}',
+    '#per-box button.cls{background:#fff;color:#111827;border:2px solid #111827}',
+    '#per-box button:disabled{opacity:.6;cursor:wait}',
+    '#per-box .tabs{display:flex;gap:8px;margin-bottom:6px}',
+    '#per-box .tabs button{flex:1;background:#e5e7eb;color:#111827}',
+    '#per-box .tabs button.on{background:#111827;color:#fff}',
+    '#per-box .imp{margin-top:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}',
+    '#per-box .imp button{padding:7px 12px;font-size:13px;background:#7c3aed;color:#fff}',
+    '#per-box .imp button[data-undo]{background:#e5e7eb;color:#111827}',
+    '#per-box .impmsg{font-size:12px;color:#555}',
+    '#per-box .m{font-size:12px;color:#555;margin-top:6px}',
+    '#per-box .drop{border:2px dashed #7c3aed;border-radius:12px;padding:26px 10px;text-align:center;cursor:pointer;background:#faf5ff}',
+    '#per-box .drop.over{background:#ede9fe}',
+    '#per-box .drop .big{font-size:17px;font-weight:700;color:#5b21b6}',
+    '#per-box .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}',
+    '#per-box .th{position:relative;border:1px solid #ddd;border-radius:10px;overflow:hidden;background:#fafafa}',
+    '#per-box .th img{display:block;width:100%;height:105px;object-fit:cover}',
+    '#per-box .th .no{position:absolute;top:4px;left:4px;background:#111827;color:#fff;border-radius:10px;font-size:11px;font-weight:700;padding:1px 7px}',
+    '#per-box .th .tb{display:flex;justify-content:space-between;padding:4px}',
+    '#per-box .th .tb button{padding:3px 9px;font-size:12px;background:#fff;color:#111827;border:1px solid #ccc}',
+    '#per-box #per-foot{position:sticky;bottom:0;background:#fff;margin:18px -20px -20px;padding:12px 20px 16px;border-top:1px solid #ddd;border-radius:0 0 14px 14px}',
+    '#per-box .btns{display:flex;gap:8px;flex-wrap:wrap}',
+    '#per-box .pg div{padding:2px 0;font-size:13px}',
+    '#per-box .bad{color:#b91c1c;font-size:13px;margin:6px 0}',
+    '#per-box .okk{font-weight:700;color:#15803d;margin-bottom:4px}',
+    '#per-box a.lnk{display:inline-block;padding:9px 14px;border-radius:8px;background:#111827;color:#fff;text-decoration:none;font-weight:700;margin:0 6px 0 0}',
+    '#per-box a.lnk,#per-box span.lnk{display:inline-block;padding:9px 14px;border-radius:8px;font-weight:700;margin:0 6px 6px 0}',
+    '#per-box span.lnk.off{background:#e5e7eb;color:#9ca3af}',
+    '#per-box .lnks{display:flex;flex-wrap:wrap;margin-bottom:8px}',
+    '#per-box h2 .pst{font-size:12px;vertical-align:middle}',
+    '.pst{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:800;pointer-events:none;vertical-align:middle;letter-spacing:.3px}',
+    '.pst.sent{background:#16a34a;color:#fff}',
+    '.pst.pend{background:#f59e0b;color:#111827}'
+  ].join('\n');
+
+  function injectStyle() {
+    if ($('per-style')) return;
+    var st = document.createElement('style'); st.id = 'per-style'; st.textContent = css; document.head.appendChild(st);
+  }
+
+  /* ---- SENT / PENDING badges next to every "Post Event Report" button ---- */
+  var PER_STATUS = {}, statusLoaded = false, statusBusy = false, statusAt = 0;
+  function perApply() {
+    if (!statusLoaded) return;
+    [].forEach.call(document.querySelectorAll('[data-rp],[data-rpg]'), function (b) {
+      var key = b.dataset.rp != null ? 'e:' + b.dataset.rp : 'g:' + b.dataset.rpg;
+      var sent = !!PER_STATUS[key];
+      b.innerHTML = 'Post Event Report <span class="pst ' + (sent ? 'sent' : 'pend') + '">' + (sent ? 'SENT' : 'PENDING') + '</span>';
+    });
+  }
+  function perFetch(force) {
+    if (!sessionStorage.pw || statusBusy || (!force && Date.now() - statusAt < 15000)) return;
+    statusBusy = true;
+    post({ action: 'statuses' }).then(function (r) {
+      if (r && r.ok) { PER_STATUS = r.map || {}; statusLoaded = true; statusAt = Date.now(); perApply(); if (window.__perLinks) window.__perLinks(); }
+    }).catch(function () {}).then(function () { statusBusy = false; });
+  }
+
+  function text(id, label, val, type, dis) {
+    return '<label>' + label + '</label><input type="' + (type || 'text') + '" id="per-' + id + '" value="' + esc(val) + '"' + (dis ? ' disabled' : '') + '>';
+  }
+  function area(id, label, val) {
+    return '<label>' + label + '</label><textarea id="per-' + id + '">' + esc(val) + '</textarea>' +
+      '<div class="imp"><button type="button" data-imp="' + id + '" data-label="' + esc(label) + '">\u2728 Improve writing</button>' +
+      '<button type="button" data-undo="' + id + '" hidden>Undo</button><span class="impmsg"></span></div>';
+  }
+  function radios(id, label, options, val) {
+    var h = '<label>' + label + '</label><div class="opts">';
+    options.forEach(function (o) { h += '<label><input type="radio" name="per-' + id + '" value="' + o + '"' + (val === o ? ' checked' : '') + '> ' + o + '</label>'; });
+    return h + '</div>';
+  }
+  function val(id) { return document.getElementById('per-' + id).value.trim(); }
+  function rad(id) { var r = document.querySelector('input[name="per-' + id + '"]:checked'); return r ? r.value : ''; }
+  function $(id) { return document.getElementById(id); }
+
+  /* ---- network helpers (Apps Script, text/plain avoids CORS preflight) ---- */
+  function post(o) {
+    o.pass = sessionStorage.pw || '';
+    return fetch(PER_CONFIG.APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(o)
+    }).then(function (r) { return r.text(); }).then(function (t) {
+      try { return JSON.parse(t); }
+      catch (e) { var x = new Error('Server replied with an unreadable page' + (t ? ': ' + t.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 140) : ''));
+                  x.bad = 1; throw x; }
+    });
+  }
+  async function postRetry(o, tries) {
+    var last;
+    for (var i = 0; i <= tries; i++) {
+      try { var r = await post(o); if (r.ok) return r; last = new Error(r.error || 'Failed'); }
+      catch (e) { last = e && e.bad ? e : new Error('Network problem: ' + ((e && e.message) || 'no connection')); }
+      if (i < tries) await new Promise(function (z) { setTimeout(z, 1500 * (i + 1)); });
+    }
+    throw last;
+  }
+  function toB64(blob) {
+    return new Promise(function (res, rej) {
+      var fr = new FileReader();
+      fr.onload = function () { res(String(fr.result).split(',')[1]); };
+      fr.onerror = rej; fr.readAsDataURL(blob);
+    });
+  }
+  function shrink(file) {
+    return new Promise(function (res, rej) {
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        var s = Math.min(1, PER_CONFIG.MAX_PX / Math.max(img.width, img.height));
+        var c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(img.width * s)); c.height = Math.max(1, Math.round(img.height * s));
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(function (b) { b ? res(b) : rej(new Error('convert')); }, 'image/jpeg', PER_CONFIG.JPEG_QUALITY);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); rej(new Error('read')); };
+      img.src = url;
+    });
+  }
+
+  window.openPostEventReport = function (ev) {
+    if ($('per-overlay')) return;
+    injectStyle();
+    var s = {};
+    try { s = JSON.parse(localStorage.getItem(draftKey(ev)) || '{}'); } catch (e) {}
+    var t = today(), photos = [], busy = false, sentOnce = false;
+    var key = ev.key || (ev.name + '|' + ev.date), L = Object.assign({}, PER_STATUS[key] || {});
+
+    var p1 =
+      text('name', 'Event Name', ev.name, 'text', true) +
+      '<div class="row"><div>' + text('date', 'Event Date', ev.date, 'date', true) + '</div>' +
+      '<div>' + text('reportDate', 'Report Date', s.reportDate || t, 'date') + '</div></div>' +
+      text('venue', 'Event Venue (Barangay and Municipality) *', s.venue) +
+      '<div class="row"><div>' + text('picEvents', 'Person in Charge (Events)', s.picEvents) + '</div>' +
+      '<div>' + text('picMarcomms', 'Person in Charge (MarComms)', s.picMarcomms) + '</div></div>' +
+
+      '<h3>I. ACTUAL EVENT ATTENDANCE</h3>' +
+      '<div class="row"><div>' + text('total', ev.totalLabel || 'Total actual participants (spun the wheel)', ev.total, 'number', true) + '</div>' +
+      '<div>' + text('over21', 'Aged 21 and above', ev.over21, 'number', true) + '</div>' +
+      '<div>' + text('under21', 'Aged below 21', ev.under21, 'number', true) + '</div></div>' +
+      (ev.unknown ? '<div class="m" style="color:#b45309">Note: ' + ev.unknown + ' entr' + (ev.unknown > 1 ? 'ies have' : 'y has') + ' no valid age, so counted in the total but not in either age group.</div>' : '') +
+      text('newRecruited', 'New promoters recruited during the event', s.newRecruited || 0, 'number') +
+      text('existingPromoters', 'Existing promoters who participated', s.existingPromoters || 0, 'number') +
+
+      '<h3>II. PROMOTER ENGAGEMENT</h3>' +
+      text('interested', 'Participants interested in becoming promoters', s.interested || 0, 'number') +
+      text('newRegistered', 'New promoters successfully registered', s.newRegistered || 0, 'number') +
+      text('newActive', 'New promoters who actively participated', s.newActive || 0, 'number') +
+
+      '<h3>III. BARANGAY FEEDBACK AND COMMUNITY RESPONSE</h3>' +
+      text('brgyRep', 'Name and position of the barangay representative', s.brgyRep || 'NA') +
+      area('brgyFeedback', 'Feedback of the barangay officials regarding the event', s.brgyFeedback || 'NA') +
+      radios('brgyPresent', 'Were barangay officials or representatives present during the event?', ['Yes', 'No'], s.brgyPresent) +
+      radios('brgySupport', 'Did the barangay express support or interest in future activities?', ['Yes', 'No'], s.brgySupport) +
+      radios('brgyConcerns', 'Were there any concerns or recommendations raised by the barangay?', ['Yes', 'No'], s.brgyConcerns) +
+      radios('brgyRating', "Overall assessment of the barangay's response", ['Excellent', 'Good', 'Fair', 'Needs Improvement'], s.brgyRating) +
+      area('brgyReco', 'Recommendations of the Barangay for future events', s.brgyReco || 'N/A') +
+
+      '<h3>IV. EVENT FEEDBACK</h3>' +
+      area('mostSuccessful', 'Most successful activity', s.mostSuccessful) +
+      area('challenges', 'Challenges encountered', s.challenges) +
+      area('actionsTaken', 'Actions taken to address these challenges', s.actionsTaken) +
+      radios('metAttendance', 'Did the event meet its target attendance?', ['Yes', 'No'], s.metAttendance) +
+      radios('metPromoters', 'Did the team achieve its target for new promoters?', ['Yes', 'No'], s.metPromoters) +
+      radios('eventRating', 'Overall event rating', ['Excellent', 'Good', 'Fair', 'Needs Improvement'], s.eventRating) +
+      area('recommendations', 'Recommendations for future events', s.recommendations) +
+
+      '<h3>Sign-off</h3><div class="row"><div>' + text('preparedBy', 'Prepared by *', s.preparedBy) + '</div>' +
+      '<div>' + text('reviewedBy', 'Reviewed by', PER_CONFIG.REVIEWED_BY, 'text', true) + '</div>' +
+      '<div>' + text('preparedDate', 'Date', t, 'date', true) + '</div></div>';
+
+    var p2 =
+      '<div class="drop" id="per-drop"><div class="big">\uD83D\uDCF7 Tap to add photos</div>' +
+      '<div class="m">or drag and drop them here</div>' +
+      '<input type="file" id="per-file" accept="image/*" multiple hidden></div>' +
+      '<div class="m" id="per-fold"></div><div id="per-grid" class="grid"></div>' +
+      '<div class="m">Photos are shrunk automatically, saved in a new Google Drive folder named like the report tab, and used to build the Photo Documentation (Google Doc). The first photo comes first in the Doc, use \u25C0 \u25B6 to reorder. Up to 20 photos fit neatly on one page. Optional.</div>';
+
+    var html = '<div id="per-box"><h2>Post Event Report <span id="per-st" class="pst pend">PENDING</span></h2><div class="sub">' + esc(ev.name) + ' \u00B7 ' + esc(mdy(ev.date)) + '</div>' +
+      '<div class="tabs"><button type="button" class="on" data-tab="1">1 \u00B7 Report details</button>' +
+      '<button type="button" data-tab="2">2 \u00B7 Photos <span id="per-pc">(0)</span></button></div>' +
+      '<div id="per-p1">' + p1 + '</div><div id="per-p2" hidden>' + p2 + '</div>' +
+      '<div id="per-foot"><div id="per-prog"></div><div class="lnks" id="per-lnks"></div><div class="btns">' +
+      '<button class="pri" id="per-send">Send everything (Sheet + Photos + Doc)</button>' +
+      '<button class="sav" id="per-save">Save draft</button><button class="cls" id="per-close">Close</button></div></div></div>';
+
+    var ov = document.createElement('div'); ov.id = 'per-overlay'; ov.innerHTML = html;
+    document.body.appendChild(ov);
+    perFetch(true);                                           // also warms up the server so "Improve writing" is quick
+
+    function renderLinks() {
+      var items = [['sheetUrl', '\uD83D\uDCCA Sheet file'], ['folderUrl', '\uD83D\uDCC1 Folder file'], ['docUrl', '\uD83D\uDCC4 Docs file']];
+      $('per-lnks').innerHTML = items.map(function (x) {
+        return L[x[0]] ? '<a class="lnk" target="_blank" rel="noopener" href="' + esc(L[x[0]]) + '">' + x[1] + '</a>'
+                       : '<span class="lnk off" title="Available after sending">' + x[1] + '</span>';
+      }).join('');
+    }
+    function updateStatus() {
+      var sent = !!PER_STATUS[key], el = $('per-st');
+      el.className = 'pst ' + (sent ? 'sent' : 'pend'); el.textContent = sent ? 'SENT' : 'PENDING';
+      $('per-send').textContent = sent ? 'Send again (replaces)' : 'Send everything (Sheet + Photos + Doc)';
+    }
+    window.__perLinks = function () { if (busy) return; if (PER_STATUS[key]) L = Object.assign({}, PER_STATUS[key]); renderLinks(); updateStatus(); };
+    renderLinks(); updateStatus();
+
+    /* ---------- tabs ---------- */
+    function showTab(n) {
+      $('per-p1').hidden = n !== 1; $('per-p2').hidden = n !== 2;
+      [].forEach.call(ov.querySelectorAll('.tabs button'), function (b) { b.className = b.dataset.tab == n ? 'on' : ''; });
+      if (n === 2) renderPhotos();
+      ov.scrollTop = 0;
+    }
+
+    /* ---------- photos ---------- */
+    function renderPhotos() {
+      $('per-pc').textContent = '(' + photos.length + ')';
+      $('per-fold').textContent = photos.length ? '\uD83D\uDCC1 Will be saved to Drive folder: ' + fileNameOf(ev) + '  \u00B7  ' + photos.length + ' photo' + (photos.length > 1 ? 's' : '') : '';
+      $('per-grid').innerHTML = photos.map(function (p, i) {
+        return '<div class="th"><img src="' + p.url + '" alt=""><span class="no">' + (i + 1) + '</span>' +
+          '<div class="tb"><button type="button" data-mv="' + i + ',-1">\u25C0</button><button type="button" data-rm="' + i + '">\u2715</button><button type="button" data-mv="' + i + ',1">\u25B6</button></div></div>';
+      }).join('');
+    }
+    async function addFiles(list) {
+      var files = [].slice.call(list).filter(function (f) { return /^image\//.test(f.type) || /\.(jpe?g|png|webp|heic)$/i.test(f.name); });
+      var fold = $('per-fold'), bad = 0;
+      for (var i = 0; i < files.length; i++) {
+        if (photos.length >= PER_CONFIG.MAX_PHOTOS) { fold.textContent = 'Maximum ' + PER_CONFIG.MAX_PHOTOS + ' photos.'; break; }
+        fold.textContent = 'Preparing photo ' + (i + 1) + ' of ' + files.length + '...';
+        try { var b = await shrink(files[i]); photos.push({ blob: b, url: URL.createObjectURL(b) }); } catch (e) { bad++; }
+        renderPhotos();
+      }
+      if (bad) fold.textContent = bad + ' photo(s) could not be read (try JPG or PNG).';
+      $('per-file').value = '';
+    }
+    $('per-drop').onclick = function () { $('per-file').click(); };
+    $('per-file').onchange = function (e) { addFiles(e.target.files); };
+    ['dragover', 'dragenter'].forEach(function (n) { $('per-drop').addEventListener(n, function (e) { e.preventDefault(); this.classList.add('over'); }); });
+    ['dragleave', 'drop'].forEach(function (n) { $('per-drop').addEventListener(n, function (e) { e.preventDefault(); this.classList.remove('over'); }); });
+    $('per-drop').addEventListener('drop', function (e) { addFiles(e.dataTransfer.files); });
+
+    /* ---------- data ---------- */
+    function collect() {
+      return {
+        eventName: ev.name, eventDateText: mdy(ev.date),
+        reportDateText: mdy(val('reportDate')), reportDate: val('reportDate'),
+        venue: val('venue'), picEvents: val('picEvents'), picMarcomms: val('picMarcomms'),
+        total: ev.total, over21: ev.over21, under21: ev.under21,
+        newRecruited: val('newRecruited'), existingPromoters: val('existingPromoters'),
+        interested: val('interested'), newRegistered: val('newRegistered'), newActive: val('newActive'),
+        brgyRep: val('brgyRep'), brgyFeedback: val('brgyFeedback'),
+        brgyPresent: rad('brgyPresent'), brgySupport: rad('brgySupport'),
+        brgyConcerns: rad('brgyConcerns'), brgyRating: rad('brgyRating'), brgyReco: val('brgyReco'),
+        mostSuccessful: val('mostSuccessful'), challenges: val('challenges'), actionsTaken: val('actionsTaken'),
+        metAttendance: rad('metAttendance'), metPromoters: rad('metPromoters'), eventRating: rad('eventRating'),
+        recommendations: val('recommendations'),
+        preparedBy: val('preparedBy'), reviewedBy: PER_CONFIG.REVIEWED_BY, preparedDateText: mdy(today())
+      };
+    }
+    function say(html) { $('per-prog').innerHTML = html; }
+    function saveDraft(quiet) {
+      try { localStorage.setItem(draftKey(ev), JSON.stringify(collect())); if (!quiet) say('<div class="okk">Draft saved on this device (photos are not part of drafts).</div>'); }
+      catch (e) { say('<div class="bad">Could not save draft.</div>'); }
+    }
+    function setBusy(b) { busy = b; ['per-send', 'per-save'].forEach(function (id) { $(id).disabled = b; }); }
+    function steps(list) {
+      say('<div class="pg">' + list.map(function (x) {
+        return '<div>' + (x.s === 'ok' ? '\u2705' : x.s === 'run' ? '\u23F3' : x.s === 'err' ? '\u274C' : '\u26AA') + ' ' + esc(x.t) + '</div>';
+      }).join('') + '</div>');
+    }
+
+    /* ---------- send everything ---------- */
+    async function run() {
+      if (busy) return;
+      var data = collect(), missing = false;
+      ['venue', 'preparedBy'].forEach(function (id) { var el = $('per-' + id); if (!data[id]) { el.classList.add('err'); missing = true; } });
+      if (missing) { showTab(1); say('<div class="bad">Please fill in the highlighted fields (Event Venue and Prepared by).</div>'); return; }
+
+      setBusy(true);
+      var has = photos.length > 0;
+      var st = [{ t: 'Saving report to Google Sheet', s: 'run' }];
+      if (has) { st.push({ t: 'Uploading photos to Google Drive', s: 'wait' }); st.push({ t: 'Creating Google Doc (Photo Documentation)', s: 'wait' }); }
+      st.push({ t: 'Updating Event Details list', s: 'wait' });
+      steps(st);
+      var cur = 0;
+      try {
+        data.photoCount = photos.length;
+        var r = await postRetry(data, 1);
+        st[0].t = 'Report saved to Google Sheet'; st[0].s = 'ok';
+        L.sheetUrl = r.sheetUrl; L.folderUrl = r.folderUrl; renderLinks();
+        if (has) {
+          cur = 1; st[1].s = 'run';
+          for (var i = 0; i < photos.length; i++) {
+            st[1].t = 'Uploading photos to Google Drive (' + (i + 1) + ' of ' + photos.length + ')'; steps(st);
+            var b64 = await toB64(photos[i].blob);
+            await postRetry({ action: 'photo', folderId: r.folderId, index: i + 1, replace: i === 0, mime: 'image/jpeg', data: b64 }, 2);
+          }
+          st[1].t = 'Photos saved to Drive folder (' + photos.length + ')'; st[1].s = 'ok';
+          cur = 2; st[2].s = 'run'; steps(st);
+          var d = await postRetry({ action: 'doc', folderId: r.folderId, tab: r.tab, location: data.venue, eventName: data.eventName, dateLong: longDate(ev.date) }, 1);
+          st[2].t = 'Google Doc created'; st[2].s = 'ok'; L.docUrl = d.docUrl; renderLinks();
+        }
+        cur = st.length - 1; st[cur].s = 'run'; steps(st);        // Event Details list (non-blocking if it fails)
+        try {
+          await postRetry({ action: 'master', eventName: data.eventName, eventDateText: data.eventDateText, venue: data.venue,
+                            preparedBy: data.preparedBy, picMarcomms: data.picMarcomms,
+                            sheetUrl: L.sheetUrl, folderUrl: L.folderUrl, docUrl: L.docUrl || '' }, 3);
+          st[cur].t = 'Event Details list updated'; st[cur].s = 'ok';
+        } catch (e2) { st[cur].t = 'Event Details list NOT updated (' + e2.message + ')'; st[cur].s = 'err'; }
+        cur = -1;
+        steps(st); saveDraft(true);
+        await postRetry({ action: 'log', key: key, eventName: data.eventName, eventDateText: data.eventDateText,
+                          sheetUrl: L.sheetUrl || '', folderUrl: L.folderUrl || '', docUrl: L.docUrl || '' }, 2);
+        sentOnce = true; PER_STATUS[key] = { sheetUrl: L.sheetUrl, folderUrl: L.folderUrl, docUrl: L.docUrl };
+        statusLoaded = true; perApply(); updateStatus();
+        say($('per-prog').innerHTML + '<div class="okk" style="margin-top:8px">\u2705 SENT. Sending again replaces this report\'s Sheet content, photos and Doc.</div>');
+      } catch (e) {
+        if (st[cur]) st[cur].s = 'err'; steps(st);
+        say($('per-prog').innerHTML + '<div class="bad">Something went wrong: ' + esc(e.message) + '. Check your internet and tap Send again (it safely replaces what was sent).</div>');
+      }
+      setBusy(false);
+    }
+
+    /* ---------- events ---------- */
+    var origText = {};
+    ov.addEventListener('input', function (e) { e.target.classList && e.target.classList.remove('err'); });
+    ov.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.tab) { showTab(Number(b.dataset.tab)); return; }
+      if (b.dataset.rm != null) { var k = Number(b.dataset.rm); URL.revokeObjectURL(photos[k].url); photos.splice(k, 1); renderPhotos(); return; }
+      if (b.dataset.mv) {
+        var pr = b.dataset.mv.split(','), a = Number(pr[0]), c = a + Number(pr[1]);
+        if (c >= 0 && c < photos.length) { var tmp = photos[a]; photos[a] = photos[c]; photos[c] = tmp; renderPhotos(); }
+        return;
+      }
+      if (b.dataset.undo) {
+        var id = b.dataset.undo;
+        if (origText[id] != null) $('per-' + id).value = origText[id];
+        b.hidden = true; return;
+      }
+      if (!b.dataset.imp) return;
+      var fid = b.dataset.imp, ta = $('per-' + fid), tx = ta.value.trim();
+      var note = b.parentNode.querySelector('.impmsg'), undo = b.parentNode.querySelector('[data-undo]');
+      if (tx.length < 5) { note.textContent = 'Type something first.'; return; }
+      b.disabled = true; note.textContent = 'Improving...';
+      post({ action: 'improve', text: tx, field: b.dataset.label }).then(function (r) {
+        if (r.text) { origText[fid] = ta.value; ta.value = r.text; undo.hidden = false; note.textContent = 'Done. Please review before sending.'; }
+        else note.textContent = 'Error: ' + (r.error || 'failed');
+      }).catch(function () { note.textContent = 'Could not reach the improve service.'; })
+        .then(function () { b.disabled = false; });
+    });
+    $('per-send').onclick = run;
+    $('per-save').onclick = function () { saveDraft(false); };
+    $('per-close').onclick = function () {
+      if (busy) return;
+      if (photos.length && !sentOnce && !confirm('Close without sending? The selected photos will be discarded.')) return;
+      photos.forEach(function (p) { URL.revokeObjectURL(p.url); });
+      window.__perLinks = null;
+      ov.remove();
+    };
+  };
+
+  injectStyle();
+  ['ev', 'gl'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) new MutationObserver(function () { perApply(); perFetch(false); }).observe(el, { childList: true });
+  });
+  window.addEventListener('focus', function () { perFetch(true); });
+})();
+
+</script></body></html>
+
