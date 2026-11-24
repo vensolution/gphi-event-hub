@@ -347,13 +347,18 @@ var PER_CONFIG = {
     o.pass = sessionStorage.pw || '';
     return fetch(PER_CONFIG.APPS_SCRIPT_URL, {
       method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(o)
-    }).then(function (r) { return r.json(); });
+    }).then(function (r) { return r.text(); }).then(function (t) {
+      try { return JSON.parse(t); }
+      catch (e) { var x = new Error('Server replied with an unreadable page' + (t ? ': ' + t.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 140) : ''));
+                  x.bad = 1; throw x; }
+    });
   }
   async function postRetry(o, tries) {
     var last;
     for (var i = 0; i <= tries; i++) {
       try { var r = await post(o); if (r.ok) return r; last = new Error(r.error || 'Failed'); }
-      catch (e) { last = new Error('Network problem'); }
+      catch (e) { last = e && e.bad ? e : new Error('Network problem: ' + ((e && e.message) || 'no connection')); }
+      if (i < tries) await new Promise(function (z) { setTimeout(z, 1500 * (i + 1)); });
     }
     throw last;
   }
@@ -565,7 +570,7 @@ var PER_CONFIG = {
         try {
           await postRetry({ action: 'master', eventName: data.eventName, eventDateText: data.eventDateText, venue: data.venue,
                             preparedBy: data.preparedBy, picMarcomms: data.picMarcomms,
-                            sheetUrl: L.sheetUrl, folderUrl: L.folderUrl, docUrl: L.docUrl || '' }, 1);
+                            sheetUrl: L.sheetUrl, folderUrl: L.folderUrl, docUrl: L.docUrl || '' }, 3);
           st[cur].t = 'Event Details list updated'; st[cur].s = 'ok';
         } catch (e2) { st[cur].t = 'Event Details list NOT updated (' + e2.message + ')'; st[cur].s = 'err'; }
         cur = -1;
