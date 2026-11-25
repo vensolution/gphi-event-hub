@@ -178,7 +178,7 @@ body:has(#v-gadm:not([hidden])) .wrap.main{max-width:none}
 <div class="sb-logo"><img class="glogo" alt="Global PlayHub"></div>
 <div class="sb-user"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div><b>Event Hub</b><span id="who">Loading…</span></div></div>
 <div class="mods" id="mods"><button type="button" data-mod="hr" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg><span class="lbl">HR FORMS</span></button><button type="button" data-mod="inv"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7.5L12 12.5l8.7-5M12 22V12.5"/></svg><span class="lbl">INVENTORY</span><span class="nbadge" id="inv-n" hidden></span></button><button type="button" data-mod="sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">ASSETS/LINKS</span></button><button type="button" data-mod="gam"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg><span class="lbl">EVENT GAMES</span></button></div>
-<nav class="tabs" hidden><div class="navg" data-g="hr"><button id="t-enc" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg><span class="lbl">Encode / Request</span></button><button id="t-ob"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="lbl">Official Business Form</span></button><button id="t-ot"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="lbl">Overtime</span></button><button id="t-rd"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">RD OT Form</span></button><button id="t-chg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="lbl">Change Schedule/OFF</span></button><button id="t-ntf"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="lbl">Notifications</span><span class="nbadge" id="ntf-n" hidden></span></button><button id="t-req"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><span class="lbl">My Requests</span></button><button id="t-apr"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg><span class="lbl">Approvals</span></button><button id="t-hr" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="lbl">HR Admin</span></button><button id="t-log"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 106 5.3L3 8"/><path d="M12 7v5l4 2"/></svg><span class="lbl">Save Log</span></button></div><div class="navg" data-g="inv" hidden><button id="t-idash"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span class="lbl">Dashboard</span><span class="nbadge" id="idash-n" hidden></span></button><button id="t-iin"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span class="lbl">Stock In</span></button><button id="t-iout"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 19h16"/></svg><span class="lbl">Stock Out</span></button><button id="t-irem"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span class="lbl">Remaining Items</span></button></div><div class="navg" data-g="sch" hidden><button id="t-sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">Assets/Links</span></button></div><div class="navg" data-g="gam" hidden><button id="t-gadm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="lbl">ByBet Admin</span></button></div></nav>
+<nav class="tabs" hidden><div class="navg" data-g="hr"><button id="t-enc" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg><span class="lbl">Encode / Request</span></button><button id="t-ob"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="lbl">Official Business Form</span></button><button id="t-ot"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="lbl">Overtime</span></button><button id="t-rd"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">RD OT Form</span></button><button id="t-chg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="lbl">Change Schedule/OFF</span></button><button id="t-ntf"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="lbl">Notifications</span><span class="nbadge" id="ntf-n" hidden></span></button><button id="t-req"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><span class="lbl">My Requests</span></button><button id="t-apr"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg><span class="lbl">Approvals</span></button><button id="t-hr" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="lbl">HR Admin</span></button><button id="t-log"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 106 5.3L3 8"/><path d="M12 7v5l4 2"/></svg><span class="lbl">Save Log</span></button></div><div class="navg" data-g="inv" hidden><button id="t-idash"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span class="lbl">Dashboard</span><span class="nbadge" id="idash-n" hidden></span></button><button id="t-iin"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span class="lbl">Stock In</span></button><button id="t-iout"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 19h16"/></svg><span class="lbl">Stock Out</span></button><button id="t-irem"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span class="lbl">Remaining Items</span></button></div><div class="navg" data-g="sch" hidden><button id="t-sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">Assets/Links</span></button></div><div class="navg" data-g="gam" hidden><button id="t-gadm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="lbl">ByBet Admin</span></button><button id="t-liq"><span class="lbl">Liquidation</span></button></div></nav>
 <div class="sb-lang"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg><select class="langsel" id="lang2" aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="es">Español</option><option value="zh">中文</option></select></div>
 <div class="sb-ver">Event Hub v2.0</div>
 <div class="sb-foot"><button id="col" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span class="lbl">Collapse</span></button><button id="a-out" class="sb-out" type="button" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg><span class="lbl">Log Out</span></button></div>
@@ -247,6 +247,7 @@ body:has(#v-gadm:not([hidden])) .wrap.main{max-width:none}
       <div class="mu" style="font-size:12px;margin-top:8px">RD OT clock in (optional): if you started duty earlier than your Official Business time in, for example you started at 9:00 am and left at 12:00 pm for Official Business, enter 9:00 am here or press ↺ (your duty start for that date). The RD OT form then shows that clock in. The Official Business form still shows the time you left.</div>
       <div class="row"><button id="add">+ Add row</button></div></div>
     <div class="card"><b>Overtime</b><div class="mu" style="margin-top:4px">Automatic. Any Official Business time before your duty start or after your duty end becomes an overtime row. Official Business dates that fall on your rest day are not counted here. They go on the RD OT form. Check it in the Print Overtime tab.</div></div>
+    <div class="card" id="otm-card"><b>Overtime without Official Business</b><div class="mu" style="margin-top:4px;font-size:12px">Worked overtime but have no Official Business that day? Add it here with the date, time and reason. It is added to your Overtime form automatically and marked “(No Official Business)” so your manager can see why.</div><div id="otm-rows"></div><div class="row"><button type="button" id="add-otm">+ Add overtime row</button></div></div>
     <div class="card"><b>Request form: change schedule / off</b>
       <div class="mu" style="font-size:12px;margin:4px 0 0">The TO duty start and end replace your normal duty hours when Overtime is computed for that date.</div>
       <div id="chg-rows"></div>
@@ -260,7 +261,7 @@ body:has(#v-gadm:not([hidden])) .wrap.main{max-width:none}
       <div id="acct-msg" class="mu" style="margin-top:8px"></div></div>
   </div>
 
-  <div id="v-ob" hidden></div>
+  <div id="v-ob" hidden></div><div id="v-liq" hidden></div>
   <div id="v-rd" hidden></div>
   <div id="v-ot" hidden></div>
   <div id="v-chg" hidden></div>
@@ -322,6 +323,7 @@ new MutationObserver(place).observe(document.getElementById('a-msg'),o);
 ['v-msg','msg'].forEach(function(id){var e=document.getElementById(id);if(e)new MutationObserver(function(){paint(e)}).observe(e,o)});
 })();</script>
 <script>setTimeout(function(){var w=document.getElementById('who');if(w&&w.textContent==='Loading…')w.textContent='Could not reach the sign-in service. Check your internet connection and reload the page.'},10000)</script>
+<script src="liquidation-config.js"></script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,sendPasswordResetEmail,verifyBeforeUpdateEmail,sendEmailVerification} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -331,6 +333,7 @@ const $=id=>document.getElementById(id);
 const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const state={profile:{name:'',dept:'',pos:'',emp:'',per:'',off:'Sunday',filed:'',dstart:'09:00',dend:'18:00'},rows:[],ot:[],chg:{},log:[]};
 let db=null,ref=null,dirty=false,authReady=false;
+let SNAP=null,SW=null,AVIEWS=[],LIQS=[],LQ=null,INVCFG=null,REQS=[],EXTRA_CATS=[],EXTRA_LABELS=[],REQU=null,IDF='all';
 
 function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
 function fmtDate(v){if(!v)return'';const[y,m,d]=v.split('-').map(Number);if(!y)return v;return d+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m-1]+' '+y}
@@ -345,10 +348,10 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches&&e.
 window.addEventListener('resize',autosizeAll);
 const mode=m=>{$('si').hidden=m!=='in';$('su').hidden=m!=='up';$('l-title').textContent=m==='in'?'Sign in':'Create account';$('a-msg').textContent=''};
 $('go-up').onclick=()=>mode('up');$('go-in').onclick=()=>mode('in');
-function show(v){
+function show(v){unswap();
   setMod(MODOF[v]||'hr');{const _t=todayStr();if(state.profile.filed!==_t){state.profile.filed=_t;const _e=$('p-filed');if(_e)_e.value=_t}}
-  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm'].forEach(k=>{$('v-'+k).hidden=k!==v;$('t-'+k).classList.toggle('on',k===v)});
-  if(v==='enc')autosizeAll();if(v==='ob')renderOB();if(v==='rd')renderRD();if(v==='ot')renderOTView();if(v==='chg')renderChgView();if(v==='log')renderLog();if(v==='req')renderReq();if(v==='apr')renderApr();if(v==='hr')renderHR();if(v==='ntf')renderNtf();if(v==='idash')renderIDash();if(v==='iin')renderIIn();if(v==='iout')renderIOut();if(v==='irem')renderIRem();if(v==='sch')renderSch();
+  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq'].forEach(k=>{$('v-'+k).hidden=k!==v;$('t-'+k).classList.toggle('on',k===v)});
+  if(v==='enc')autosizeAll();withSaved(v,()=>{if(v==='ob')renderOB();if(v==='rd')renderRD();if(v==='ot')renderOTView();if(v==='chg')renderChgView()});if(v==='liq')renderLiq();FONTS_READY.then(()=>{unswap();unsavedBanner(v)});if(v==='log')renderLog();if(v==='req')renderReq();if(v==='apr')renderApr();if(v==='hr')renderHR();if(v==='ntf')renderNtf();if(v==='idash')renderIDash();if(v==='iin')renderIIn();if(v==='iout')renderIOut();if(v==='irem')renderIRem();if(v==='sch')renderSch();
   if(v==='gadm'&&!$('ga-f').getAttribute('src'))$('ga-f').src='bybet/admin.html';
   {const b=$('t-'+v),l=b&&b.querySelector('.lbl'),p=$('tb-p');if(p)p.textContent=l?' / '+l.textContent:''}
 }
@@ -383,6 +386,7 @@ function autoOT(){
     add(a,Math.min(b,w.s));
     add(Math.max(a,w.e),b);
   });
+  (Array.isArray(state.chg.otm)?state.chg.otm:[]).forEach(r=>{if(r.date&&r.from&&r.to&&r.from!==r.to)res.push({date:r.date,reason:'(No Official Business) '+(r.reason||''),from:r.from,to:r.to})});
   return res.sort((x,y)=>x.date<y.date?-1:x.date>y.date?1:tm(x.from)-tm(y.from));
 }
 const DAYS7=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
@@ -396,7 +400,7 @@ function chgRows(){
   if(!c.rows.length)c.rows.push(newChg());
   return c.rows;
 }
-function loadChg(){renderChg()}
+function loadChg(){renderChg();renderOtm()}
 function renderChg(){
   const box=$('chg-rows');box.innerHTML='';const rows=chgRows();
   const day=k=>'<select data-k="'+k+'"><option></option>'+DAYS7.map(d=>'<option>'+d+'</option>').join('')+'</select>';
@@ -742,7 +746,7 @@ async function createDir(u,i){
 }
 function block(title,text,form){
   $('login').hidden=true;$('verify').hidden=true;document.querySelector('.tabs').hidden=true;$('a-out').hidden=true;
-  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch'].forEach(k=>{$('v-'+k).hidden=true});
+  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq'].forEach(k=>{$('v-'+k).hidden=true});
   $('gatecard').hidden=!!form;$('acctform').hidden=!form;
   if(!form){$('gc-title').textContent=title;$('gc-text').textContent=text}
 }
@@ -801,17 +805,17 @@ async function sendTag(uid){
   try{await addDoc(collection(DB,'tags'),{fromUid:ME.uid,fromName:ME.dir.name,fromEmp:ME.dir.emp,toUid:uid,toName:P.name,toEmp:P.emp||'',toDept:P.dept||'',toPos:P.pos||'',info,status:'pending',createdAt:Date.now()})}catch(e){}
 }
 /* ================= MODULES: HR FORMS / INVENTORY / SCHEDULE ================= */
-const MODOF={idash:'inv',iin:'inv',iout:'inv',irem:'inv',sch:'sch',gadm:'gam'},MODDEF={hr:'enc',inv:'idash',sch:'sch',gam:'gadm'},MODN={hr:'HR Forms',inv:'Inventory',sch:'Assets/Links',gam:'Event Games'};
+const MODOF={idash:'inv',iin:'inv',iout:'inv',irem:'inv',sch:'sch',gadm:'gam',liq:'gam'},MODDEF={hr:'enc',inv:'idash',sch:'sch',gam:'gadm'},MODN={hr:'HR Forms',inv:'Inventory',sch:'Assets/Links',gam:'Event Games',liq:'Liquidation'};
 function setMod(m){
   document.querySelectorAll('#mods [data-mod]').forEach(b=>b.classList.toggle('on',b.dataset.mod===m));
   document.querySelectorAll('.navg').forEach(g=>{g.hidden=g.dataset.g!==m});const tm=$('tb-m');if(tm)tm.textContent=MODN[m]||'Event Hub';
 }
 document.querySelectorAll('#mods [data-mod]').forEach(b=>b.onclick=()=>{setMod(b.dataset.mod);show(MODDEF[b.dataset.mod])});
-['idash','iin','iout','irem','sch','gadm'].forEach(k=>{$('t-'+k).onclick=()=>show(k)});
+['idash','iin','iout','irem','sch','gadm','liq'].forEach(k=>{$('t-'+k).onclick=()=>show(k)});
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 
 let INV=[],MOV=[],SCHD=[],PEOPLE=[],DUN=[];
-const LOW_MERCH=100,CATS=['Merchandise','Marketing Collaterals'],UNITS=['pcs','box','pack','set','roll','bundle','liter','kg'];
+const LOW_MERCH=100,CATS=['Merchandise','Event Supplies','Event Collaterals'],UNITS=['pcs','box','pack','set','roll','bundle','liter','kg'];
 const stat=i=>i.qty<=0?'out':(i.category==='Merchandise'&&i.qty<LOW_MERCH?'low':'ok');
 const fq=n=>Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2});
 const pill=(t,c)=>'<span class="ipill '+c+'">'+t+'</span>';
@@ -824,10 +828,14 @@ function startData(){
   DUN.push(onSnapshot(query(collection(DB,'stock_moves'),orderBy('at','desc'),limit(80)),s=>{MOV=s.docs.map(d=>({id:d.id,...d.data()}));invRefresh()},()=>{}));
   DUN.push(onSnapshot(collection(DB,'schedules'),s=>{SCHD=s.docs.map(d=>({id:d.id,...d.data()}));fillDl()},()=>{}));
   DUN.push(onSnapshot(collection(DB,'asset_links'),s=>{ASSETS=s.docs.map(d=>({id:d.id,...d.data()}));if(!$('v-sch').hidden)renderSch(true)},()=>{}));
+  try{const uid=AUTH.currentUser.uid;DUN.push(onSnapshot(ME.isHR?collection(DB,'asset_views'):query(collection(DB,'asset_views'),where('ownerUid','==',uid)),s=>{AVIEWS=s.docs.map(d=>({id:d.id,...d.data()}));if(!$('v-sch').hidden&&$('as-list'))renderSch(true)},()=>{}));
+  DUN.push(onSnapshot(ME.isHR?collection(DB,'liquidations'):query(collection(DB,'liquidations'),where('by','==',uid)),s=>{LIQS=s.docs.map(d=>({id:d.id,...d.data()}));if(!$('v-liq').hidden)lqList()},()=>{}));
+  DUN.push(onSnapshot(doc(DB,'config','inv'),s=>{INVCFG=s.exists()?s.data():null;subReq();invRefresh()},()=>{}));subReq()}catch(e){}
   getDocs(query(collection(DB,'directory'),where('status','==','active'))).then(s=>{PEOPLE=s.docs.map(d=>d.data().name).filter(Boolean).sort();fillDl()}).catch(()=>{});
 }
-function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];PEOPLE=[];lowBadge()}
+function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];INVCFG=null;REQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
 function invRefresh(){
+  iBadge();
   if(!$('v-idash').hidden)renderIDash();if(!$('v-iin').hidden)renderIIn(true);if(!$('v-iout').hidden)renderIOut(true);if(!$('v-irem').hidden)renderIRem(true);
   fillDl();
 }
@@ -896,27 +904,13 @@ function movTable(L){
 
 /* ---------- dashboard ---------- */
 const kpi=(l,v,c)=>'<div class="kpi '+(c||'')+'"><div class="kv">'+v+'</div><div class="kl">'+l+'</div></div>';
-function renderIDash(){
-  const low=lowItems(),mer=INV.filter(i=>i.category==='Merchandise').length,mx=Math.max(1,...INV.map(i=>i.qty));
-  const bars=[...INV].sort((a,b)=>a.qty-b.qty).slice(0,14).map(i=>'<div class="ibar"><div class="ibn"><b>'+esc(i.name)+'</b><span class="mu">'+esc(i.category)+'</span></div><div class="ibt"><i class="'+stat(i)+'" style="width:'+Math.max(2,Math.round(Math.max(i.qty,0)/mx*100))+'%"></i></div><div class="ibv">'+fq(i.qty)+' '+esc(i.unit)+'</div></div>').join('');
-  const inS=INV.filter(i=>stat(i)==='ok').sort((a,b)=>a.name.localeCompare(b.name)),units=INV.reduce((t,i)=>t+Math.max(i.qty||0,0),0);
-  $('v-idash').innerHTML=
-    '<div class="ihead"><b style="font-size:16px">Inventory dashboard</b><button type="button" id="idash-print">🖨 Print</button></div>'+
-    (low.length?'<div class="iwarn"><b>⚠ Low on stock</b><div style="margin-top:2px">'+low.length+' Merchandise item'+(low.length>1?'s are':' is')+' below '+LOW_MERCH+' pcs. Please restock.</div><div class="chips">'+low.map(i=>'<span class="chip '+(i.qty<=0?'bad':'warn')+'">'+esc(i.name)+' · '+fq(i.qty)+' '+esc(i.unit)+'</span>').join('')+'</div></div>':'<div class="iok">✓ All Merchandise items are at '+LOW_MERCH+' pcs or more.</div>')+
-    '<div class="kpis">'+kpi('Total items',INV.length)+kpi('In stock',inS.length,'ok')+kpi('Merchandise',mer)+kpi('Marketing Collaterals',INV.length-mer)+kpi('Low / out of stock',INV.filter(i=>stat(i)!=='ok').length,INV.some(i=>stat(i)!=='ok')?'bad':'')+'</div>'+
-    '<div class="card"><b>In stock</b><div class="mu" style="font-size:12px;margin:2px 0 8px">'+inS.length+' item'+(inS.length===1?'':'s')+' with enough stock</div>'+(inS.length?inS.map(i=>'<span class="chip good">'+esc(i.name)+' · '+fq(i.qty)+' '+esc(i.unit)+'</span>').join(''):'<div class="mu">No items are in stock yet.</div>')+'</div>'+
-    '<div class="card"><b>Stock levels</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Lowest first</div>'+(bars||'<div class="mu">No items yet. Add stock in the Stock In tab.</div>')+'</div>'+
-    '<div class="card"><b>Recent movements</b>'+movTable(MOV.slice(0,8))+'</div>';
-  $('idash-print').onclick=()=>printItems('Inventory - Stock summary',[...INV].sort((a,b)=>a.name.localeCompare(b.name)));
-}
-
 /* ---------- stock in ---------- */
 function renderIIn(snap){
   const b=$('v-iin');
   if(snap&&$('iin-log')){$('iin-log').innerHTML=movTable(MOV.filter(m=>m.type==='in').slice(0,15));return}
   b.innerHTML='<div class="card"><b>Stock In</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Record items received. If the item name already exists, the quantity is added to it.</div><div class="grid">'+
     '<div><label>Item name</label><input id="si-name" list="inv-names" autocomplete="off"></div>'+
-    '<div><label>Category</label><select id="si-cat">'+CATS.map(c=>'<option>'+c+'</option>').join('')+'</select></div>'+
+    '<div><label>Category</label><select id="si-cat">'+catOpts('')+'</select><input id="si-newcat" placeholder="New category name" hidden style="margin-top:6px"></div>'+
     '<div><label>Qty</label><input id="si-qty" type="number" min="0" step="any" inputmode="decimal"></div>'+
     '<div><label>Unit (pcs, box, liter…)</label><select id="si-unit">'+UNITS.map(u=>'<option>'+u+'</option>').join('')+'</select></div>'+
     '<div><label>Total quantity (after this stock in)</label><input id="si-total" readonly></div>'+
@@ -932,10 +926,12 @@ function renderIIn(snap){
     $('si-total').value=($('si-name').value.trim()||q)?fq((ex?ex.totalIn:0)+q)+' '+$('si-unit').value:'';
   };
   ['si-name','si-qty','si-unit'].forEach(id=>{$(id).oninput=$(id).onchange=calc});
+  $('si-cat').onchange=()=>{$('si-newcat').hidden=$('si-cat').value!=='__new';if(!$('si-newcat').hidden)$('si-newcat').focus()};
   $('si-go').onclick=async()=>{
-    const name=$('si-name').value.trim().replace(/\s+/g,' '),q=parseFloat($('si-qty').value),cat=$('si-cat').value,unit=$('si-unit').value,note=$('si-note').value.trim(),id=slug(name);
+    const name=$('si-name').value.trim().replace(/\s+/g,' '),q=parseFloat($('si-qty').value),cat=($('si-cat').value==='__new'?$('si-newcat').value.trim().replace(/\s+/g,' '):$('si-cat').value),unit=$('si-unit').value,note=$('si-note').value.trim(),id=slug(name);
     if(!name||!id)return say('si-msg','Enter the item name.');
     if(!(q>0))return say('si-msg','Enter a quantity greater than 0.');
+    if(!cat)return say('si-msg','Type the name of the new category.');
     const ex=INV.find(i=>i.id===id),total=(ex?ex.totalIn:0)+q,rem=(ex?ex.qty:0)+q,nm=ex?ex.name:name;
     try{
       const bt=writeBatch(DB),it={name:nm,category:cat,unit,totalIn:increment(q),qty:increment(q),updatedAt:Date.now()};
@@ -944,7 +940,7 @@ function renderIIn(snap){
       bt.set(doc(collection(DB,'stock_moves')),{itemId:id,itemName:nm,category:cat,unit,type:'in',qty:q,total,rem,note,at:Date.now(),by:ME.uid,byName:ME.dir.name});
       await bt.commit();
       say('si-msg','Saved ✓ '+nm+': total quantity is now '+fq(total)+' '+unit,true);
-      ['si-name','si-qty','si-note','si-total'].forEach(k=>{$(k).value=''});
+      ['si-name','si-qty','si-note','si-total'].forEach(k=>{$(k).value=''});if(!catList().includes(cat))EXTRA_CATS.push(cat);$('si-cat').innerHTML=catOpts(cat);$('si-newcat').hidden=true;$('si-newcat').value='';
     }catch(e){say('si-msg','Could not save: '+((e&&e.code)||'error'))}
   };
 }
@@ -957,23 +953,15 @@ function outLogHtml(){
     '<div style="margin-top:10px"></div>'+movTable(MOV.filter(m=>m.type==='out').slice(0,15));
 }
 const LABEL_PRESETS=['PR Merch','Booth Merch'];
-function soFillDl(){
-  const L=[...new Set([...LABEL_PRESETS,...MOV.filter(m=>m.type==='out'&&m.label).map(m=>m.label),...[...document.querySelectorAll('#so-rows .so-label')].map(x=>x.value.trim()).filter(Boolean)])];
-  const B=[...new Set([...document.querySelectorAll('#so-rows .so-box')].map(x=>x.value.trim()).filter(Boolean))];
-  const l=$('dl-labels'),b=$('dl-boxes');
-  if(l)l.innerHTML=L.map(x=>'<option value="'+esc(x)+'">').join('');
-  if(b)b.innerHTML=B.map(x=>'<option value="'+esc(x)+'">').join('');
-}
+function soFillDl(){refreshSel('#so-rows')}
 function soCalc(r){const ex=INV.find(i=>i.id===r.querySelector('.so-item').value),q=parseFloat(r.querySelector('.so-qty').value)||0;r.querySelector('.so-rem').value=ex?fq(ex.qty-q)+' '+ex.unit:''}
 function soAddRow(){
   const c=$('so-rows'),d=document.createElement('div');d.className='sorow';
-  d.innerHTML='<div><label>Box</label><input class="so-box" list="dl-boxes" placeholder="Box 1" autocomplete="off"></div><div><label>Label</label><input class="so-label" list="dl-labels" placeholder="e.g. PR Merch" autocomplete="off"></div><div class="so-wide"><label>Item</label><select class="so-item"></select></div><div><label>Qty</label><input class="so-qty" type="number" min="0" step="any" inputmode="decimal"></div><div><label>Remaining after</label><input class="so-rem" readonly></div><div><button type="button" class="so-x" title="Remove row">✕</button></div>';
-  const prev=c.lastElementChild;if(prev){d.querySelector('.so-box').value=prev.querySelector('.so-box').value;d.querySelector('.so-label').value=prev.querySelector('.so-label').value}else d.querySelector('.so-box').value='Box 1';
-  const bx=d.querySelector('.so-box'),lb=d.querySelector('.so-label');
-  bx.onchange=()=>{const v=bx.value.trim().toLowerCase();if(!v)return;const o=[...document.querySelectorAll('#so-rows .sorow')].find(r=>r!==d&&r.querySelector('.so-box').value.trim().toLowerCase()===v&&r.querySelector('.so-label').value.trim());if(o&&!lb.value.trim())lb.value=o.querySelector('.so-label').value;soFillDl()};
-  lb.onchange=soFillDl;
-  c.appendChild(d);d.querySelector('.so-item').innerHTML=outOpts();soFillDl();
-  d.querySelector('.so-item').onchange=()=>soCalc(d);d.querySelector('.so-qty').oninput=()=>soCalc(d);
+  d.innerHTML='<div><label>Box</label><select class="so-box"></select></div><div><label>Label</label><select class="so-label"></select></div><div class="so-wide"><label>Item</label><select class="so-item"></select></div><div><label>Qty</label><input class="so-qty" type="number" min="0" step="any" inputmode="decimal"></div><div><label>Remaining after</label><input class="so-rem" readonly></div><div><button type="button" class="so-x" title="Remove row">✕</button></div>';
+  const prev=c.lastElementChild,pb=prev?prev.querySelector('.so-box').value:'Box 1',pl=prev?prev.querySelector('.so-label').value:'';
+  c.appendChild(d);const bx=d.querySelector('.so-box'),lb=d.querySelector('.so-label');bx.innerHTML=boxOpts(pb||'Box 1','#so-rows');bx.value=pb||'Box 1';lb.innerHTML=labelOpts(pl);lb.value=pl;
+  bx.onchange=lb.onchange=e=>soChange(e.target,'#so-rows');
+  d.querySelector('.so-item').innerHTML=outOpts();d.querySelector('.so-item').onchange=()=>soCalc(d);d.querySelector('.so-qty').oninput=()=>soCalc(d);
   d.querySelector('.so-x').onclick=()=>{if(c.children.length>1)d.remove();else{d.querySelector('.so-item').value='';d.querySelector('.so-qty').value='';d.querySelector('.so-rem').value=''}soFillDl()};
 }
 function soCollect(){
@@ -992,9 +980,9 @@ function soCollect(){
   return {list:out};
 }
 function renderIOut(snap){
-  const b=$('v-iout');
-  if(snap&&$('iout-log')){document.querySelectorAll('#so-rows .so-item').forEach(s=>{const v=s.value;s.innerHTML=outOpts();s.value=v});document.querySelectorAll('#so-rows .sorow').forEach(soCalc);$('iout-log').innerHTML=outLogHtml();return}
-  b.innerHTML='<div class="card"><b>Stock Out</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Record items released for an event. Put each item in a Box and give it a Label (e.g. PR Merch, Booth Merch). A label is printed for every box showing what is inside. The quantities are deducted from the remaining stock.</div><div class="grid">'+
+  const b=$('v-iout');if(!canOut())return renderIOutReq(snap);
+  if(snap&&$('iout-log')){document.querySelectorAll('#so-rows .so-item').forEach(s=>{const v=s.value;s.innerHTML=outOpts();s.value=v});document.querySelectorAll('#so-rows .sorow').forEach(soCalc);$('iout-log').innerHTML=outLogHtml();renderPend();return}
+  b.innerHTML='<div id="so-pend"></div><div class="card"><b>Stock Out</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Record items released for an event. Put each item in a Box and give it a Label (e.g. PR Merch, Booth Merch). A label is printed for every box showing what is inside. The quantities are deducted from the remaining stock.</div><div class="grid">'+
     '<div><label>Event Name</label><input id="so-ev" list="dl-events" autocomplete="off"></div>'+
     '<div><label>Date</label><input id="so-date" readonly></div>'+
     '<div><label>Released to (optional)</label><input id="so-to" autocomplete="off"></div></div>'+
@@ -1004,7 +992,7 @@ function renderIOut(snap){
     '<datalist id="dl-events"></datalist><datalist id="dl-labels"></datalist><datalist id="dl-boxes"></datalist>'+
     '<div class="row"><button class="pri" id="so-go">Save stock out</button><button type="button" id="so-print">🖨 Print box labels</button><span id="so-msg"></span></div></div>'+
     '<div class="card"><b>Recent stock out</b><div id="iout-log"></div></div>';
-  $('so-date').value=todayStr();soAddRow();fillDl();$('iout-log').innerHTML=outLogHtml();
+  $('so-date').value=todayStr();soAddRow();fillDl();$('iout-log').innerHTML=outLogHtml();renderPend();
   $('so-add').onclick=soAddRow;
   $('iout-log').onclick=e=>{
     const bt=e.target.closest('.so-pg');if(!bt)return;
@@ -1051,7 +1039,7 @@ function iremTable(){
 }
 function renderIRem(snap){
   if(snap&&$('ir-tbl')){$('ir-tbl').innerHTML=iremTable();return}
-  $('v-irem').innerHTML='<div class="card"><div class="ihead"><b>Remaining items</b><button type="button" id="ir-print">🖨 Print</button></div><div class="mu" style="font-size:12px;margin:2px 0 10px">Merchandise under '+LOW_MERCH+' pcs is marked <b>Low on stock</b>.</div><div class="row" style="margin-top:0"><input id="ir-q" placeholder="Search item…" style="max-width:260px"><select id="ir-c" style="max-width:220px"><option value="">All categories</option>'+CATS.map(c=>'<option>'+c+'</option>').join('')+'</select></div><div id="ir-tbl">'+iremTable()+'</div></div>';
+  $('v-irem').innerHTML='<div class="card"><div class="ihead"><b>Remaining items</b><button type="button" id="ir-print">🖨 Print</button></div><div class="mu" style="font-size:12px;margin:2px 0 10px">Merchandise under '+LOW_MERCH+' pcs is marked <b>Low on stock</b>.</div><div class="row" style="margin-top:0"><input id="ir-q" placeholder="Search item…" style="max-width:260px"><select id="ir-c" style="max-width:220px"><option value="">All categories</option>'+catList().map(c=>'<option>'+c+'</option>').join('')+'</select></div><div id="ir-tbl">'+iremTable()+'</div></div>';
   $('ir-q').value=IREMQ;$('ir-c').value=IREMC;
   $('ir-print').onclick=()=>printItems('Remaining items'+(IREMC?' - '+IREMC:''),iremList());
   $('ir-q').oninput=()=>{IREMQ=$('ir-q').value;$('ir-tbl').innerHTML=iremTable()};
@@ -1080,12 +1068,13 @@ function asList(){
   const rows=ASSETS.filter(a=>!q||nkey(a.name).includes(q)).sort((a,b)=>ASDIR*String(a.name).localeCompare(String(b.name),undefined,{sensitivity:'base',numeric:true}));
   const card=a=>'<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b style="word-break:break-word">'+esc(a.name)+'</b>'+(a.updatedAt?'<span class="mu" style="font-size:12px">Updated '+esc(fmtStamp(a.updatedAt))+'</span>':'<span class="mu" style="font-size:12px">Added '+esc(fmtStamp(a.at))+'</span>')+'</div>'+
     '<div style="margin:4px 0 6px;font-size:13px;word-break:break-all"><a href="'+escA(a.url)+'" target="_blank" rel="noopener noreferrer">'+esc(a.url)+'</a></div>'+
-    '<div class="row" style="margin-top:6px"><a href="'+escA(a.url)+'" target="_blank" rel="noopener noreferrer"><button type="button">Open</button></a><button type="button" data-ac="'+escA(a.id)+'">Copy link</button><button type="button" data-ae="'+escA(a.id)+'">Edit</button>'+(ME.isHR?'<button type="button" data-ad="'+escA(a.id)+'">Delete</button>':'')+'<span class="mu" style="font-size:12px">Encoded by '+esc(a.byName||'')+'</span></div>'+
-    '<details style="margin-top:8px"><summary class="mu" style="font-size:12px;cursor:pointer">Edit history ('+((a.history||[]).length)+')</summary>'+asHist(a)+'</details></div>';
+    '<div class="row" style="margin-top:6px"><a href="'+escA(a.url)+'" target="_blank" rel="noopener noreferrer" data-ao="'+escA(a.id)+'"><button type="button">Open</button></a><button type="button" data-ac="'+escA(a.id)+'">Copy link</button><button type="button" data-ae="'+escA(a.id)+'">Edit</button>'+(ME.isHR?'<button type="button" data-ad="'+escA(a.id)+'">Delete</button>':'')+'<span class="mu" style="font-size:12px">Encoded by '+esc(a.byName||'')+'</span></div>'+
+    '<details style="margin-top:8px"><summary class="mu" style="font-size:12px;cursor:pointer">Edit history ('+((a.history||[]).length)+')</summary>'+asHist(a)+'</details>'+asViews(a)+'</div>';
   return '<div class="mu" style="font-size:12px;margin:0 0 6px">'+(q?'Showing '+rows.length+' of '+all:all+' item'+(all===1?'':'s'))+' · sorted '+(ASDIR>0?'A → Z':'Z → A')+'</div>'+(rows.map(card).join('')||'<div class="card mu">'+(all?'No file name matches your search.':'No assets or links yet.')+'</div>');
 }
 function wireAsList(){
   const l=$('as-list');
+  l.querySelectorAll('[data-ao]').forEach(x=>x.addEventListener('click',()=>logView(ASSETS.find(a=>a.id===x.dataset.ao),'open')));l.querySelectorAll('[data-ac]').forEach(x=>x.addEventListener('click',()=>logView(ASSETS.find(a=>a.id===x.dataset.ac),'copy')));
   l.querySelectorAll('[data-ae]').forEach(b=>b.onclick=()=>{const a=ASSETS.find(x=>x.id===b.dataset.ae);if(!a)return;ASF={id:a.id,name:a.name,url:a.url};renderSch();window.scrollTo(0,0)});
   l.querySelectorAll('[data-ac]').forEach(b=>b.onclick=async()=>{const a=ASSETS.find(x=>x.id===b.dataset.ac);if(!a)return;try{await navigator.clipboard.writeText(a.url);b.textContent='Copied ✓'}catch(e){b.textContent='Copy failed'}setTimeout(()=>{b.textContent='Copy link'},1500)});
   l.querySelectorAll('[data-ad]').forEach(b=>b.onclick=async()=>{const a=ASSETS.find(x=>x.id===b.dataset.ad);if(!a||!confirm('Delete "'+a.name+'" and its edit history?'))return;try{await deleteDoc(doc(DB,'asset_links',a.id));if(ASF.id===a.id){ASF={id:'',name:'',url:''};renderSch()}}catch(e){say('as-msg','Could not delete: '+((e&&e.code)||'error'))}});
@@ -1155,7 +1144,7 @@ function gate(on){
   $('verify').hidden=true;$('gatecard').hidden=true;$('acctform').hidden=true;
   if(!on)mode('in');
   $('login').hidden=on;document.querySelector('.tabs').hidden=!on;$('a-out').hidden=!on;
-  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch'].forEach(k=>$('v-'+k).hidden=true);
+  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq'].forEach(k=>$('v-'+k).hidden=true);
   if(on)show('enc');
 }
 if(firebaseConfig.apiKey.startsWith('PASTE')){
@@ -1204,14 +1193,15 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   $('a-out').onclick=()=>signOut(auth);
   $('save').onclick=async()=>{
     if(!ref){$('msg').textContent='Please sign in first.';return}
-    try{const cp=o=>JSON.parse(JSON.stringify(o));const log=[...state.log,{t:Date.now(),profile:cp(state.profile),rows:cp(state.rows),chg:cp(state.chg)}].slice(-50);await setDoc(ref,{profile:state.profile,rows:state.rows,chg:state.chg,log},{merge:true});state.log=log;dirty=false;$('msg').textContent='Saved ✓'}
+    unswap();{const bad=otm().find(r=>(r.date||r.from||r.to||r.reason)&&!(r.date&&r.from&&r.to&&String(r.reason||'').trim()));if(bad){$('msg').textContent='Overtime without Official Business: fill in the date, from, to and a reason for every row.';return}}
+    try{const cp=o=>JSON.parse(JSON.stringify(o));const log=[...state.log,{t:Date.now(),profile:cp(state.profile),rows:cp(state.rows),chg:cp(state.chg)}].slice(-50);await setDoc(ref,{profile:state.profile,rows:state.rows,chg:state.chg,log},{merge:true});state.log=log;dirty=false;takeSnap();clearDraft();$('msg').textContent='Saved ✓ Your forms now show these details.'}
     catch(e){$('msg').textContent='Could not save: '+((e&&e.code)||'error')}
   };
   function showVerify(u){authReady=true;ref=null;
     $('who').textContent='Signed in as '+u.email+' (email not confirmed yet)';
     if(pendingProfile){try{localStorage.setItem('gphi-pp:'+u.uid,JSON.stringify(pendingProfile))}catch(e){}pendingProfile=null}
     $('login').hidden=true;document.querySelector('.tabs').hidden=true;$('a-out').hidden=true;
-    ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch'].forEach(k=>{$('v-'+k).hidden=true});
+    ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq'].forEach(k=>{$('v-'+k).hidden=true});
     $('v-text').textContent='We sent a confirmation link to '+u.email+'. Open the email (check your spam folder too), click the link, then press the button below.';
     $('verify').hidden=false}
   const vmsg=t=>{$('v-msg').textContent=t};
@@ -1229,7 +1219,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   $('v-out').onclick=()=>signOut(auth);
   onAuthStateChanged(auth,async u=>{
     state.profile=defaults();state.rows=[];state.ot=[];state.chg={};state.log=[];
-    if(!u){vmsg('');['s-email','s-emp','s-first','s-last','s-dept','s-pass','s-pass2'].forEach(i=>{$(i).value=''});curUser=null;$('acct-email').value='';amsg('');ref=null;dirty=false;authReady=true;$('who').textContent='Not signed in';state.rows=[];loadProfile();renderRows();loadChg();['ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch'].forEach(k=>{$('v-'+k).innerHTML=''});ME=null;stopTags();stopData();$('a-pass').value='';gate(false);return}
+    if(!u){vmsg('');['s-email','s-emp','s-first','s-last','s-dept','s-pass','s-pass2'].forEach(i=>{$(i).value=''});curUser=null;$('acct-email').value='';amsg('');ref=null;dirty=false;authReady=true;$('who').textContent='Not signed in';state.rows=[];loadProfile();renderRows();loadChg();['ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq'].forEach(k=>{$('v-'+k).innerHTML=''});ME=null;stopTags();stopData();$('a-pass').value='';gate(false);return}
     curUser=u;
     if(!(isFake(u.email)||u.emailVerified)){showVerify(u);return}
     await enter(u);
@@ -1248,7 +1238,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     pendingProfile=null;try{localStorage.removeItem('gphi-pp:'+u.uid)}catch(e){}
     if(!state.profile.emp)state.profile.emp=empNo;
     if(!state.rows.length)state.rows.push({});
-    loadProfile();renderRows();loadChg();dirty=false;authReady=true;
+    loadProfile();renderRows();loadChg();dirty=false;authReady=true;takeSnap();restoreDraft(u);
     if(await accessFor(u,pp)){startTags();startData();gate(true)}
   }
   $('gc-refresh').onclick=()=>enter(curUser);$('gc-out').onclick=()=>signOut(auth);$('af-out').onclick=()=>signOut(auth);
@@ -1259,6 +1249,203 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     try{await createDir(curUser,i);Object.assign(state.profile,{name:i.name,emp:i.emp,dept:i.dept,pos:i.pos});await enter(curUser)}catch(e){$('af-msg').textContent='Could not save: '+((e&&e.code)||'error')}
   };
 }
+
+/* ================= ADDITIONS: autosave, saved-only forms, OT without OB, link history, Liquidation ================= */
+const cpj=o=>JSON.parse(JSON.stringify(o));
+function takeSnap(){SNAP=cpj({profile:state.profile,rows:state.rows,chg:state.chg})}
+function clearDraft(){try{if(curUser)localStorage.removeItem('gphi-draft:'+curUser.uid)}catch(e){}}
+function restoreDraft(u){try{const d=JSON.parse(localStorage.getItem('gphi-draft:'+u.uid)||'null');if(!d||!d.s||JSON.stringify(d.s)===JSON.stringify(SNAP))return;
+  Object.assign(state.profile,d.s.profile||{});state.rows=d.s.rows&&d.s.rows.length?d.s.rows:[{}];state.chg=d.s.chg||{};loadProfile();renderRows();loadChg();dirty=true;
+  $('msg').textContent='We restored your unsaved draft from '+new Date(d.t).toLocaleString()+'. Click Save to keep it.'}catch(e){}}
+setInterval(()=>{if(!dirty||!ref||!curUser)return;try{localStorage.setItem('gphi-draft:'+curUser.uid,JSON.stringify({t:Date.now(),s:cpj({profile:state.profile,rows:state.rows,chg:state.chg})}));const m=$('msg');if(m&&!/Could not|sign in|Overtime without/i.test(m.textContent))m.textContent='Draft autosaved on this device. Click Save to update your forms.'}catch(e){}},1500);
+addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+/* forms only show SAVED details */
+function unswap(){if(SW){state.profile=SW[0];state.rows=SW[1];state.chg=SW[2];SW=null}}
+function withSaved(v,fn){if(!(['ob','rd','ot','chg'].includes(v)&&dirty&&SNAP)){fn();return}
+  SW=[state.profile,state.rows,state.chg];state.profile=cpj(SNAP.profile);state.rows=cpj(SNAP.rows);state.chg=cpj(SNAP.chg);fn()}
+function unsavedBanner(v){const el=$('v-'+v);if(!el)return;const o=el.querySelector('[data-unsaved]');if(o)o.remove();if(!dirty||!['ob','rd','ot','chg'].includes(v))return;
+  const b=document.createElement('div');b.className='card';b.setAttribute('data-unsaved','1');b.style.cssText='border-color:#f59e0b;background:#fef3c7;color:#92400e';
+  b.innerHTML='<b>You have unsaved changes.</b> This form still shows your last saved details. <div class="row"><button class="pri" type="button">Save now</button></div>';
+  b.querySelector('button').onclick=()=>{$('save').click();setTimeout(()=>show(v),1000)};el.prepend(b)}
+/* Overtime without Official Business */
+function otm(){if(!Array.isArray(state.chg.otm))state.chg.otm=[];return state.chg.otm}
+function renderOtm(){const box=$('otm-rows');if(!box)return;const R=otm();
+  box.innerHTML=R.map((r,i)=>'<div class="row" style="align-items:flex-end"><div><label>Date</label><input type="date" data-i="'+i+'" data-k="date" value="'+escA(r.date||'')+'"></div><div><label>From</label><input type="time" data-i="'+i+'" data-k="from" value="'+escA(r.from||'')+'"></div><div><label>To</label><input type="time" data-i="'+i+'" data-k="to" value="'+escA(r.to||'')+'"></div><div style="flex:1 1 220px"><label>Reason (required)</label><input data-i="'+i+'" data-k="reason" placeholder="e.g. Closed the bingo event, packed prizes" value="'+escA(r.reason||'')+'"></div><button type="button" class="x" data-rm="'+i+'" title="Remove">✕</button></div>').join('')||'<div class="mu" style="font-size:12px;margin-top:8px">No rows yet. Click “+ Add overtime row”.</div>';
+  box.querySelectorAll('input').forEach(el=>el.oninput=()=>{R[+el.dataset.i][el.dataset.k]=el.value;dirty=true});
+  box.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{R.splice(+b.dataset.rm,1);dirty=true;renderOtm()})}
+$('add-otm').onclick=()=>{otm().push({});dirty=true;renderOtm()};
+/* who opened each link */
+function devName(){const u=navigator.userAgent;return /iPhone|iPad/.test(u)?'iOS':/Android/.test(u)?'Android':/Windows/.test(u)?'Windows':/Mac/.test(u)?'Mac':'Other'}
+async function logView(a,action){try{const u=AUTH.currentUser;if(!u||!a)return;await addDoc(collection(DB,'asset_views'),{assetId:a.id,assetName:a.name||'',ownerUid:a.by||'',uid:u.uid,email:u.email||'',name:(ME&&ME.dir&&ME.dir.name)||'',action,t:Date.now(),device:devName()})}catch(e){}}
+function asViews(a){const V=AVIEWS.filter(v=>v.assetId===a.id).sort((x,y)=>(y.t||0)-(x.t||0));
+  const who={};V.forEach(v=>{const k=v.email||v.uid,w=who[k]=who[k]||{n:0,c:0,last:0,name:v.name};w.n++;if(v.action==='copy')w.c++;w.last=Math.max(w.last,v.t||0)});
+  const sum=Object.keys(who).map(k=>{const w=who[k];return '<div style="font-size:12px;padding:5px 0;border-top:1px solid var(--bd)"><b>'+esc(w.name||k)+'</b> <span class="mu">'+esc(k)+'</span> · '+w.n+' time'+(w.n===1?'':'s')+(w.c?' · <b style="color:#dc2626">copied the link '+w.c+'×</b>':'')+' <span class="mu">· last '+esc(fmtStamp(w.last))+'</span></div>'}).join('');
+  const log=V.slice(0,40).map(v=>'<div class="mu" style="font-size:12px;padding:2px 0">'+esc(fmtStamp(v.t))+' · '+esc(v.email||'')+' · '+(v.action==='copy'?'copied the link':'opened')+' · '+esc(v.device||'')+'</div>').join('');
+  return '<details style="margin-top:6px"><summary class="mu" style="font-size:12px;cursor:pointer">Who opened this link ('+V.length+')</summary>'+(V.length?'<div style="margin-top:6px"><b style="font-size:12px">People</b>'+sum+'</div><div style="margin-top:8px"><b style="font-size:12px">Latest activity</b>'+log+'</div>':'<div class="mu" style="font-size:12px;margin-top:6px">No one has opened or copied this link through Event Hub yet. Opens made outside Event Hub are not recorded here.</div>')+'</details>'}
+/* ============ LIQUIDATION ============ */
+{const st=document.createElement('style');st.textContent='.lqg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}@media(max-width:980px){.lqg{grid-template-columns:1fr}}.lqt input,.lqt select{min-width:0;width:100%}.lqt td{padding:3px}.lqt th{font-size:12px;text-align:left;padding:4px}.lqp{background:#fff;color:#000;border:1px solid #888;font:12px Arial,sans-serif;max-width:560px;margin:0 auto}.lqp table{width:100%;border-collapse:collapse}.lqp td,.lqp th{border:1px solid #999;padding:3px 5px;color:#000;background:#fff;font-size:12px}.lqp .h{background:#1f4d1f;color:#fff;text-align:center;font-weight:700;padding:5px}.lqp .s{display:flex;justify-content:space-between;border:1px solid #999;padding:3px 6px;font-weight:700}';document.head.appendChild(st)}
+const LQ_TYPES=['Activation Material','Advertising','Bank Charge - Others','Courier','Manpower','Meal','Sponsorship','Talents','Transportation','Game Prize','Grocery','Others','Hospitality Meals for Barangay/Organizers','Marketing Supplies'];
+const newLq=()=>({id:'',event:'',dept:'Events & Activations',dReq:'',dRec:'',recBy:state.profile.name||'',per:'',req:0,status:'Pending',rows:[{p:'',t:'',q:1,pr:0}]});
+const peso=n=>'₱'+Number(n||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
+const lqTot=o=>(o.rows||[]).reduce((s,r)=>s+(+r.q||0)*(+r.pr||0),0);
+const lqDk=()=>'gphi-lq-draft:'+((curUser&&curUser.uid)||'');
+function lqDraft(){try{localStorage.setItem(lqDk(),JSON.stringify(LQ))}catch(e){}}
+function lqMsg(t,ok=1){const m=$('lq-msg');if(m){m.textContent=t;m.style.color=ok?'':'#dc2626'}}
+function lqSheetHtml(o){const T=lqTot(o),R=(+o.req||0)-T,lg=new URL('bybet/logo.webp',location.href).href;
+  const rows=o.rows.filter(r=>r.p||r.pr).map(r=>'<tr><td>'+esc(r.p)+'</td><td style="text-align:center">'+esc(r.t)+'</td><td style="text-align:center">'+(+r.q||0)+'</td><td style="text-align:right">'+(+r.pr||0).toLocaleString('en-PH')+'</td><td style="text-align:right"><b>'+peso((+r.q||0)*(+r.pr||0))+'</b></td></tr>').join('');
+  return '<div class="lqp"><div class="h" style="background:#1f4d1f;padding:8px"><img src="'+lg+'" alt="ByBet" style="height:34px;vertical-align:middle"></div><table>'+
+  [['EVENT/PURPOSE NAME:',o.event],['DEPARTMENT:',o.dept],['DATE REQUESTED:',o.dReq?fmtDate(o.dReq):''],['DATE RECEIVED:',o.dRec?fmtDate(o.dRec):''],['RECEIVED BY:',o.recBy],['EXPENSE PERIOD:',o.per]].map(x=>'<tr><td style="width:38%"><b>'+x[0]+'</b></td><td>'+esc(x[1]||'')+'</td></tr>').join('')+'</table>'+
+  '<div class="h">BUDGET INFORMATION</div><div class="s"><span>AMOUNT REQUESTED:</span><span>'+peso(o.req)+'</span></div><div class="h">EXPENSE REPORT</div>'+
+  '<table><tr><th>PARTICULARS</th><th>EXPENSE TYPE</th><th>QUANTITY</th><th>ITEM PRICE</th><th>TOTAL EXPENSE</th></tr>'+rows+'</table>'+
+  '<div class="h">SUMMARY</div><div class="s"><span>AMOUNT REQUESTED:</span><span>'+peso(o.req)+'</span></div><div class="s"><span>TOTAL AMOUNT SPENT:</span><span>'+peso(T)+'</span></div><div class="s"><span>REMAINING AMOUNT:</span><span'+(R<0?' style="color:#c00"':'')+'>'+peso(R)+'</span></div>'+
+  '<table style="margin-top:10px"><tr><td style="height:44px;vertical-align:bottom;text-align:center"><b>'+esc(state.profile.name||o.recBy||'')+'</b></td><td></td><td></td></tr><tr><td style="text-align:center"><b>PREPARED BY:</b></td><td style="text-align:center"><b>NOTED BY:</b></td><td style="text-align:center"><b>APPROVED BY:</b></td></tr></table></div>'}
+function lqPrint(o){const w=window.open('','_blank');if(!w)return lqMsg('Allow pop-ups to print.',0);
+  w.document.write('<!doctype html><meta charset="utf-8"><title>Liquidation - '+esc(o.event)+'</title><style>@page{size:A4;margin:10mm}body{margin:0;font-family:Arial,sans-serif}.lqp{font:12px Arial,sans-serif;max-width:560px;margin:0 auto;border:1px solid #888}.lqp table{width:100%;border-collapse:collapse}.lqp td,.lqp th{border:1px solid #999;padding:3px 5px;font-size:12px}.lqp .h{background:#1f4d1f!important;color:#fff;text-align:center;font-weight:700;padding:5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.lqp .s{display:flex;justify-content:space-between;border:1px solid #999;padding:3px 6px;font-weight:700}</style>'+lqSheetHtml(o));
+  w.document.close();setTimeout(()=>{w.focus();w.print()},600)}
+function lqTsv(o){const L=[['EVENT/PURPOSE NAME','DATE REQUESTED','DATE RECEIVED','RECEIVED BY','AMOUNT REQUESTED','PARTICULARS','EXPENSE TYPE','QUANTITY','ITEM PRICE','TOTAL','STATUS']];
+  o.rows.filter(r=>r.p||r.pr).forEach((r,i)=>L.push([i?'':o.event,i?'':o.dReq,i?'':o.dRec,i?'':o.recBy,i?'':o.req,r.p,r.t,r.q,r.pr,(+r.q||0)*(+r.pr||0),i?'':o.status]));return L}
+function lqSync(o){const url=window.LIQ_SYNC_URL;if(!url)return false;try{fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'liquidation',id:o.id,by:state.profile.name||'',rows:lqTsv(o)})});return true}catch(e){return false}}
+async function lqSave(){const o=LQ,u=AUTH.currentUser;if(!u)return lqMsg('Please sign in first.',0);if(!o.event.trim())return lqMsg('Enter the event / purpose name first.',0);
+  if(o.rows.some(r=>(r.p||r.pr)&&!r.t))return lqMsg('Choose an expense type for every row.',0);
+  const data={event:o.event.trim(),dept:o.dept,dReq:o.dReq,dRec:o.dRec,recBy:o.recBy,per:o.per,req:+o.req||0,status:o.status,rows:o.rows.filter(r=>r.p||r.pr).map(r=>({p:r.p||'',t:r.t||'',q:+r.q||0,pr:+r.pr||0})),spent:lqTot(o),updatedAt:Date.now()};
+  try{if(o.id)await updateDoc(doc(DB,'liquidations',o.id),data);else{const r=await addDoc(collection(DB,'liquidations'),{...data,by:u.uid,byName:state.profile.name||u.email,at:Date.now()});o.id=r.id}
+    try{localStorage.removeItem(lqDk())}catch(e){}const sy=lqSync(o);lqMsg('Saved ✓'+(sy?' · sent to Google Sheet':' · Google Sheet sync is not connected yet (see README)'))}
+  catch(e){lqMsg('Could not save: '+((e&&e.code)||'error'),0)}}
+function lqPaint(){const T=lqTot(LQ),R=(+LQ.req||0)-T;
+  document.querySelectorAll('[data-tt]').forEach(c=>{const r=LQ.rows[+c.dataset.tt];c.textContent=peso((+r.q||0)*(+r.pr||0))});
+  $('lq-sum').innerHTML='Requested <b>'+peso(LQ.req)+'</b> · Spent <b>'+peso(T)+'</b> · Remaining <b style="color:'+(R<0?'#dc2626':'inherit')+'">'+peso(R)+'</b>';
+  $('lq-pv').innerHTML=lqSheetHtml(LQ);lqDraft()}
+function lqRowsHtml(){return LQ.rows.map((r,i)=>'<tr><td><input data-i="'+i+'" data-k="p" value="'+escA(r.p)+'" placeholder="Particulars" aria-label="Particulars"></td><td><select data-i="'+i+'" data-k="t" aria-label="Expense type"><option value="">Choose…</option>'+LQ_TYPES.map(t=>'<option'+(t===r.t?' selected':'')+'>'+escA(t)+'</option>').join('')+'</select></td><td style="width:62px"><input type="number" min="0" data-i="'+i+'" data-k="q" value="'+(r.q||'')+'" aria-label="Quantity"></td><td style="width:92px"><input type="number" min="0" step="any" data-i="'+i+'" data-k="pr" value="'+(r.pr||'')+'" aria-label="Item price"></td><td style="white-space:nowrap" data-tt="'+i+'"></td><td><button type="button" class="x" data-rm="'+i+'" title="Remove row">✕</button></td></tr>').join('')}
+function lqWireRows(){const tb=$('lq-rows');tb.innerHTML=lqRowsHtml();
+  tb.querySelectorAll('[data-k]').forEach(el=>{el.oninput=el.onchange=()=>{const k=el.dataset.k;LQ.rows[+el.dataset.i][k]=(k==='q'||k==='pr')?el.value:el.value;lqPaint()};
+    el.onkeydown=e=>{if(e.key==='Enter'&&el.dataset.k==='pr'&&+el.dataset.i===LQ.rows.length-1){e.preventDefault();LQ.rows.push({p:'',t:LQ.rows[LQ.rows.length-1].t||'',q:1,pr:0});lqWireRows();lqPaint();tb.querySelector('[data-i="'+(LQ.rows.length-1)+'"][data-k="p"]').focus()}}});
+  tb.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{if(LQ.rows.length>1)LQ.rows.splice(+b.dataset.rm,1);else LQ.rows[0]={p:'',t:'',q:1,pr:0};lqWireRows();lqPaint()});lqPaint()}
+function lqList(){const box=$('lq-list');if(!box)return;const q=nkey($('lq-q')?$('lq-q').value:'');
+  const L=LIQS.filter(l=>!q||nkey(l.event).includes(q)).sort((a,b)=>(b.updatedAt||b.at||0)-(a.updatedAt||a.at||0));
+  box.innerHTML=L.map(l=>'<div class="card" style="margin:8px 0 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>'+esc(l.event)+'</b><span class="mu" style="font-size:12px">'+esc(l.status||'Pending')+' · updated '+esc(fmtStamp(l.updatedAt||l.at))+'</span></div><div class="mu" style="font-size:12px;margin-top:2px">Requested '+peso(l.req)+' · Spent '+peso(l.spent)+' · Remaining '+peso((l.req||0)-(l.spent||0))+(ME&&ME.isHR?' · by '+esc(l.byName||''):'')+'</div><div class="row" style="margin-top:6px"><button type="button" data-lo="'+escA(l.id)+'">Open / edit</button><button type="button" data-lp="'+escA(l.id)+'">Print</button><button type="button" data-ld="'+escA(l.id)+'">Delete</button></div></div>').join('')||'<div class="mu" style="margin-top:8px">'+(LIQS.length?'No liquidation matches your search.':'No saved liquidations yet.')+'</div>';
+  const get=id=>{const l=LIQS.find(x=>x.id===id);return l&&{id:l.id,event:l.event,dept:l.dept||'Events & Activations',dReq:l.dReq||'',dRec:l.dRec||'',recBy:l.recBy||'',per:l.per||'',req:l.req||0,status:l.status||'Pending',rows:(l.rows||[]).map(r=>({p:r.p,t:r.t,q:r.q,pr:r.pr}))}};
+  box.querySelectorAll('[data-lo]').forEach(b=>b.onclick=()=>{LQ=get(b.dataset.lo);if(!LQ.rows.length)LQ.rows=[{p:'',t:'',q:1,pr:0}];renderLiq();window.scrollTo(0,0)});
+  box.querySelectorAll('[data-lp]').forEach(b=>b.onclick=()=>lqPrint(get(b.dataset.lp)));
+  box.querySelectorAll('[data-ld]').forEach(b=>b.onclick=async()=>{const l=LIQS.find(x=>x.id===b.dataset.ld);if(!l||!confirm('Delete “'+l.event+'”?'))return;try{await deleteDoc(doc(DB,'liquidations',l.id));if(LQ&&LQ.id===l.id)LQ=newLq();renderLiq()}catch(e){lqMsg('Could not delete: '+((e&&e.code)||'error'),0)}})}
+function renderLiq(){
+  if(!LQ){try{const d=JSON.parse(localStorage.getItem(lqDk())||'null');LQ=d&&d.rows?d:newLq()}catch(e){LQ=newLq()}}
+  const F=(id,label,type,val,extra)=>'<div><label for="'+id+'">'+label+'</label><input id="'+id+'" type="'+type+'" value="'+escA(val)+'" '+(extra||'')+'></div>';
+  $('v-liq').innerHTML='<div class="card"><b>Liquidation</b><div class="mu" style="font-size:12px;margin-top:4px">Encode the expenses on the left. The ByBet report on the right updates as you type. Your entries are kept on this device until you click Save.</div></div>'+
+  '<div class="lqg"><div class="card"><div class="grid"><div style="grid-column:1/-1"><label for="lq-event">Event / purpose name</label><input id="lq-event" value="'+escA(LQ.event)+'" placeholder="e.g. Brgy. 770 District 5 San Andres Manila - BINGO Event"></div>'+
+  F('lq-dept','Department','text',LQ.dept)+F('lq-recby','Received by','text',LQ.recBy)+F('lq-dreq','Date requested','date',LQ.dReq)+F('lq-drec','Date received','date',LQ.dRec)+F('lq-per','Expense period','text',LQ.per,'placeholder="e.g. 22 Nov 2026"')+F('lq-req','Amount requested (₱)','number',LQ.req||'','min="0" step="any"')+
+  '<div><label for="lq-st">Status</label><select id="lq-st">'+['Pending','Submitted','Liquidated','Approved'].map(x=>'<option'+(x===LQ.status?' selected':'')+'>'+x+'</option>').join('')+'</select></div></div>'+
+  '<div class="scroll" style="margin-top:10px"><table class="lqt" style="width:100%;min-width:520px"><thead><tr><th>Particulars</th><th>Expense type</th><th>Qty</th><th>Item price</th><th>Total</th><th></th></tr></thead><tbody id="lq-rows"></tbody></table></div>'+
+  '<div class="row"><button type="button" id="lq-add">+ Add row</button><button type="button" id="lq-pastebtn">Paste rows from a sheet</button></div>'+
+  '<div id="lq-paste" hidden style="margin-top:8px"><div class="mu" style="font-size:12px">Copy cells from Google Sheets (Particulars, Expense type, Qty, Item price) and paste here.</div><textarea id="lq-pt" rows="4" style="width:100%"></textarea><div class="row"><button type="button" id="lq-padd">Add pasted rows</button></div></div>'+
+  '<div id="lq-sum" style="margin-top:12px"></div><div class="row"><button class="pri" type="button" id="lq-save">Save</button><button type="button" id="lq-print">🖨 Print</button><button type="button" id="lq-copy">Copy for Google Sheet</button><button type="button" id="lq-csv">Download CSV</button><button type="button" id="lq-new">New</button><span id="lq-msg" class="mu"></span></div></div>'+
+  '<div class="card"><div id="lq-pv" style="overflow-x:auto"></div></div></div>'+
+  '<div class="card"><b>Saved liquidations</b><input id="lq-q" type="search" placeholder="Search by event name…" style="margin-top:8px"><div id="lq-list"></div></div>';
+  const bind=(id,k,num)=>{$(id).oninput=$(id).onchange=e=>{LQ[k]=e.target.value;lqPaint()}};
+  [['lq-event','event'],['lq-dept','dept'],['lq-recby','recBy'],['lq-dreq','dReq'],['lq-drec','dRec'],['lq-per','per'],['lq-req','req'],['lq-st','status']].forEach(a=>bind(a[0],a[1]));
+  lqWireRows();lqList();$('lq-q').oninput=lqList;
+  $('lq-add').onclick=()=>{LQ.rows.push({p:'',t:LQ.rows[LQ.rows.length-1].t||'',q:1,pr:0});lqWireRows();$('lq-rows').querySelector('[data-i="'+(LQ.rows.length-1)+'"][data-k="p"]').focus()};
+  $('lq-pastebtn').onclick=()=>{$('lq-paste').hidden=!$('lq-paste').hidden};
+  $('lq-padd').onclick=()=>{const L=$('lq-pt').value.split(/\r?\n/).map(x=>x.split('\t')).filter(x=>x[0]&&x[0].trim());if(!L.length)return lqMsg('Nothing to add. Paste tab-separated rows.',0);
+    const num=v=>parseFloat(String(v||'').replace(/[₱,\s]/g,''))||0;if(LQ.rows.length===1&&!LQ.rows[0].p&&!LQ.rows[0].pr)LQ.rows=[];
+    L.forEach(x=>{const t=LQ_TYPES.find(y=>nkey(y)===nkey(x[1]))||'';LQ.rows.push({p:x[0].trim(),t,q:num(x[2])||1,pr:num(x[3])})});$('lq-pt').value='';$('lq-paste').hidden=true;lqWireRows();lqMsg(L.length+' row'+(L.length>1?'s':'')+' added. Check any row with no expense type.')};
+  $('lq-save').onclick=lqSave;$('lq-print').onclick=()=>lqPrint(LQ);
+  $('lq-new').onclick=()=>{if(!confirm('Start a new liquidation? Unsaved entries on this form will be cleared.'))return;LQ=newLq();try{localStorage.removeItem(lqDk())}catch(e){}renderLiq()};
+  $('lq-copy').onclick=async()=>{try{await navigator.clipboard.writeText(lqTsv(LQ).map(r=>r.join('\t')).join('\n'));lqMsg('Copied. Paste it into your Google Sheet.')}catch(e){lqMsg('Copy failed.',0)}};
+  $('lq-csv').onclick=()=>{const c=lqTsv(LQ).map(r=>r.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='liquidation.csv';a.click()};
+}
+$('t-liq').onclick=()=>show('liq');
+/* Liquidation button inside Event Games opens the matching liquidation */
+addEventListener('message',e=>{const d=e.data;if(e.origin!==location.origin||!d||d.type!=='gphi-liquidation')return;
+  const ex=LIQS.find(l=>nkey(l.event)===nkey(d.event));
+  if(ex){LQ={id:ex.id,event:ex.event,dept:ex.dept||'Events & Activations',dReq:ex.dReq||'',dRec:ex.dRec||'',recBy:ex.recBy||'',per:ex.per||'',req:ex.req||0,status:ex.status||'Pending',rows:(ex.rows||[]).length?ex.rows.map(r=>({p:r.p,t:r.t,q:r.q,pr:r.pr})):[{p:'',t:'',q:1,pr:0}]}}
+  else{LQ=newLq();LQ.event=d.event||'';LQ.per=d.date?fmtDate(d.date):''}
+  setMod('liq');show('liq')});
+
+/* ================= ADDITIONS: inventory approvals, categories, labels, boxes ================= */
+const CAT_ORDER=['Merchandise','Event Supplies','Event Collaterals'];
+const escI=v=>esc(v).replace(/"/g,'&quot;');
+const canOut=()=>{const u=AUTH&&AUTH.currentUser;if(!u||!ME)return false;return INVCFG&&INVCFG.approverUid?INVCFG.approverUid===u.uid:!!ME.isHR};
+const catList=()=>[...new Set([...CATS,...INV.map(i=>i.category).filter(Boolean),...EXTRA_CATS])];
+const catOpts=cur=>catList().map(c=>'<option'+(c===cur?' selected':'')+'>'+esc(c)+'</option>').join('')+'<option value="__new">＋ Add new category…</option>';
+const idCats=()=>{const c=catList();return [...CAT_ORDER,...c.filter(x=>!CAT_ORDER.includes(x))]};
+function subReq(){if(REQU){try{REQU()}catch(e){}REQU=null}const u=AUTH&&AUTH.currentUser;if(!u||!DB)return;
+  REQU=onSnapshot((canOut()||(ME&&ME.isHR))?collection(DB,'stock_requests'):query(collection(DB,'stock_requests'),where('by','==',u.uid)),s=>{REQS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));invRefresh()},()=>{})}
+function iBadge(){const b=$('t-iout');if(!b)return;let e=$('iout-n');if(!e){e=document.createElement('span');e.id='iout-n';e.className='nbadge';b.appendChild(e)}const n=canOut()?REQS.filter(r=>r.status==='pending').length:0;e.textContent=n;e.hidden=!n}
+/* ---- dashboard: split by category, with In stock integrated into the stock levels ---- */
+function renderIDash(){
+  const low=lowItems(),F=IDF,cnt=k=>k==='all'?INV.length:INV.filter(i=>stat(i)===k).length;
+  const sf=i=>F==='all'||stat(i)===F;
+  const secs=idCats().map(cat=>{const L=INV.filter(i=>i.category===cat);if(!L.length&&!CAT_ORDER.includes(cat))return '';
+    const mx=Math.max(1,...L.map(i=>i.qty)),n=k=>L.filter(i=>stat(i)===k).length;
+    const rows=[...L].filter(sf).sort((a,b)=>a.qty-b.qty).map(i=>'<div class="ibar"><div class="ibn"><b>'+esc(i.name)+'</b> '+stPill(stat(i))+'</div><div class="ibt"><i class="'+stat(i)+'" style="width:'+Math.max(2,Math.round(Math.max(i.qty,0)/mx*100))+'%"></i></div><div class="ibv">'+fq(i.qty)+' '+esc(i.unit)+'</div></div>').join('');
+    return '<div class="card"><div class="ihead"><b>'+esc(cat)+'</b><span class="mu" style="font-size:12px">'+L.length+' item'+(L.length===1?'':'s')+' · '+n('ok')+' in stock · '+n('low')+' low · '+n('out')+' out</span></div>'+(rows||'<div class="mu" style="margin-top:6px">'+(L.length?'No items match this filter.':'No items yet. Add stock in the Stock In tab.')+'</div>')+'</div>'}).join('');
+  $('v-idash').innerHTML=
+    '<div class="ihead"><b style="font-size:16px">Inventory dashboard</b><button type="button" id="idash-print">🖨 Print</button></div>'+
+    (low.length?'<div class="iwarn"><b>⚠ Low on stock</b><div style="margin-top:2px">'+low.length+' Merchandise item'+(low.length>1?'s are':' is')+' below '+LOW_MERCH+' pcs. Please restock.</div><div class="chips">'+low.map(i=>'<span class="chip '+(i.qty<=0?'bad':'warn')+'">'+esc(i.name)+' · '+fq(i.qty)+' '+esc(i.unit)+'</span>').join('')+'</div></div>':'<div class="iok">✓ All Merchandise items are at '+LOW_MERCH+' pcs or more.</div>')+
+    '<div class="kpis">'+kpi('Total items',INV.length)+CAT_ORDER.map(c=>kpi(c,INV.filter(i=>i.category===c).length)).join('')+kpi('In stock',cnt('ok'),'ok')+kpi('Low / out of stock',INV.length-cnt('ok'),INV.length-cnt('ok')?'bad':'')+'</div>'+
+    '<div class="row" style="margin:4px 0 10px"><span class="mu" style="font-size:12px">Stock level:</span>'+[['all','All'],['ok','In stock'],['low','Low on stock'],['out','Out of stock']].map(a=>'<button type="button" class="'+(F===a[0]?'pri':'')+'" data-idf="'+a[0]+'">'+a[1]+' ('+cnt(a[0])+')</button>').join('')+'</div>'+
+    secs+'<div class="card"><b>Recent movements</b>'+movTable(MOV.slice(0,8))+'</div>';
+  document.querySelectorAll('#v-idash [data-idf]').forEach(b=>b.onclick=()=>{IDF=b.dataset.idf;renderIDash()});
+  $('idash-print').onclick=()=>printItems('Inventory - Stock summary',[...INV].sort((a,b)=>a.category.localeCompare(b.category)||a.name.localeCompare(b.name)));
+}
+/* ---- unlimited boxes + labels with "add new" ---- */
+const lbSet=()=>[...new Set([...LABEL_PRESETS,...MOV.filter(m=>m.type==='out'&&m.label).map(m=>m.label),...REQS.flatMap(r=>(r.items||[]).map(x=>x.label).filter(Boolean)),...EXTRA_LABELS])];
+const labelOpts=cur=>{const L=lbSet();if(cur&&!L.includes(cur))L.push(cur);return '<option value="">Select label</option>'+L.map(x=>'<option value="'+escI(x)+'"'+(x===cur?' selected':'')+'>'+esc(x)+'</option>').join('')+'<option value="__new">＋ Add new label…</option>'};
+const boxNum=v=>parseInt((String(v).match(/\d+/)||[0])[0],10)||0;
+const boxMax=sc=>Math.max(1,...[...document.querySelectorAll(sc+' .so-box')].map(x=>boxNum(x.value)));
+const boxOpts=(cur,sc)=>{const n=Math.max(boxMax(sc),boxNum(cur),1);let o='';for(let i=1;i<=n;i++)o+='<option'+('Box '+i===cur?' selected':'')+'>Box '+i+'</option>';return o+'<option value="__new">＋ New box (Box '+(n+1)+')</option>'};
+function refreshSel(sc){document.querySelectorAll(sc+' .so-box').forEach(b=>{const v=b.value;b.innerHTML=boxOpts(v,sc);b.value=v});document.querySelectorAll(sc+' .so-label').forEach(l=>{const v=l.value;l.innerHTML=labelOpts(v);l.value=v})}
+function soChange(el,sc){
+  if(el.classList.contains('so-label')&&el.value==='__new'){const n=(prompt('Name of the new label')||'').trim().replace(/\s+/g,' ');if(n&&!EXTRA_LABELS.includes(n))EXTRA_LABELS.push(n);el.innerHTML=labelOpts(n);el.value=n}
+  if(el.classList.contains('so-box')&&el.value==='__new'){const n=boxMax(sc)+1;el.innerHTML=boxOpts('Box '+n,sc);el.value='Box '+n}
+  refreshSel(sc);
+  if(el.classList.contains('so-box')){const r=el.closest('.sorow'),lb=r&&r.querySelector('.so-label');if(r&&lb&&!lb.value){const o=[...document.querySelectorAll(sc+' .sorow')].find(x=>x!==r&&x.querySelector('.so-box').value===el.value&&x.querySelector('.so-label').value);if(o)lb.value=o.querySelector('.so-label').value}}
+}
+/* ---- approver: pending requests ---- */
+function renderPend(){const box=$('so-pend');if(!box)return;const P=REQS.filter(r=>r.status==='pending');
+  box.innerHTML=P.length?'<div class="card" style="border-color:#f59e0b"><b>Stock out requests waiting for your approval ('+P.length+')</b>'+P.map(r=>'<div class="card" id="rq-'+r.id+'" style="margin:8px 0 0"><div class="ihead"><b>'+esc(r.event)+'</b><span class="mu" style="font-size:12px">Requested by '+esc(r.byName||'')+' · '+esc(new Date(r.at).toLocaleString())+'</span></div>'+((r.to||r.note)?'<div class="mu" style="font-size:12px">'+esc([r.to?'For: '+r.to:'',r.note].filter(Boolean).join(' · '))+'</div>':'')+'<div class="scroll"><table class="enc itbl"><thead><tr><th>Item</th><th>Requested</th><th>Available</th><th>Box</th><th>Label</th></tr></thead><tbody>'+(r.items||[]).map((x,k)=>{const ex=INV.find(i=>i.id===x.id),av=ex?ex.qty:0;return '<tr data-k="'+k+'"><td>'+esc(x.name)+'</td><td>'+fq(x.qty)+' '+esc(x.unit)+'</td><td style="color:'+(av<x.qty?'#dc2626':'inherit')+'">'+fq(av)+' '+esc(x.unit)+(av<x.qty?' ⚠ not enough':'')+'</td><td><select class="so-box">'+boxOpts('Box 1','#rq-'+r.id)+'</select></td><td><select class="so-label">'+labelOpts('')+'</select></td></tr>'}).join('')+'</tbody></table></div><div class="row"><button class="pri" data-ap="'+r.id+'">Approve and deduct stock</button><button data-rj="'+r.id+'">Reject</button><span class="mu" id="rm-'+r.id+'"></span></div></div>').join('')+'</div>':'';
+  box.querySelectorAll('.card[id^="rq-"]').forEach(c=>c.querySelectorAll('select').forEach(el=>el.onchange=()=>soChange(el,'#'+c.id)));
+  box.querySelectorAll('[data-ap]').forEach(b=>b.onclick=()=>approveReq(b.dataset.ap));
+  box.querySelectorAll('[data-rj]').forEach(b=>b.onclick=()=>rejectReq(b.dataset.rj))}
+async function approveReq(id){const r=REQS.find(x=>x.id===id),m=$('rm-'+id),card=$('rq-'+id);if(!r||!card)return;
+  const sel=[...card.querySelectorAll('tbody tr')].map(tr=>({box:tr.querySelector('.so-box').value||'Box 1',label:tr.querySelector('.so-label').value}));
+  const list=[];for(let k=0;k<r.items.length;k++){const x=r.items[k],ex=INV.find(i=>i.id===x.id);if(!ex){m.textContent=x.name+' no longer exists in the inventory.';return}if(x.qty>ex.qty){m.textContent='Only '+fq(ex.qty)+' '+ex.unit+' of '+ex.name+' left. Reject this request or ask for a smaller quantity.';return}list.push({ex,q:x.qty,box:sel[k].box,label:sel[k].label})}
+  const at=Date.now(),batch=at.toString(36)+Math.random().toString(36).slice(2,6),note=['Event: '+r.event,r.to?'To: '+r.to:'',r.note,'Requested by '+r.byName].filter(Boolean).join(' · ');
+  try{const bt=writeBatch(DB);
+    list.forEach(({ex,q,box,label})=>{bt.update(doc(DB,'stock_items',ex.id),{qty:increment(-q),totalOut:increment(q),updatedAt:at});bt.set(doc(collection(DB,'stock_moves')),{itemId:ex.id,itemName:ex.name,category:ex.category,unit:ex.unit,type:'out',qty:q,total:ex.totalIn||0,rem:ex.qty-q,event:r.event,to:r.to||'',batch,label,box,note,requestId:id,at,by:ME.uid,byName:ME.dir.name})});
+    bt.update(doc(DB,'stock_requests',id),{status:'approved',approvedBy:ME.uid,approvedByName:ME.dir.name,approvedAt:at,items:r.items.map((x,k)=>({...x,box:sel[k].box,label:sel[k].label}))});
+    await bt.commit();m.textContent='Approved ✓'}catch(e){m.textContent='Could not approve: '+((e&&e.code)||'error')}}
+async function rejectReq(id){const why=prompt('Reason for rejecting (optional)');if(why===null)return;try{await updateDoc(doc(DB,'stock_requests',id),{status:'rejected',reason:why.trim(),rejectedBy:ME.uid,rejectedByName:ME.dir.name,rejectedAt:Date.now()})}catch(e){const m=$('rm-'+id);if(m)m.textContent='Could not reject: '+((e&&e.code)||'error')}}
+/* ---- requester: request stock out, with availability ---- */
+const reqOpts=()=>'<option value="">Select item</option>'+[...INV].sort((a,b)=>a.name.localeCompare(b.name)).map(i=>'<option value="'+escI(i.id)+'"'+(i.qty<=0?' disabled':'')+'>'+esc(i.name)+' — '+(i.qty<=0?'OUT OF STOCK':fq(i.qty)+' '+esc(i.unit)+' available')+'</option>').join('');
+function rqAv(r){const ex=INV.find(i=>i.id===r.querySelector('.rq-item').value),q=parseFloat(r.querySelector('.rq-qty').value)||0,a=r.querySelector('.rq-av');
+  if(!ex){a.textContent='';return}a.innerHTML=q>ex.qty?'<b style="color:#dc2626">Only '+fq(ex.qty)+' '+esc(ex.unit)+' available</b>':'<span style="color:#16a34a">Available: '+fq(ex.qty)+' '+esc(ex.unit)+'</span>'}
+function rqAdd(){const c=$('rq-rows'),d=document.createElement('div');d.className='sorow';d.innerHTML='<div class="so-wide"><label>Item</label><select class="rq-item"></select></div><div><label>Qty needed</label><input class="rq-qty" type="number" min="0" step="any" inputmode="decimal"></div><div><label>Availability</label><div class="rq-av" style="padding:9px 0"></div></div><div><button type="button" class="so-x" title="Remove row">✕</button></div>';
+  c.appendChild(d);d.querySelector('.rq-item').innerHTML=reqOpts();d.querySelector('.rq-item').onchange=d.querySelector('.rq-qty').oninput=()=>rqAv(d);
+  d.querySelector('.so-x').onclick=()=>{if(c.children.length>1)d.remove();else{d.querySelector('.rq-item').value='';d.querySelector('.rq-qty').value='';d.querySelector('.rq-av').textContent=''}}}
+function myReqHtml(){const L=REQS.filter(r=>r.by===(AUTH.currentUser&&AUTH.currentUser.uid));
+  return L.length?L.slice(0,20).map(r=>'<div class="ogrp"><div><b>'+esc(r.event)+'</b> '+(r.status==='approved'?pill('Approved','ok'):r.status==='rejected'?pill('Rejected','bad'):r.status==='cancelled'?pill('Cancelled','warn'):pill('Waiting for approval','warn'))+'<div class="mu" style="font-size:12px">'+esc(new Date(r.at).toLocaleString())+' · '+(r.items||[]).map(x=>esc(x.name)+' × '+fq(x.qty)+(x.box?' ('+esc(x.box)+(x.label?', '+esc(x.label):'')+')':'')).join(', ')+(r.status==='approved'?' · approved by '+esc(r.approvedByName||''):'')+(r.status==='rejected'&&r.reason?' · reason: '+esc(r.reason):'')+'</div></div>'+(r.status==='pending'?'<button type="button" data-cx="'+escI(r.id)+'">Cancel request</button>':'')+'</div>').join(''):'<div class="mu">No requests yet.</div>'}
+function renderIOutReq(snap){const b=$('v-iout');
+  if(snap&&$('rq-form')){document.querySelectorAll('#rq-rows .sorow').forEach(r=>{const s=r.querySelector('.rq-item'),v=s.value;s.innerHTML=reqOpts();s.value=v;rqAv(r)});$('rq-list').innerHTML=myReqHtml();wireCx();return}
+  b.innerHTML='<div class="card" id="rq-form"><b>Request stock out</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Choose what you need for your event. You can see how many are available. '+(INVCFG&&INVCFG.approverName?'<b>'+esc(INVCFG.approverName)+'</b> approves your request, then the stock is released.':'An approver has not been assigned yet. Ask HR to assign one in HR Admin.')+'</div><div class="grid"><div><label>Event Name</label><input id="rq-ev" list="dl-events" autocomplete="off"></div><div><label>Needed for / released to (optional)</label><input id="rq-to" autocomplete="off"></div></div><div id="rq-rows"></div><div class="row"><button type="button" id="rq-add">+ Add item</button></div><div style="margin-top:10px"><label>Note (optional)</label><input id="rq-note"></div><datalist id="dl-events"></datalist><div class="row"><button class="pri" id="rq-go">Send request for approval</button><span id="rq-msg"></span></div></div><div class="card"><b>My stock out requests</b><div id="rq-list" style="margin-top:6px"></div></div>';
+  rqAdd();fillDl();$('rq-list').innerHTML=myReqHtml();wireCx();$('rq-add').onclick=rqAdd;
+  $('rq-go').onclick=async()=>{const ev=$('rq-ev').value.trim().replace(/\s+/g,' ');if(!ev)return say('rq-msg','Enter the event name.');
+    const items=[],seen={};let n=0;for(const r of document.querySelectorAll('#rq-rows .sorow')){n++;const id=r.querySelector('.rq-item').value,qv=r.querySelector('.rq-qty').value.trim();if(!id&&!qv)continue;const ex=INV.find(i=>i.id===id),q=parseFloat(qv);
+      if(!ex)return say('rq-msg','Row '+n+': select the item.');if(!(q>0))return say('rq-msg','Row '+n+': enter the quantity.');if(seen[id])return say('rq-msg','Row '+n+': '+ex.name+' is already on another row.');if(q>ex.qty)return say('rq-msg','Row '+n+': only '+fq(ex.qty)+' '+ex.unit+' of '+ex.name+' available.');seen[id]=1;items.push({id:ex.id,name:ex.name,unit:ex.unit,qty:q})}
+    if(!items.length)return say('rq-msg','Add at least one item with a quantity.');
+    try{await addDoc(collection(DB,'stock_requests'),{event:ev,to:$('rq-to').value.trim(),note:$('rq-note').value.trim(),items,status:'pending',by:ME.uid,byName:ME.dir.name,at:Date.now(),approverUid:(INVCFG&&INVCFG.approverUid)||'',approverName:(INVCFG&&INVCFG.approverName)||''});
+      say('rq-msg','Sent ✓ Waiting for approval.',true);['rq-ev','rq-to','rq-note'].forEach(k=>{$(k).value=''});$('rq-rows').innerHTML='';rqAdd()}catch(e){say('rq-msg','Could not send: '+((e&&e.code)||'error'))}}}
+function wireCx(){document.querySelectorAll('#rq-list [data-cx]').forEach(b=>b.onclick=async()=>{if(!confirm('Cancel this request?'))return;try{await updateDoc(doc(DB,'stock_requests',b.dataset.cx),{status:'cancelled'})}catch(e){}})}
+/* ---- HR assigns the stock out approver ---- */
+let APPR=null;
+async function invApprCard(){if(!ME||!ME.isHR)return;const hr=$('v-hr');if(!hr||$('inv-appr'))return;
+  const c=document.createElement('div');c.className='card';c.id='inv-appr';
+  c.innerHTML='<b>Inventory: who approves stock out</b><div class="mu" style="font-size:12px;margin:2px 0 8px">The person you choose approves every stock out request. Until someone is assigned, HR approves.</div><div class="row" style="margin-top:0"><select id="ia-sel" style="max-width:320px"><option>Loading…</option></select><button class="pri" type="button" id="ia-save">Assign approver</button><span id="ia-msg"></span></div><div class="mu" style="font-size:12px;margin-top:6px" id="ia-cur"></div>';
+  hr.prepend(c);const cur=()=>{$('ia-cur').textContent=INVCFG&&INVCFG.approverName?'Current approver: '+INVCFG.approverName:'No approver assigned yet (HR approves for now).'};
+  try{if(!APPR){const s=await getDocs(query(collection(DB,'directory'),where('status','==','active')));APPR=s.docs.map(d=>({uid:d.id,name:d.data().name||d.data().email||d.id})).sort((a,b)=>a.name.localeCompare(b.name))}}catch(e){APPR=[]}
+  const sel=$('ia-sel');if(!sel)return;sel.innerHTML='<option value="">Select a person</option>'+APPR.map(p=>'<option value="'+escI(p.uid)+'"'+(INVCFG&&INVCFG.approverUid===p.uid?' selected':'')+'>'+esc(p.name)+'</option>').join('');cur();
+  $('ia-save').onclick=async()=>{const p=APPR.find(x=>x.uid===sel.value);if(!p)return say('ia-msg','Select a person.');try{await setDoc(doc(DB,'config','inv'),{approverUid:p.uid,approverName:p.name,by:ME.uid,at:Date.now()});say('ia-msg','Saved ✓ '+p.name+' now approves stock out.',true)}catch(e){say('ia-msg','Could not save: '+((e&&e.code)||'error'))}}}
+new MutationObserver(()=>{if(!$('inv-appr'))invApprCard()}).observe($('v-hr'),{childList:true});
 
 </script>
 </body>

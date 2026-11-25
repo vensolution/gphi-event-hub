@@ -13,6 +13,13 @@ service cloud.firestore {
       allow read, write: if signedIn() && request.auth.uid == uid;
     }
 
+    // the person HR assigned to approve inventory stock out (config/inv)
+    function isApprover() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/config/inv)
+        && get(/databases/$(database)/documents/config/inv).data.approverUid == request.auth.uid;
+    }
+
     // the ONE central HR account (can never be changed from the website)
     match /config/hr {
       allow get: if true;
@@ -87,14 +94,20 @@ service cloud.firestore {
     // inventory: any approved employee can read and encode; only HR can delete an item
     match /stock_items/{id} {
       allow read: if isActive();
-      allow create, update: if isActive()
+      allow create: if isActive()
         && request.resource.data.qty >= 0
         && request.resource.data.totalIn >= 0;
+      // lowering the quantity (stock out) is only for the approver (or HR)
+      allow update: if isActive()
+        && request.resource.data.qty >= 0
+        && request.resource.data.totalIn >= 0
+        && (request.resource.data.qty >= resource.data.qty || isApprover() || isHR());
       allow delete: if isHR();
     }
     match /stock_moves/{id} {
       allow read: if isActive();
-      allow create: if isActive() && request.resource.data.by == request.auth.uid;
+      allow create: if isActive() && request.resource.data.by == request.auth.uid
+        && (request.resource.data.type != 'out' || isApprover() || isHR());
       allow update, delete: if false;
     }
 
@@ -105,6 +118,35 @@ service cloud.firestore {
       allow update: if isActive() && request.resource.data.by == resource.data.by
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'nameKey', 'url', 'updatedAt', 'updatedBy', 'updatedByName', 'history']);
       allow delete: if isHR();
+    }
+
+    // stock out requests: any approved employee requests, the assigned approver (or HR) decides
+    match /stock_requests/{id} {
+      allow create: if isActive() && request.resource.data.by == request.auth.uid && request.resource.data.status == 'pending';
+      allow read: if isActive() && (resource.data.by == request.auth.uid || isApprover() || isHR());
+      allow update: if isActive() && (isApprover() || isHR()
+        || (resource.data.by == request.auth.uid && resource.data.status == 'pending' && request.resource.data.status == 'cancelled'));
+      allow delete: if isHR();
+    }
+    match /config/inv {
+      allow read: if isActive();
+      allow write: if isHR();
+    }
+
+    // who opened / copied each Assets/Links link (written by the person who opens it; read by HR and the person who encoded the link)
+    match /asset_views/{id} {
+      allow create: if isActive() && request.resource.data.uid == request.auth.uid;
+      allow read: if isHR() || (isActive() && resource.data.ownerUid == request.auth.uid);
+      allow update: if false;
+      allow delete: if isHR();
+    }
+
+    // liquidation reports: each person manages their own; HR can see and manage all
+    match /liquidations/{id} {
+      allow create: if isActive() && request.resource.data.by == request.auth.uid;
+      allow read: if isActive() && (resource.data.by == request.auth.uid || isHR());
+      allow update: if isActive() && (resource.data.by == request.auth.uid || isHR()) && request.resource.data.by == resource.data.by;
+      allow delete: if isActive() && (resource.data.by == request.auth.uid || isHR());
     }
 
     // team schedule: everyone approved can read; the person who encoded it (or HR) can edit or delete
