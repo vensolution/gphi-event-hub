@@ -54,11 +54,12 @@ table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px
 <!-- SPIN THE WHEEL -->
 <div id="v-wheel" hidden>
 <div id="nW" class="bn" hidden></div>
-<div class="tabs"><button id="tb-e" class="on">🎡 Events</button><button id="tb-t">🏷️ Merchandise Tiering</button></div>
+<div class="tabs"><button id="tb-e" class="on">🎡 Events</button><button id="tb-t">🏷️ Merchandise Tiering</button><button id="tb-d">📊 Event Data</button></div>
+<div id="pd" hidden></div>
 <div id="pe">
 <div class="hd"><div><h2>Events</h2><div class="m">Each event has its own spin link.</div></div><button class="gr" id="newE">+ New event</button></div>
 <div class="card" id="wf" hidden><h3 id="wft">New event</h3>
-<div class="g2"><div><label>Event / stakeholder name</label><input id="name"></div><div><label>Link code (auto if empty)</label><input id="code"></div><div><label>Start</label><input id="st" type="datetime-local"></div><div><label>End</label><input id="en" type="datetime-local"></div></div>
+<div class="g2"><div><label>Event name</label><input id="name"></div><div><label>Event location</label><input id="loc" placeholder="e.g. Brgy. 770, San Andres, Manila"></div><div class="m" style="grid-column:1/-1">Saved as: Event Name - Event Location</div><div><label>Link code (auto if empty)</label><input id="code"></div><div><label>Start</label><input id="st" type="datetime-local"></div><div><label>End</label><input id="en" type="datetime-local"></div></div>
 <div class="step"><i>2</i><b>Prizes</b></div><div style="max-width:420px;margin-bottom:8px"><label>Merchandise Tiering (optional) — tick one or more tiers to fill in the prizes below</label><div class="ms"><button type="button" id="tbtn">Select tiers ▾</button><div class="mp" id="tpn" hidden></div></div></div><div class="m">High Value = rarest, Low Value = most common. Stock is released gradually, and every prize keeps a reserve until the last 10% of the event, so no prize is empty on the wheel before then.</div><div id="pl"></div>
 <div style="margin-top:10px"><button class="g" id="ap">+ Add prize</button></div><div class="m" id="pv" style="margin-top:8px"></div>
 <div style="margin-top:14px"><button id="sv">Save event</button> <button class="g" id="cE">Cancel</button></div></div>
@@ -71,6 +72,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px
 <!-- PHYSICAL GAME TRACKER -->
 <div id="v-tracker" hidden>
 <div id="nT" class="bn" hidden></div>
+<div class="tabs"><button id="gt-g" class="on">🎯 Games</button><button id="gt-d">📊 Event Data</button></div><div id="gd" hidden></div><div id="gmain">
 <div class="hd"><div><h2>Physical games</h2><div class="m">Staff open a game's link to record players and the merch given.</div></div><button class="gr" id="newG">+ New game</button></div>
 <div class="card" id="gf" hidden><h3 id="gft">New game</h3>
 <div class="step" style="margin-top:0"><i>1</i><b>Name your game</b></div>
@@ -80,7 +82,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px
 <div><button id="gsv">Save game</button> <button class="g" id="cG">Cancel</button></div></div>
 <div class="card"><input id="gq" type="search" placeholder="🔍 Search games by name, date or link…" style="margin-bottom:10px"><div id="gl"></div></div>
 <div class="card"><h3>Players &amp; merch given</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><select id="gfl" style="max-width:300px"></select><input id="glq" type="search" placeholder="🔍 Search players (name, bybet, contact, merch…)" style="max-width:340px"></div><div id="gsum" style="margin-top:10px"></div><div class="sc" id="glg" style="margin-top:10px"></div></div>
-</div>
+</div></div>
 </div></div>
 
 <script src="config.js"></script>
@@ -117,14 +119,14 @@ $('pl').addEventListener('dragend',()=>{document.querySelectorAll('#pl .dg,#pl .
 const rd=()=>[...document.querySelectorAll('#pl .pr')].map(r=>({name:r.querySelector('.n').value.trim(),value:r.querySelector('.v').value,qty:+r.querySelector('.q').value})).filter(p=>p.name&&p.value&&p.qty>0);
 function pv(){const L=rd(),t=L.reduce((a,p)=>a+W(p),0);$('pv').textContent=L.length?'Base chance: '+L.map(p=>p.name+' '+(100*W(p)/t).toFixed(1)+'%').join(' · '):''}
 $('ap').onclick=()=>prow();
-function openE(v){$('wft').textContent=v?'Edit event':'New event';$('name').value=v?v.name:'';$('code').value=v?v.code:'';$('st').value=v?v.start:'';$('en').value=v?v.end:'';$('pl').innerHTML='';fillTsel();
+function openE(v){$('wft').textContent=v?'Edit event':'New event';{const i=v?v.name.lastIndexOf(' - '):-1;$('name').value=v?(i>0?v.name.slice(0,i):v.name):'';$('loc').value=v&&i>0?v.name.slice(i+3):''}$('code').value=v?v.code:'';$('st').value=v?v.start:'';$('en').value=v?v.end:'';$('pl').innerHTML='';fillTsel();
  const L=v?D.prizes.filter(p=>p.event==v.code):[];L.length?L.forEach(prow):prow();$('wf').hidden=false;note('nW','');$('wf').scrollIntoView({behavior:'smooth',block:'start'})}
 $('newE').onclick=()=>openE();$('cE').onclick=()=>{$('wf').hidden=true};
-$('sv').onclick=async()=>{const e={code:$('code').value||$('name').value,name:$('name').value.trim(),start:$('st').value,end:$('en').value,prizes:rd()};
+$('sv').onclick=async()=>{const nm0=$('name').value.trim(),lc0=($('loc').value||'').trim();if(!lc0&&$('wft').textContent=='New event')return note('nW','Please enter the event location.');const full=lc0?nm0+' - '+lc0:nm0;const e={code:$('code').value||full,name:full,start:$('st').value,end:$('en').value,prizes:rd()};
  if(!e.name||!e.start||!e.end||!e.prizes.length)return note('nW','Please enter the name, start, end and at least one prize.');
  const d=await call({action:'save',event:e});if(d.error)return note('nW',d.error);$('wf').hidden=true;note('nW','✔ Event saved. Link: '+wlink(d.code),1);await load()};
 function render(){
- $('ev').innerHTML=D.events.slice().reverse().filter(e=>hit($('evq').value,e.name,e.code,e.start,e.end)).map(e=>'<div class="it"><div><b>'+esc(e.name)+'</b>'+badge(e.start,e.end)+'<div class="m">'+fdt(e.start)+' → '+fdt(e.end)+'</div><div class="lk">'+esc(wlink(e.code))+'</div></div><div class="bt"><button data-copy="'+esc(wlink(e.code))+'">Copy link</button><a class="bb g" href="'+esc(wlink(e.code))+'" target="_blank">Open</a><a class="bb g" href="'+esc(wlink(e.code))+'&kiosk=1" target="_blank">Kiosk</a><button class="g" data-e="'+esc(e.code)+'">Edit</button><button class="g" data-rp="'+esc(e.code)+'">Post Event Report</button></div></div>').join('')||'<div class="m">'+($('evq').value?'No matching events.':'No events yet. Click “+ New event” to create one.')+'</div>';
+ $('ev').innerHTML=liveFirst(D.events.slice().reverse()).filter(e=>hit($('evq').value,e.name,e.code,e.start,e.end)).map(e=>'<div class="it"><div><b>'+esc(e.name)+'</b>'+badge(e.start,e.end)+'<div class="m">'+fdt(e.start)+' → '+fdt(e.end)+'</div><div class="lk">'+esc(wlink(e.code))+'</div></div><div class="bt"><button data-copy="'+esc(wlink(e.code))+'">Copy link</button><a class="bb g" href="'+esc(wlink(e.code))+'" target="_blank">Open</a><a class="bb g" href="'+esc(wlink(e.code))+'&kiosk=1" target="_blank">Kiosk</a><button class="g" data-e="'+esc(e.code)+'">Edit</button><button class="g hl" data-ed="'+esc(e.code)+'">📋 Event Details</button><button class="g" data-rp="'+esc(e.code)+'">Post Event Report</button><button class="g" data-lq="w:'+esc(e.code)+'">🧾 Liquidation</button></div></div>').join('')||'<div class="m">'+($('evq').value?'No matching events.':'No events yet. Click “+ New event” to create one.')+'</div>';
  const cur=$('fl').value;$('fl').innerHTML='<option value="">All events</option>'+D.events.map(e=>'<option value="'+esc(e.code)+'">'+esc(e.name)+'</option>').join('');$('fl').value=cur;spins();games()}
 function spins(){const f=$('fl').value,L=D.spins.filter(s=>(!f||s.event==f)&&hit($('spq').value,s.fullname,s.username,s.contact,s.team,s.prize,s.age,s.event,s.status)).reverse();
  $('sp').innerHTML=L.length?'<table><tr><th>Time</th><th>Event</th><th>bybet</th><th>Name</th><th>Age</th><th>Team</th><th>Contact</th><th>Prize</th><th>Status</th></tr>'+L.map(s=>'<tr><td>'+esc(s.time)+'</td><td>'+esc(s.event)+'</td><td>'+esc(s.username)+'</td><td>'+esc(s.fullname)+'</td><td>'+esc(s.age)+'</td><td>'+esc(s.team)+'</td><td>'+esc(s.contact)+'</td><td><b>'+esc(s.prize)+'</b></td><td><button class="g" data-r="'+s.row+'" data-s="'+esc(s.status)+'">'+esc(s.status)+'</button></td></tr>').join('')+'</table>':'<div class="m">No spins yet.</div>'}
@@ -159,8 +161,8 @@ $('tl').onclick=e=>{const b=e.target.closest('button');if(!b)return;const c=b.cl
  else if(b.dataset.s){const ok=tcommit(),s=c.querySelector('.m.ok');tiers();const n=document.querySelector('#tl .m.ok');n.textContent=ok?'✔ Saved':'Could not save (browser storage blocked)';setTimeout(()=>n.textContent='',2500)}};
 $('tl').addEventListener('change',()=>{tcommit();const T=tload(),c=document.querySelector('#tl .tc');document.querySelector('#sub .on').textContent=TIERLIST.find(x=>x.id==CT).tab+' ('+(T[CT]||[]).length+')'});
 /* wheel tabs */
-function wtab(n){if(n!='t'&&!$('pt').hidden)tcommit();$('pe').hidden=n=='t';$('pt').hidden=n!='t';$('tb-e').classList.toggle('on',n!='t');$('tb-t').classList.toggle('on',n=='t');try{sessionStorage.wtab=n}catch(e){}if(n=='t')tiers()}
-$('tb-e').onclick=()=>wtab('e');$('tb-t').onclick=()=>wtab('t');
+function wtab(n){if(n!='t'&&!$('pt').hidden)tcommit();$('pe').hidden=n=='t'||n=='d';$('pt').hidden=n!='t';$('pd').hidden=n!='d';$('tb-d').classList.toggle('on',n=='d');$('tb-e').classList.toggle('on',n!='t'&&n!='d');$('tb-t').classList.toggle('on',n=='t');try{sessionStorage.wtab=n=='d'?'e':n}catch(e){}if(n=='t')tiers();if(n=='d')edata('w')}
+$('tb-e').onclick=()=>wtab('e');$('tb-t').onclick=()=>wtab('t');$('tb-d').onclick=()=>wtab('d');
 if(sessionStorage.wtab=='t')wtab('t');
 /* multi-tier picker in the event form */
 const TSEL=new Set();
@@ -196,10 +198,10 @@ $('gsv').onclick=async()=>{const g={code:$('gcode').value||$('gname').value,name
  if(!g.name||!g.merch.length)return note('nT','Please enter the game name and at least one merch item with a quantity.');
  const d=await call({action:'gamesave',game:g});if(d.error)return note('nT',d.error);$('gf').hidden=true;note('nT','✔ Game saved. Tracker link: '+tlink(d.code),1);await load()};
 function games(){
- $('gl').innerHTML=D.games.slice().reverse().filter(g=>hit($('gq').value,g.name,g.code,g.start,g.end)).map(g=>{const M=D.gmerch.filter(m=>m.game==g.code);
+ $('gl').innerHTML=liveFirst(D.games.slice().reverse()).filter(g=>hit($('gq').value,g.name,g.code,g.start,g.end)).map(g=>{const M=D.gmerch.filter(m=>m.game==g.code);
   return '<div class="it"><div><b>'+esc(g.name)+'</b>'+(g.start||g.end?badge(g.start,g.end):'')+(g.start?'<div class="m">'+fdt(g.start)+(g.end?' → '+fdt(g.end):'')+'</div>':'')+'<div class="lk">'+esc(tlink(g.code))+'</div>'+
   '<div class="stk">'+(M.map(m=>'<span'+(m.rem<=3?' class="low"':'')+'>'+esc(m.name)+': '+(m.rem<=0?'OUT':m.rem+' left')+'</span>').join('')||'<span>No merch</span>')+'</div></div>'+
-  '<div class="bt"><button data-copy="'+esc(tlink(g.code))+'">Copy link</button><a class="bb g" href="'+esc(tlink(g.code))+'" target="_blank">Open</a><button class="g" data-g="'+esc(g.code)+'">Edit</button><button class="g" data-rpg="'+esc(g.code)+'">Post Event Report</button></div></div>'}).join('')||'<div class="m">'+($('gq').value?'No matching games.':'No games yet. Click “+ New game” to create one.')+'</div>';
+  '<div class="bt"><button data-copy="'+esc(tlink(g.code))+'">Copy link</button><a class="bb g" href="'+esc(tlink(g.code))+'" target="_blank">Open</a><button class="g" data-g="'+esc(g.code)+'">Edit</button><button class="g hl" data-gd="'+esc(g.code)+'">📋 Event Details</button><button class="g" data-rpg="'+esc(g.code)+'">Post Event Report</button><button class="g" data-lq="g:'+esc(g.code)+'">🧾 Liquidation</button></div></div>'}).join('')||'<div class="m">'+($('gq').value?'No matching games.':'No games yet. Click “+ New game” to create one.')+'</div>';
  const cur=$('gfl').value;$('gfl').innerHTML='<option value="">All games</option>'+D.games.map(g=>'<option value="'+esc(g.code)+'">'+esc(g.name)+'</option>').join('');$('gfl').value=cur;glog()}
 function glog(){const f=$('gfl').value,L=D.glog.filter(l=>(!f||l.game==f)&&hit($('glq').value,l.fullname,l.username,l.contact,l.team,l.merch,l.note,l.age,l.game)).reverse();
  if(f){const M=D.gmerch.filter(m=>m.game==f),P=new Set(D.glog.filter(l=>l.game==f&&!/^VOID/.test(l.note)).map(l=>l.username.toLowerCase()));
@@ -215,6 +217,63 @@ $('gl').onclick=e=>{const c=e.target.dataset.g;if(c)openG(D.games.find(x=>x.code
   openPostEventReport({key:'g:'+r,name:v.name,date:d,total:P.length,over21:o,under21:u,unknown:k,totalLabel:'Total actual participants (players recorded)'})}};
 $('glg').onclick=async e=>{const r=e.target.dataset.v;if(!r||!confirm('Void this entry? The merch goes back into stock.'))return;await call({action:'gamevoid',row:r});load()};
 $('evq').oninput=render;$('spq').oninput=spins;$('gq').oninput=games;$('glq').oninput=glog;
+</script>
+<script>
+/* ===== additions: live events first, Event Details tile, Event Data tab ===== */
+(function(){
+var st=document.createElement('style');st.textContent='button.hl,.bb.hl{background:#dcfce7;color:#166534;box-shadow:inset 0 0 0 2px #16a34a}.bd.live{animation:lv 1.6s infinite}@keyframes lv{50%{opacity:.55}}@media(prefers-reduced-motion:reduce){.bd.live{animation:none}}'+
+'.ds{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.ds div{flex:1 1 120px;background:#9aa3b522;border-radius:10px;padding:10px 12px}.ds b{display:block;font-size:22px}.ds span{font-size:12px;opacity:.75}'+
+'tr.u21 td{background:#fee2e2}.dmo{position:fixed;inset:0;background:#0008;z-index:60;display:flex;align-items:center;justify-content:center;padding:14px}.dmo>div{background:var(--c);color:var(--t);border-radius:16px;padding:18px;max-width:560px;width:100%;max-height:88vh;overflow:auto}'+
+'#per-box select{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid #ccc;border-radius:8px;font:inherit}.dmo dl{display:grid;grid-template-columns:150px 1fr;gap:6px 10px;margin:12px 0}.dmo dt{opacity:.7;font-weight:700}.dmo dd{margin:0;word-break:break-word}';
+document.head.appendChild(st);
+window.isLive=function(s,e){var n=Date.now(),a=s?new Date(s).getTime():0,b=e?new Date(e).getTime():Infinity;return n>=a&&n<=b};
+window.liveFirst=function(a){return a.map(function(x,i){return[x,i]}).sort(function(p,q){return(isLive(q[0].start,q[0].end)?1:0)-(isLive(p[0].start,p[0].end)?1:0)||p[1]-q[1]}).map(function(x){return x[0]})};
+function ages(L){var o=0,u=0,k=0;L.forEach(function(s){var a=parseInt(s.age,10);if(isNaN(a)||a<=0)k++;else if(a>=21)o++;else u++});return{o:o,u:u,k:k}}
+function copy(t,b){try{navigator.clipboard.writeText(t);b.textContent='Copied ✓'}catch(e){b.textContent='Copy failed'}setTimeout(function(){b.textContent='Copy link'},1400)}
+function modal(html){var m=document.createElement('div');m.className='dmo';m.innerHTML='<div>'+html+'</div>';m.onclick=function(e){if(e.target===m||e.target.dataset.x)m.remove()};document.body.appendChild(m);return m}
+function rowsFor(kind){
+ if(kind=='w')return D.events.map(function(e){var L=D.spins.filter(function(s){return s.event==e.code}),a=ages(L);return{date:String(e.start||'').slice(0,10),name:e.name,code:e.code,total:L.length,o:a.o,u:a.u,k:a.k,live:isLive(e.start,e.end)}});
+ return D.games.map(function(g){var seen={},L=D.glog.filter(function(l){if(/^VOID/.test(l.note||''))return false;var u=String(l.username||l.fullname||'').toLowerCase();if(seen[u])return false;seen[u]=1;return true}),a=ages(L);return{date:String(g.start||'').slice(0,10),name:g.name,code:g.code,total:L.length,o:a.o,u:a.u,k:a.k,live:isLive(g.start,g.end)}});
+}
+var EQ={w:'',g:'',wu:false,gu:false},SYNC=null;
+window.edata=function(kind){
+ var box=document.getElementById(kind=='w'?'pd':'gd');if(!box)return;
+ var q=EQ[kind].toLowerCase(),only=EQ[kind+'u'];
+ var all=rowsFor(kind).sort(function(a,b){return(b.live?1:0)-(a.live?1:0)||(a.date<b.date?1:a.date>b.date?-1:0)});
+ var R=all.filter(function(r){return(!q||(r.name+r.date+r.code).toLowerCase().includes(q))&&(!only||r.u>0)});
+ var T=R.reduce(function(a,r){a.t+=r.total;a.o+=r.o;a.u+=r.u;a.k+=r.k;return a},{t:0,o:0,u:0,k:0});
+ box.innerHTML='<div class="hd"><div><h2>Event Data</h2><div class="m">'+(kind=='w'?'Players per Spin the Wheel event':'Players per physical game')+'. Read live from your Google Sheet'+(SYNC?' · updated '+SYNC.toLocaleTimeString():'')+'.</div></div><div><button class="g" data-ref>↻ Refresh from sheet</button> <button class="g" data-csv>Download CSV</button></div></div>'+
+ '<div class="ds"><div><b>'+R.length+'</b><span>Events</span></div><div><b>'+T.t+'</b><span>Total FTD\'s</span></div><div><b>'+T.o+'</b><span>21+</span></div><div><b style="color:#b91c1c">'+T.u+'</b><span>Below 21</span></div><div><b>'+T.k+'</b><span>Age not given</span></div></div>'+
+ '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px"><input type="search" data-q placeholder="🔍 Search event name or date…" value="'+esc(EQ[kind])+'" style="max-width:340px"><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" data-u style="width:auto"'+(only?' checked':'')+'> Only events with players below 21</label></div>'+
+ '<div class="sc"><table><tr><th>Date</th><th>Event name</th><th>Total FTD\'s</th><th>21+</th><th>Below 21</th></tr>'+(R.map(function(r){return'<tr'+(r.u?' class="u21"':'')+'><td>'+esc(r.date)+'</td><td>'+esc(r.name)+(r.live?' <span class="bd live">Live</span>':'')+'</td><td>'+r.total+'</td><td>'+r.o+'</td><td>'+(r.u?'<b>'+r.u+'</b>':0)+'</td></tr>'}).join('')||'<tr><td colspan="5" class="m">No events match.</td></tr>')+'</table></div>';
+ var qi=box.querySelector('[data-q]');qi.oninput=function(){EQ[kind]=qi.value;var p=qi.selectionStart;edata(kind);var n=box.querySelector('[data-q]');n.focus();n.setSelectionRange(p,p)};
+ box.querySelector('[data-u]').onchange=function(e){EQ[kind+'u']=e.target.checked;edata(kind)};
+ box.querySelector('[data-ref]').onclick=function(e){e.target.textContent='Refreshing…';load()};
+ box.querySelector('[data-csv]').onclick=function(){var c=[['Date','Event name',"Total FTD's",'21+','Below 21']].concat(R.map(function(r){return[r.date,r.name,r.total,r.o,r.u]})).map(function(r){return r.map(function(x){return'"'+String(x).replace(/"/g,'""')+'"'}).join(',')}).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='event-data.csv';a.click()};
+};
+var _r=window.render;window.render=render=function(){_r();SYNC=new Date();if(!document.getElementById('pd').hidden)edata('w');if(!document.getElementById('gd').hidden)edata('g')};
+function gtab(n){document.getElementById('gmain').hidden=n=='d';document.getElementById('gd').hidden=n!='d';document.getElementById('gt-g').classList.toggle('on',n!='d');document.getElementById('gt-d').classList.toggle('on',n=='d');if(n=='d')edata('g')}
+document.getElementById('gt-g').onclick=function(){gtab('g')};document.getElementById('gt-d').onclick=function(){gtab('d')};
+window.__pr={get:function(k){try{return JSON.parse(localStorage.getItem('per_promoter_'+k)||'{}')}catch(e){return{}}},set:function(k,v){try{localStorage.setItem('per_promoter_'+k,JSON.stringify(v))}catch(e){}}};
+function mdy2(iso){var p=String(iso||'').split('-');return p.length===3?p[1]+'/'+p[2]+'/'+p[0]:''}
+function venueOf(name){try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k.indexOf('per_draft_'+name+'_')===0){var v=JSON.parse(localStorage.getItem(k)||'{}').venue;if(v)return v}}}catch(e){}return''}
+function details(kind,code){
+ var it=(kind=='w'?D.events:D.games).find(function(x){return x.code==code});if(!it)return;
+ var r=rowsFor(kind).find(function(x){return x.code==code}),key=(kind=='w'?'e:':'g:')+code,st=window.__perStatus?window.__perStatus(key):{},PR=window.__pr.get(key);
+ var date=r.date||new Date().toLocaleDateString('en-CA'),venue=venueOf(it.name),nm=(mdy2(date)+'-'+it.name+'-'+(venue||'LOCATION')).toUpperCase().replace(/\s+/g,' ');
+ var who=[PR.name,PR.user?'@'+String(PR.user).replace(/^@/,''):''].filter(Boolean).join(' / ')+(PR.type&&(PR.name||PR.user)?' ('+PR.type+')':'');
+ var F=[['EVENT DATE',mdy2(date)],['EVENT NAME (DATE-NAME OF THE EVENT-LOCATION OF THE EVENT)',nm],['POST EVENT LINK',st.sheetUrl||''],['EVENT PHOTO LINK',st.folderUrl||''],['EVENT PROMOTER\u2019S PHOTO LINK',PR.docUrl||PR.photo||''],['PROMOTER NAME AND USERNAME',who],['ACTUAL NO. OF PARTICIPANTS',String(r.total)]];
+ var msg=F.map(function(f){return f[0].replace(/ \(DATE-.*\)/,'')+': '+(f[1]||'')}).join('\n');
+ var rows=F.map(function(f,i){var v=f[1];return'<dt>'+esc(f[0])+'</dt><dd>'+(v?(/^https?:/.test(v)?'<a href="'+esc(v)+'" target="_blank" class="lk">'+esc(v)+'</a>':esc(v)):'<span class="m">'+(i==2||i==3?'Not available yet. Send the Post Event Report first.':i>=4&&i<6?'Add it in Post Event Report \u2192 Promoter\u2019s Details.':'\u2014')+'</span>')+(v?' <button class="g" data-c="'+i+'" style="padding:3px 8px;font-size:12px">Copy</button>':'')+'</dd>'}).join('');
+ var m=modal('<div class="hd"><h2>Event Details</h2><button class="g" data-x="1">Close</button></div><div><b>'+esc(it.name)+'</b> '+badge(it.start,it.end)+'</div><dl>'+rows+''+'</dl><div style="display:flex;gap:6px;flex-wrap:wrap"><button id="cpall">📋 Copy for message</button><button class="g" data-x="1" id="oprp">Open Post Event Report</button></div><div class="m" id="cpm" style="margin-top:8px"></div>');
+ m.querySelectorAll('[data-c]').forEach(function(b){b.onclick=function(){navigator.clipboard.writeText(F[+b.dataset.c][1]);b.textContent='Copied ✓'}});
+ m.querySelector('#cpall').onclick=function(){try{navigator.clipboard.writeText(msg);m.querySelector('#cpm').textContent='Copied. Paste it in your message.'}catch(e){m.querySelector('#cpm').textContent='Copy failed.'}};
+ m.querySelector('#oprp').onclick=function(){var b=document.querySelector('['+(kind=='w'?'data-rp':'data-rpg')+'="'+code+'"]');if(b)b.click()};
+}
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-lq]');if(!t)return;var a=t.dataset.lq.split(':'),it=(a[0]=='w'?D.events:D.games).find(function(x){return x.code==a[1]});if(!it)return;
+ if(window.parent!==window)window.parent.postMessage({type:'gphi-liquidation',event:it.name,date:String(it.start||'').slice(0,10)},location.origin);else alert('Open Event Hub and use the Liquidation tile.')});
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-ed],[data-gd]');if(!t)return;details(t.dataset.ed?'w':'g',t.dataset.ed||t.dataset.gd)});
+})();
 </script>
 <script>
 /**
@@ -309,6 +368,7 @@ var PER_CONFIG = {
 
   /* ---- SENT / PENDING badges next to every "Post Event Report" button ---- */
   var PER_STATUS = {}, statusLoaded = false, statusBusy = false, statusAt = 0;
+  window.__perStatus = function (k) { return PER_STATUS[k] || {}; };
   function perApply() {
     if (!statusLoaded) return;
     [].forEach.call(document.querySelectorAll('[data-rp],[data-rpg]'), function (b) {
@@ -392,6 +452,7 @@ var PER_CONFIG = {
     try { s = JSON.parse(localStorage.getItem(draftKey(ev)) || '{}'); } catch (e) {}
     var t = today(), photos = [], busy = false, sentOnce = false;
     var key = ev.key || (ev.name + '|' + ev.date), L = Object.assign({}, PER_STATUS[key] || {});
+    var PR = window.__pr.get(key);
 
     var p1 =
       text('name', 'Event Name', ev.name, 'text', true) +
@@ -413,6 +474,14 @@ var PER_CONFIG = {
       text('interested', 'Participants interested in becoming promoters', s.interested || 0, 'number') +
       text('newRegistered', 'New promoters successfully registered', s.newRegistered || 0, 'number') +
       text('newActive', 'New promoters who actively participated', s.newActive || 0, 'number') +
+
+      '<h3>PROMOTER\u2019S DETAILS <span style="font-weight:400;color:#666">(shown in Event Details only, not sent to the Google Sheet)</span></h3>' +
+      text('prName', 'Promoter\u2019s name', PR.name) + text('prUser', 'Promoter\u2019s username', PR.user) +
+      '<label>Promoter type</label><select id="per-prType"><option value="">Select\u2026</option><option' + (PR.type === 'Old' ? ' selected' : '') + '>Old</option><option' + (PR.type === 'New' ? ' selected' : '') + '>New</option></select>' +
+      text('prPhoto', 'Promoter\u2019s photo link (optional, filled in automatically when you create the Doc)', PR.docUrl || PR.photo) +
+      '<label>Promoter\u2019s photos</label><div class="drop" id="per-pdrop"><div class="big">\uD83D\uDCF7 Add promoter\u2019s photos</div><div class="m">Tap, or drag and drop them here</div><input type="file" id="per-pfile" accept="image/*" multiple hidden></div>' +
+      '<div id="per-pgrid" class="grid"></div><div class="m" id="per-pmsg"></div>' +
+      '<div class="btns" style="margin-top:6px"><button type="button" class="sav" id="per-pdoc">Create promoter photo Google Doc</button></div><div class="lnks" id="per-plink"></div>' +
 
       '<h3>III. BARANGAY FEEDBACK AND COMMUNITY RESPONSE</h3>' +
       text('brgyRep', 'Name and position of the barangay representative', s.brgyRep || 'NA') +
@@ -505,6 +574,59 @@ var PER_CONFIG = {
     ['dragleave', 'drop'].forEach(function (n) { $('per-drop').addEventListener(n, function (e) { e.preventDefault(); this.classList.remove('over'); }); });
     $('per-drop').addEventListener('drop', function (e) { addFiles(e.dataTransfer.files); });
 
+    /* ---------- promoter photos -> Google Doc (same Photo Documentation format) ---------- */
+    var pPhotos = [];
+    function renderP() {
+      $('per-pgrid').innerHTML = pPhotos.map(function (p, i) { return '<div class="th"><img src="' + p.url + '" alt=""><span class="no">' + (i + 1) + '</span><div class="tb"><button type="button" data-prm="' + i + '">\u2715</button></div></div>'; }).join('');
+      var o = window.__pr.get(key);
+      $('per-plink').innerHTML = (o.docUrl ? '<a class="lnk" target="_blank" rel="noopener" href="' + esc(o.docUrl) + '">\uD83D\uDC64 Promoter photo Doc</a>' : '') + (o.folderUrl ? '<a class="lnk" target="_blank" rel="noopener" href="' + esc(o.folderUrl) + '">\uD83D\uDCC1 Promoter photos folder</a>' : '');
+    }
+    async function addP(list) {
+      var files = [].slice.call(list).filter(function (f) { return /^image\//.test(f.type) || /\.(jpe?g|png|webp|heic)$/i.test(f.name); }), bad = 0;
+      for (var i = 0; i < files.length; i++) {
+        if (pPhotos.length >= PER_CONFIG.MAX_PHOTOS) { $('per-pmsg').textContent = 'Maximum ' + PER_CONFIG.MAX_PHOTOS + ' photos.'; break; }
+        $('per-pmsg').textContent = 'Preparing photo ' + (i + 1) + ' of ' + files.length + '...';
+        try { var b = await shrink(files[i]); pPhotos.push({ blob: b, url: URL.createObjectURL(b) }); } catch (e) { bad++; }
+        renderP();
+      }
+      $('per-pmsg').textContent = bad ? bad + ' photo(s) could not be read (try JPG or PNG).' : (pPhotos.length ? pPhotos.length + ' promoter photo' + (pPhotos.length > 1 ? 's' : '') + ' ready.' : '');
+      $('per-pfile').value = '';
+    }
+    $('per-pdrop').onclick = function () { $('per-pfile').click(); };
+    $('per-pfile').onchange = function (e) { addP(e.target.files); };
+    ['dragover', 'dragenter'].forEach(function (n) { $('per-pdrop').addEventListener(n, function (e) { e.preventDefault(); this.classList.add('over'); }); });
+    ['dragleave', 'drop'].forEach(function (n) { $('per-pdrop').addEventListener(n, function (e) { e.preventDefault(); this.classList.remove('over'); }); });
+    $('per-pdrop').addEventListener('drop', function (e) { addP(e.dataTransfer.files); });
+    async function makePDoc() {
+      var pm = $('per-pmsg');
+      if (!val('prName')) { pm.textContent = 'Enter the promoter\u2019s name first.'; return; }
+      if (!pPhotos.length) { pm.textContent = 'Add at least one promoter photo first.'; return; }
+      $('per-pdoc').disabled = true;
+      try {
+        var fu = (window.__perStatus && window.__perStatus(key).folderUrl) || '';
+        pm.textContent = 'Creating promoter folder...';
+        var f = await postRetry({ action: 'promoterFolder', eventName: ev.name, eventDateText: mdy(ev.date), parentFolderUrl: fu, promoter: val('prName') }, 1);
+        for (var i = 0; i < pPhotos.length; i++) {
+          pm.textContent = 'Uploading promoter photos (' + (i + 1) + ' of ' + pPhotos.length + ')...';
+          await postRetry({ action: 'promoterPhoto', folderId: f.folderId, index: i + 1, replace: i === 0, mime: 'image/jpeg', data: await toB64(pPhotos[i].blob) }, 2);
+        }
+        pm.textContent = 'Creating Google Doc...';
+        var d = await postRetry({ action: 'promoterDoc', folderId: f.folderId, eventName: ev.name, location: val('venue'), dateLong: longDate(ev.date), promoterName: val('prName'), promoterUser: val('prUser'), promoterType: $('per-prType').value }, 1);
+        var o = window.__pr.get(key); o.docUrl = d.docUrl; o.folderUrl = f.folderUrl || ''; window.__pr.set(key, o);
+        $('per-prPhoto').value = d.docUrl; renderP();
+        pm.innerHTML = '<span class="okk">\u2705 Promoter photo Doc created. Its link is now in Event Details.</span>';
+      } catch (e) {
+        pm.innerHTML = '<span class="bad">Could not create the Doc: ' + esc(e.message) + '. If it says unknown action, add promoter-doc.gs to your Apps Script and redeploy.</span>';
+      }
+      $('per-pdoc').disabled = false;
+    }
+    ov.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.prm != null) { var k = Number(b.dataset.prm); URL.revokeObjectURL(pPhotos[k].url); pPhotos.splice(k, 1); renderP(); }
+      else if (b.id === 'per-pdoc') makePDoc();
+    });
+    renderP();
+
     /* ---------- data ---------- */
     function collect() {
       return {
@@ -590,6 +712,8 @@ var PER_CONFIG = {
     /* ---------- events ---------- */
     var origText = {};
     ov.addEventListener('input', function (e) { e.target.classList && e.target.classList.remove('err'); });
+    function savePr() { var o = window.__pr.get(key); o.name = val('prName'); o.user = val('prUser'); o.type = $('per-prType').value; o.photo = val('prPhoto'); window.__pr.set(key, o); }
+    ov.addEventListener('input', savePr); ov.addEventListener('change', savePr);
     ov.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
       if (b.dataset.tab) { showTab(Number(b.dataset.tab)); return; }

@@ -79,12 +79,15 @@ function liveSpin(resP,fail,done){
    const c=((p.a0+p.t/2)+Math.PI/2)*180/Math.PI,j=(Math.random()-.5)*p.t*180/Math.PI*.7,ang=(360-c)+j,base=rot+1800,target=base+(((ang-base)%360)+360)%360;
    ease(target,3*(target-rot)/V*1000,()=>done(res.prize));return}
   rot+=spd*dt;setRot();tk();requestAnimationFrame(f)})(t0)}
+let retried=false;
+/* if a prize runs out, take it off the wheel and keep the game going */
+function refreshWheel(){return fetch(API+'?e='+encodeURIComponent(q),{cache:'no-store'}).then(r=>r.json()).then(d=>{if(d&&!d.error&&d.status=='live'&&d.prizes){if(!d.prizes.length){$('s').textContent='All prizes have been claimed.';$('main').hidden=true;return d}const a=P.map(x=>x.name).join('|'),b=d.prizes.map(x=>x.name).join('|');if(a!==b){P=d.prizes;draw()}try{localStorage['ev_'+q]=JSON.stringify(d)}catch(e){}}return d}).catch(()=>null)}
 $('go').onclick=()=>{
  if(busy)return;if(!navigator.onLine){$('err2').textContent='No internet connection. Please reconnect, then tap SPIN again.';return}
  ac();const b={action:'spin',e:q,username:$('u').value,fullname:$('n').value,age:$('a').value,contact:$('c').value.replace(/\D/g,''),team:$('tm').value};$('err2').textContent='';
  busy=$('go').disabled=true;start();
  const resP=fetch(API,{method:'POST',body:JSON.stringify(b)}).then(r=>r.json());
- liveSpin(resP,m=>{busy=$('go').disabled=false;if(/already|nakapag|one spin/i.test(m)){$('st2').hidden=true;$('fm').hidden=false;$('err').textContent='⛔ Already registered. '+m;return}$('err2').textContent=m},pz=>{ladd($('u').value.trim(),$('c').value.replace(/\D/g,''));fanfare();conf();$('pz').textContent=pz;$('go').hidden=$('bk').hidden=true;$('res').style.display='block';if(KIOSK)$('nx').hidden=false})};
+ liveSpin(resP,m=>{busy=$('go').disabled=false;if(/already|nakapag|one spin/i.test(m)){$('st2').hidden=true;$('fm').hidden=false;$('err').textContent='⛔ Already registered. '+m;return}if(/out of stock|no stock|sold out|ubos|naubos|none left|unavailable|not available|no prize|claimed|ran out/i.test(m)&&!retried){retried=true;$('err2').textContent='A prize just ran out. Updating the wheel…';refreshWheel().then(()=>{$('err2').textContent='';if(!$('main').hidden)$('go').onclick()});return}$('err2').textContent=m},pz=>{ladd($('u').value.trim(),$('c').value.replace(/\D/g,''));fanfare();conf();retried=false;refreshWheel();$('pz').textContent=pz;$('go').hidden=$('bk').hidden=true;$('res').style.display='block';if(KIOSK)$('nx').hidden=false})};
 /* wake the server while the player fills in the form */
 let pinged=false;const ping=()=>{if(pinged)return;pinged=true;fetch(API+'?ping=1',{cache:'no-store'}).catch(()=>{})};
 $('fm').addEventListener('focusin',ping);$('fm').addEventListener('input',ping);
