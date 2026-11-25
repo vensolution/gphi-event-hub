@@ -7,7 +7,8 @@ function doPost(e) {
   return ContentService.createTextOutput('ignored');
 }
 function handleLiquidation_(data) {
-  var sh = SpreadsheetApp.getActive().getSheetByName('LIQUIDATION') || SpreadsheetApp.getActive().insertSheet('LIQUIDATION');
+  var name = data.sheet || 'LIQUIDATION';   // 'LIQUIDATION' (Liquidation module) or 'EVENT LIQUIDATION' (inside Event Games)
+  var sh = SpreadsheetApp.getActive().getSheetByName(name) || SpreadsheetApp.getActive().insertSheet(name);
   var rows = data.rows;                       // first row = headers, then one row per expense
   var all = sh.getDataRange().getValues();
   if (all.length < 1 || all[0][0] === '') { sh.getRange(1, 1, 1, rows[0].length).setValues([rows[0]]); all = sh.getDataRange().getValues(); }

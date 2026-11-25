@@ -170,6 +170,8 @@ body:has(:is(#gatecard,#acctform):not([hidden])){background:#0e1217 radial-gradi
 .app:has(:is(#login,#verify,#gatecard,#acctform):not([hidden])) .topbar{display:none}
 .gfr{display:block;width:100%;height:calc(100vh - 92px);min-height:520px;border:0;border-radius:12px;background:#fff}
 body:has(#v-gadm:not([hidden])) .wrap.main{max-width:none}
+.elq{position:fixed;inset:0;z-index:60;background:#0009;overflow:auto;padding:16px;display:flex;justify-content:center;align-items:flex-start}.elq[hidden]{display:none}.elq .eb{background:var(--bg);border:1px solid var(--bd);border-radius:14px;padding:16px;width:100%;max-width:1150px}
+.app:has(:is(#login,#verify,#gatecard,#acctform):not([hidden])) #v-none{display:none}
 </style>
 </head>
 <body>
@@ -177,14 +179,15 @@ body:has(#v-gadm:not([hidden])) .wrap.main{max-width:none}
 <aside class="sb noprint">
 <div class="sb-logo"><img class="glogo" alt="Global PlayHub"></div>
 <div class="sb-user"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div><b>Event Hub</b><span id="who">Loading…</span></div></div>
-<div class="mods" id="mods"><button type="button" data-mod="hr" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg><span class="lbl">HR FORMS</span></button><button type="button" data-mod="inv"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7.5L12 12.5l8.7-5M12 22V12.5"/></svg><span class="lbl">INVENTORY</span><span class="nbadge" id="inv-n" hidden></span></button><button type="button" data-mod="sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">ASSETS/LINKS</span></button><button type="button" data-mod="gam"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg><span class="lbl">EVENT GAMES</span></button></div>
-<nav class="tabs" hidden><div class="navg" data-g="hr"><button id="t-enc" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg><span class="lbl">Encode / Request</span></button><button id="t-ob"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="lbl">Official Business Form</span></button><button id="t-ot"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="lbl">Overtime</span></button><button id="t-rd"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">RD OT Form</span></button><button id="t-chg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="lbl">Change Schedule/OFF</span></button><button id="t-ntf"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="lbl">Notifications</span><span class="nbadge" id="ntf-n" hidden></span></button><button id="t-req"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><span class="lbl">My Requests</span></button><button id="t-apr"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg><span class="lbl">Approvals</span></button><button id="t-hr" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="lbl">HR Admin</span></button><button id="t-log"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 106 5.3L3 8"/><path d="M12 7v5l4 2"/></svg><span class="lbl">Save Log</span></button></div><div class="navg" data-g="inv" hidden><button id="t-idash"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span class="lbl">Dashboard</span><span class="nbadge" id="idash-n" hidden></span></button><button id="t-iin"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span class="lbl">Stock In</span></button><button id="t-iout"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 19h16"/></svg><span class="lbl">Stock Out</span></button><button id="t-irem"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span class="lbl">Remaining Items</span></button></div><div class="navg" data-g="sch" hidden><button id="t-sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">Assets/Links</span></button></div><div class="navg" data-g="gam" hidden><button id="t-gadm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="lbl">ByBet Admin</span></button><button id="t-liq"><span class="lbl">Liquidation</span></button></div></nav>
+<div class="mods" id="mods"><button type="button" data-mod="hr" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg><span class="lbl">HR FORMS</span></button><button type="button" data-mod="inv"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7.5L12 12.5l8.7-5M12 22V12.5"/></svg><span class="lbl">INVENTORY</span><span class="nbadge" id="inv-n" hidden></span></button><button type="button" data-mod="sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">ASSETS/LINKS</span></button><button type="button" data-mod="gam"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg><span class="lbl">EVENT GAMES</span></button><button type="button" data-mod="liq"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2v20l3-2 2 2 3-2 3 2 2-2 3 2V2l-3 2-2-2-3 2-3-2-2 2z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="lbl">LIQUIDATION</span></button></div>
+<nav class="tabs" hidden><div class="navg" data-g="hr"><button id="t-enc" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg><span class="lbl">Encode / Request</span></button><button id="t-ob"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="lbl">Official Business Form</span></button><button id="t-ot"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="lbl">Overtime</span></button><button id="t-rd"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">RD OT Form</span></button><button id="t-chg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="lbl">Change Schedule/OFF</span></button><button id="t-ntf"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="lbl">Notifications</span><span class="nbadge" id="ntf-n" hidden></span></button><button id="t-req"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><span class="lbl">My Requests</span></button><button id="t-apr"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg><span class="lbl">Approvals</span></button><button id="t-hr" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="lbl">HR Admin</span></button><button id="t-acc" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><span class="lbl">Employee Access</span></button><button id="t-log"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 106 5.3L3 8"/><path d="M12 7v5l4 2"/></svg><span class="lbl">Save Log</span></button></div><div class="navg" data-g="inv" hidden><button id="t-idash"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span class="lbl">Dashboard</span><span class="nbadge" id="idash-n" hidden></span></button><button id="t-iin"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span class="lbl">Stock In</span></button><button id="t-iout"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 19h16"/></svg><span class="lbl">Stock Out</span></button><button id="t-irem"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span class="lbl">Remaining Items</span></button></div><div class="navg" data-g="sch" hidden><button id="t-sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">Assets/Links</span></button></div><div class="navg" data-g="gam" hidden><button id="t-gadm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="lbl">ByBet Admin</span></button></div><div class="navg" data-g="liq" hidden><button id="t-liq"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2v20l3-2 2 2 3-2 3 2 2-2 3 2V2l-3 2-2-2-3 2-3-2-2 2z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="lbl">Liquidation</span></button></div></nav>
 <div class="sb-lang"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg><select class="langsel" id="lang2" aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="es">Español</option><option value="zh">中文</option></select></div>
 <div class="sb-ver">Event Hub v2.0</div>
 <div class="sb-foot"><button id="col" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span class="lbl">Collapse</span></button><button id="a-out" class="sb-out" type="button" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg><span class="lbl">Log Out</span></button></div>
 </aside>
 <div class="wrap main">
   <div class="topbar noprint"><div><b id="tb-m">HR Forms</b><span id="tb-p" class="mu"></span></div><span class="mu">Event Hub</span></div>
+  <div id="pvbar" class="noprint" hidden style="background:#f59e0b22;border:1px solid #f59e0b66;border-radius:10px;padding:10px 12px;margin:0 0 12px"></div>
   <div id="lgtop" class="noprint"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg><select class="langsel" id="lang1" aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="es">Español</option><option value="zh">中文</option></select></div>
   <div id="lg-brand"><img class="glogo" alt="Global PlayHub"></div>
   <div id="login" class="card lg" hidden><b id="l-title">Sign in</b>
@@ -266,7 +269,8 @@ body:has(#v-gadm:not([hidden])) .wrap.main{max-width:none}
   <div id="v-ot" hidden></div>
   <div id="v-chg" hidden></div>
   <div id="v-log" hidden></div>
-  <div id="v-req" hidden></div><div id="v-apr" hidden></div><div id="v-hr" hidden></div><div id="v-ntf" hidden></div><div id="v-idash" hidden></div><div id="v-iin" hidden></div><div id="v-iout" hidden></div><div id="v-irem" hidden></div><div id="v-sch" hidden></div>
+  <div id="v-req" hidden></div><div id="v-apr" hidden></div><div id="v-hr" hidden></div><div id="v-ntf" hidden></div><div id="v-idash" hidden></div><div id="v-iin" hidden></div><div id="v-iout" hidden></div><div id="v-irem" hidden></div><div id="v-sch" hidden></div><div id="v-acc" hidden></div><div id="v-none" hidden></div>
+  <div class="elq noprint" id="elq" hidden></div>
   <div id="tagpop" class="noprint" hidden></div>
   <div class="noprint mu" style="text-align:center;margin:28px 0 8px;font-size:12px">Created by: Arven Franco</div>
 </div>
@@ -348,14 +352,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches&&e.
 window.addEventListener('resize',autosizeAll);
 const mode=m=>{$('si').hidden=m!=='in';$('su').hidden=m!=='up';$('l-title').textContent=m==='in'?'Sign in':'Create account';$('a-msg').textContent=''};
 $('go-up').onclick=()=>mode('up');$('go-in').onclick=()=>mode('in');
-function show(v){unswap();
+function show(v){{const _m=MODOF[v]||'hr';if(!canMod(_m)){const A=myFeats();if(A.length)return show(MODDEF[A[0]]);return noFeat()}}unswap();$('v-none').hidden=true;
   setMod(MODOF[v]||'hr');{const _t=todayStr();if(state.profile.filed!==_t){state.profile.filed=_t;const _e=$('p-filed');if(_e)_e.value=_t}}
-  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq'].forEach(k=>{$('v-'+k).hidden=k!==v;$('t-'+k).classList.toggle('on',k===v)});
-  if(v==='enc')autosizeAll();withSaved(v,()=>{if(v==='ob')renderOB();if(v==='rd')renderRD();if(v==='ot')renderOTView();if(v==='chg')renderChgView()});if(v==='liq')renderLiq();FONTS_READY.then(()=>{unswap();unsavedBanner(v)});if(v==='log')renderLog();if(v==='req')renderReq();if(v==='apr')renderApr();if(v==='hr')renderHR();if(v==='ntf')renderNtf();if(v==='idash')renderIDash();if(v==='iin')renderIIn();if(v==='iout')renderIOut();if(v==='irem')renderIRem();if(v==='sch')renderSch();
+  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'].forEach(k=>{$('v-'+k).hidden=k!==v;$('t-'+k).classList.toggle('on',k===v)});
+  if(v==='enc')autosizeAll();withSaved(v,()=>{if(v==='ob')renderOB();if(v==='rd')renderRD();if(v==='ot')renderOTView();if(v==='chg')renderChgView()});if(v==='liq')renderLiq();FONTS_READY.then(()=>{unswap();unsavedBanner(v)});if(v==='log')renderLog();if(v==='req')renderReq();if(v==='apr')renderApr();if(v==='hr')renderHR();if(v==='acc')renderAcc();if(v==='ntf')renderNtf();if(v==='idash')renderIDash();if(v==='iin')renderIIn();if(v==='iout')renderIOut();if(v==='irem')renderIRem();if(v==='sch')renderSch();
   if(v==='gadm'&&!$('ga-f').getAttribute('src'))$('ga-f').src='bybet/admin.html';
   {const b=$('t-'+v),l=b&&b.querySelector('.lbl'),p=$('tb-p');if(p)p.textContent=l?' / '+l.textContent:''}
 }
-$('t-enc').onclick=()=>show('enc');$('t-ob').onclick=()=>show('ob');$('t-rd').onclick=()=>show('rd');$('t-ot').onclick=()=>show('ot');$('t-chg').onclick=()=>show('chg');$('t-log').onclick=()=>show('log');$('t-req').onclick=()=>show('req');$('t-apr').onclick=()=>show('apr');$('t-hr').onclick=()=>show('hr');$('t-ntf').onclick=()=>show('ntf');
+$('t-enc').onclick=()=>show('enc');$('t-ob').onclick=()=>show('ob');$('t-rd').onclick=()=>show('rd');$('t-ot').onclick=()=>show('ot');$('t-chg').onclick=()=>show('chg');$('t-log').onclick=()=>show('log');$('t-req').onclick=()=>show('req');$('t-apr').onclick=()=>show('apr');$('t-hr').onclick=()=>show('hr');$('t-acc').onclick=()=>show('acc');$('t-ntf').onclick=()=>show('ntf');
 
 function renderRows(){
   $('rows').innerHTML='';
@@ -746,7 +750,7 @@ async function createDir(u,i){
 }
 function block(title,text,form){
   $('login').hidden=true;$('verify').hidden=true;document.querySelector('.tabs').hidden=true;$('a-out').hidden=true;
-  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq'].forEach(k=>{$('v-'+k).hidden=true});
+  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq','acc'].forEach(k=>{$('v-'+k).hidden=true});
   $('gatecard').hidden=!!form;$('acctform').hidden=!form;
   if(!form){$('gc-title').textContent=title;$('gc-text').textContent=text}
 }
@@ -767,7 +771,7 @@ async function accessFor(u,pp){
   if(loginAs==='hr'&&!ME.isHR){await signOut(AUTH);setTimeout(()=>{$('a-msg').textContent='This is not the HR account. Use the Employee tab.'},500);return false}
   if(dir.status==='pending'){block('Waiting for HR approval','Your account was created. HR must confirm that your details are correct before you can use the system. Come back later and press Check again.'+(dir.requestedRole==='hr'?' (An HR account already exists, so HR will approve you as an employee.)':''));return false}
   if(dir.status==='rejected'){block('Account not approved','HR did not approve this account. Please contact HR.');return false}
-  $('t-hr').hidden=!ME.isHR;return true;
+  PREVIEW=null;applyAccess();return true;
 }
 function setAs(v){loginAs=v;$('as-emp').classList.toggle('on',v==='employee');$('as-hr').classList.toggle('on',v==='hr');$('hr-note').hidden=v!=='hr'}
 $('as-emp').onclick=()=>setAs('employee');$('as-hr').onclick=()=>setAs('hr');
@@ -805,7 +809,8 @@ async function sendTag(uid){
   try{await addDoc(collection(DB,'tags'),{fromUid:ME.uid,fromName:ME.dir.name,fromEmp:ME.dir.emp,toUid:uid,toName:P.name,toEmp:P.emp||'',toDept:P.dept||'',toPos:P.pos||'',info,status:'pending',createdAt:Date.now()})}catch(e){}
 }
 /* ================= MODULES: HR FORMS / INVENTORY / SCHEDULE ================= */
-const MODOF={idash:'inv',iin:'inv',iout:'inv',irem:'inv',sch:'sch',gadm:'gam',liq:'gam'},MODDEF={hr:'enc',inv:'idash',sch:'sch',gam:'gadm'},MODN={hr:'HR Forms',inv:'Inventory',sch:'Assets/Links',gam:'Event Games',liq:'Liquidation'};
+const MODOF={idash:'inv',iin:'inv',iout:'inv',irem:'inv',sch:'sch',gadm:'gam',liq:'liq',acc:'hr'},MODDEF={hr:'enc',inv:'idash',sch:'sch',gam:'gadm',liq:'liq'},MODN={hr:'HR Forms',inv:'Inventory',sch:'Assets/Links',gam:'Event Games',liq:'Liquidation'};
+const FEATS=[['hr','HR Forms'],['inv','Inventory'],['sch','Assets/Links'],['gam','Event Games'],['liq','Liquidation']];let PREVIEW=null,ELQS=[];
 function setMod(m){
   document.querySelectorAll('#mods [data-mod]').forEach(b=>b.classList.toggle('on',b.dataset.mod===m));
   document.querySelectorAll('.navg').forEach(g=>{g.hidden=g.dataset.g!==m});const tm=$('tb-m');if(tm)tm.textContent=MODN[m]||'Event Hub';
@@ -830,10 +835,12 @@ function startData(){
   DUN.push(onSnapshot(collection(DB,'asset_links'),s=>{ASSETS=s.docs.map(d=>({id:d.id,...d.data()}));if(!$('v-sch').hidden)renderSch(true)},()=>{}));
   try{const uid=AUTH.currentUser.uid;DUN.push(onSnapshot(ME.isHR?collection(DB,'asset_views'):query(collection(DB,'asset_views'),where('ownerUid','==',uid)),s=>{AVIEWS=s.docs.map(d=>({id:d.id,...d.data()}));if(!$('v-sch').hidden&&$('as-list'))renderSch(true)},()=>{}));
   DUN.push(onSnapshot(ME.isHR?collection(DB,'liquidations'):query(collection(DB,'liquidations'),where('by','==',uid)),s=>{LIQS=s.docs.map(d=>({id:d.id,...d.data()}));if(!$('v-liq').hidden)lqList()},()=>{}));
+  DUN.push(onSnapshot(collection(DB,'event_liquidations'),s=>{ELQS=s.docs.map(d=>({id:d.id,...d.data()}))},()=>{}));
+  DUN.push(onSnapshot(doc(DB,'directory',ME.uid),s=>{if(!s.exists()||!ME)return;if(ME.dir)ME.dir.features=s.data().features;applyAccess()},()=>{}));
   DUN.push(onSnapshot(doc(DB,'config','inv'),s=>{INVCFG=s.exists()?s.data():null;subReq();invRefresh()},()=>{}));subReq()}catch(e){}
   getDocs(query(collection(DB,'directory'),where('status','==','active'))).then(s=>{PEOPLE=s.docs.map(d=>d.data().name).filter(Boolean).sort();fillDl()}).catch(()=>{});
 }
-function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];INVCFG=null;REQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
+function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];ELQS=[];try{closeElq()}catch(e){}INVCFG=null;REQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
 function invRefresh(){
   iBadge();
   if(!$('v-idash').hidden)renderIDash();if(!$('v-iin').hidden)renderIIn(true);if(!$('v-iout').hidden)renderIOut(true);if(!$('v-irem').hidden)renderIRem(true);
@@ -1144,7 +1151,7 @@ function gate(on){
   $('verify').hidden=true;$('gatecard').hidden=true;$('acctform').hidden=true;
   if(!on)mode('in');
   $('login').hidden=on;document.querySelector('.tabs').hidden=!on;$('a-out').hidden=!on;
-  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq'].forEach(k=>$('v-'+k).hidden=true);
+  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq','acc'].forEach(k=>$('v-'+k).hidden=true);
   if(on)show('enc');
 }
 if(firebaseConfig.apiKey.startsWith('PASTE')){
@@ -1201,7 +1208,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     $('who').textContent='Signed in as '+u.email+' (email not confirmed yet)';
     if(pendingProfile){try{localStorage.setItem('gphi-pp:'+u.uid,JSON.stringify(pendingProfile))}catch(e){}pendingProfile=null}
     $('login').hidden=true;document.querySelector('.tabs').hidden=true;$('a-out').hidden=true;
-    ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq'].forEach(k=>{$('v-'+k).hidden=true});
+    ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq','acc'].forEach(k=>{$('v-'+k).hidden=true});
     $('v-text').textContent='We sent a confirmation link to '+u.email+'. Open the email (check your spam folder too), click the link, then press the button below.';
     $('verify').hidden=false}
   const vmsg=t=>{$('v-msg').textContent=t};
@@ -1219,7 +1226,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   $('v-out').onclick=()=>signOut(auth);
   onAuthStateChanged(auth,async u=>{
     state.profile=defaults();state.rows=[];state.ot=[];state.chg={};state.log=[];
-    if(!u){vmsg('');['s-email','s-emp','s-first','s-last','s-dept','s-pass','s-pass2'].forEach(i=>{$(i).value=''});curUser=null;$('acct-email').value='';amsg('');ref=null;dirty=false;authReady=true;$('who').textContent='Not signed in';state.rows=[];loadProfile();renderRows();loadChg();['ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq'].forEach(k=>{$('v-'+k).innerHTML=''});ME=null;stopTags();stopData();$('a-pass').value='';gate(false);return}
+    if(!u){vmsg('');['s-email','s-emp','s-first','s-last','s-dept','s-pass','s-pass2'].forEach(i=>{$(i).value=''});curUser=null;$('acct-email').value='';amsg('');ref=null;dirty=false;authReady=true;$('who').textContent='Not signed in';state.rows=[];loadProfile();renderRows();loadChg();['ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq','acc'].forEach(k=>{$('v-'+k).innerHTML=''});ME=null;stopTags();stopData();$('a-pass').value='';gate(false);return}
     curUser=u;
     if(!(isFake(u.email)||u.emailVerified)){showVerify(u);return}
     await enter(u);
@@ -1355,11 +1362,112 @@ function renderLiq(){
 }
 $('t-liq').onclick=()=>show('liq');
 /* Liquidation button inside Event Games opens the matching liquidation */
-addEventListener('message',e=>{const d=e.data;if(e.origin!==location.origin||!d||d.type!=='gphi-liquidation')return;
-  const ex=LIQS.find(l=>nkey(l.event)===nkey(d.event));
-  if(ex){LQ={id:ex.id,event:ex.event,dept:ex.dept||'Events & Activations',dReq:ex.dReq||'',dRec:ex.dRec||'',recBy:ex.recBy||'',per:ex.per||'',req:ex.req||0,status:ex.status||'Pending',rows:(ex.rows||[]).length?ex.rows.map(r=>({p:r.p,t:r.t,q:r.q,pr:r.pr})):[{p:'',t:'',q:1,pr:0}]}}
-  else{LQ=newLq();LQ.event=d.event||'';LQ.per=d.date?fmtDate(d.date):''}
-  setMod('liq');show('liq')});
+
+/* ================= EVENT LIQUIDATION (opened from Event Games, separate from the Liquidation tile) ================= */
+let ELQ=null;
+const newElq=()=>({id:'',by:'',byName:'',canEdit:true,event:'',dept:'Events & Activations',dReq:'',dRec:'',recBy:state.profile.name||'',per:'',req:0,status:'Pending',rows:[{p:'',t:'',q:1,pr:0}]});
+const elqFrom=l=>({id:l.id,by:l.by||'',byName:l.byName||'',canEdit:!!(ME&&(ME.isHR||l.by===ME.uid)),event:l.event,dept:l.dept||'Events & Activations',dReq:l.dReq||'',dRec:l.dRec||'',recBy:l.recBy||'',per:l.per||'',req:l.req||0,status:l.status||'Pending',rows:(l.rows||[]).length?l.rows.map(r=>({p:r.p,t:r.t,q:r.q,pr:r.pr})):[{p:'',t:'',q:1,pr:0}]});
+const elqDk=ev=>'gphi-elq-draft:'+((curUser&&curUser.uid)||'')+':'+nkey(ev||'');
+function elqMsg(t,ok=1){const m=$('elq-msg');if(m){m.textContent=t;m.style.color=ok?'':'#dc2626'}}
+function elqDraft(){if(!ELQ||ELQ.id||!ELQ.canEdit)return;try{localStorage.setItem(elqDk(ELQ.event),JSON.stringify(ELQ))}catch(e){}}
+function openElq(d){
+  const ex=ELQS.find(l=>nkey(l.event)===nkey(d.event));
+  if(ex)ELQ=elqFrom(ex);
+  else{ELQ=null;try{const x=JSON.parse(localStorage.getItem(elqDk(d.event))||'null');if(x&&x.rows)ELQ=Object.assign(newElq(),x,{id:'',canEdit:true})}catch(e){}
+    if(!ELQ)ELQ=Object.assign(newElq(),{event:d.event||'',per:d.date?fmtDate(d.date):''})}
+  renderElq();$('elq').hidden=false;$('elq').scrollTop=0;document.body.style.overflow='hidden'}
+function closeElq(){const e=$('elq');if(!e)return;e.hidden=true;e.innerHTML='';document.body.style.overflow='';ELQ=null}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&$('elq')&&!$('elq').hidden)closeElq()});
+function elqRowsHtml(){const dis=ELQ.canEdit?'':' disabled';return ELQ.rows.map((r,i)=>'<tr><td><input data-i="'+i+'" data-k="p" value="'+escA(r.p)+'" placeholder="Particulars" aria-label="Particulars"'+dis+'></td><td><select data-i="'+i+'" data-k="t" aria-label="Expense type"'+dis+'><option value="">Choose…</option>'+LQ_TYPES.map(t=>'<option'+(t===r.t?' selected':'')+'>'+escA(t)+'</option>').join('')+'</select></td><td style="width:62px"><input type="number" min="0" data-i="'+i+'" data-k="q" value="'+(r.q||'')+'" aria-label="Quantity"'+dis+'></td><td style="width:92px"><input type="number" min="0" step="any" data-i="'+i+'" data-k="pr" value="'+(r.pr||'')+'" aria-label="Item price"'+dis+'></td><td style="white-space:nowrap" data-tt="'+i+'"></td><td>'+(ELQ.canEdit?'<button type="button" class="x" data-rm="'+i+'" title="Remove row">✕</button>':'')+'</td></tr>').join('')}
+function elqPaint(){const T=lqTot(ELQ),R=(+ELQ.req||0)-T;
+  document.querySelectorAll('#elq-rows [data-tt]').forEach(c=>{const r=ELQ.rows[+c.dataset.tt];c.textContent=peso((+r.q||0)*(+r.pr||0))});
+  $('elq-sum').innerHTML='Requested <b>'+peso(ELQ.req)+'</b> · Spent <b>'+peso(T)+'</b> · Remaining <b style="color:'+(R<0?'#dc2626':'inherit')+'">'+peso(R)+'</b>';
+  $('elq-pv').innerHTML=lqSheetHtml(ELQ);elqDraft()}
+function elqWire(){const tb=$('elq-rows');tb.innerHTML=elqRowsHtml();
+  tb.querySelectorAll('[data-k]').forEach(el=>{el.oninput=el.onchange=()=>{ELQ.rows[+el.dataset.i][el.dataset.k]=el.value;elqPaint()};
+    el.onkeydown=e=>{if(e.key==='Enter'&&el.dataset.k==='pr'&&+el.dataset.i===ELQ.rows.length-1){e.preventDefault();ELQ.rows.push({p:'',t:ELQ.rows[ELQ.rows.length-1].t||'',q:1,pr:0});elqWire();tb.querySelector('[data-i="'+(ELQ.rows.length-1)+'"][data-k="p"]').focus()}}});
+  tb.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{if(ELQ.rows.length>1)ELQ.rows.splice(+b.dataset.rm,1);else ELQ.rows[0]={p:'',t:'',q:1,pr:0};elqWire()});elqPaint()}
+function elqSync(o){const url=window.LIQ_SYNC_URL;if(!url)return false;try{fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'liquidation',sheet:'EVENT LIQUIDATION',id:o.id,by:state.profile.name||'',rows:lqTsv(o)})});return true}catch(e){return false}}
+async function elqSave(){const o=ELQ,u=AUTH.currentUser;if(!u)return elqMsg('Please sign in first.',0);if(!o.event.trim())return elqMsg('The event name is missing.',0);
+  if(o.rows.some(r=>(r.p||r.pr)&&!r.t))return elqMsg('Choose an expense type for every row.',0);
+  const data={event:o.event.trim(),dept:o.dept,dReq:o.dReq,dRec:o.dRec,recBy:o.recBy,per:o.per,req:+o.req||0,status:o.status,rows:o.rows.filter(r=>r.p||r.pr).map(r=>({p:r.p||'',t:r.t||'',q:+r.q||0,pr:+r.pr||0})),spent:lqTot(o),updatedAt:Date.now()};
+  try{if(o.id)await updateDoc(doc(DB,'event_liquidations',o.id),data);
+    else{const r=await addDoc(collection(DB,'event_liquidations'),{...data,by:u.uid,byName:state.profile.name||u.email,at:Date.now()});o.id=r.id;o.by=u.uid;o.byName=state.profile.name||u.email}
+    try{localStorage.removeItem(elqDk(o.event))}catch(e){}const sy=elqSync(o);elqMsg('Saved ✓'+(sy?' · sent to the EVENT LIQUIDATION sheet':' · Google Sheet sync is not connected yet (see README)'))}
+  catch(e){elqMsg((e&&e.code)==='permission-denied'?'You cannot edit this. Only the person who made it, or HR, can.':'Could not save: '+((e&&e.code)||'error'),0)}}
+function renderElq(){
+  const o=ELQ,dis=o.canEdit?'':' disabled';
+  const F=(id,label,type,val,extra)=>'<div><label for="'+id+'">'+label+'</label><input id="'+id+'" type="'+type+'" value="'+escA(val)+'" '+(extra||'')+dis+'></div>';
+  $('elq').innerHTML='<div class="eb"><div class="ihead"><div><b style="font-size:16px">Event Liquidation</b><div class="mu" style="font-size:12px">'+esc(o.event)+'</div></div><button type="button" id="elq-x">Close</button></div>'+
+  '<div class="mu" style="font-size:12px;margin:6px 0 10px">Separate from the Liquidation tile. One per event. Saved to the EVENT LIQUIDATION tab of your Google Sheet. Closing brings you back to Event Games.'+(o.canEdit?'':' <b>Made by '+esc(o.byName||'someone else')+'. You can view and print it only.</b>')+'</div>'+
+  '<div class="lqg"><div class="card"><div class="grid"><div style="grid-column:1/-1"><label for="elq-event">Event / purpose name</label><input id="elq-event" value="'+escA(o.event)+'" readonly></div>'+
+  F('elq-dept','Department','text',o.dept)+F('elq-recby','Received by','text',o.recBy)+F('elq-dreq','Date requested','date',o.dReq)+F('elq-drec','Date received','date',o.dRec)+F('elq-per','Expense period','text',o.per,'placeholder="e.g. 22 Nov 2026"')+F('elq-req','Amount requested (₱)','number',o.req||'','min="0" step="any"')+
+  '<div><label for="elq-st">Status</label><select id="elq-st"'+dis+'>'+['Pending','Submitted','Liquidated','Approved'].map(x=>'<option'+(x===o.status?' selected':'')+'>'+x+'</option>').join('')+'</select></div></div>'+
+  '<div class="scroll" style="margin-top:10px"><table class="lqt" style="width:100%;min-width:520px"><thead><tr><th>Particulars</th><th>Expense type</th><th>Qty</th><th>Item price</th><th>Total</th><th></th></tr></thead><tbody id="elq-rows"></tbody></table></div>'+
+  (o.canEdit?'<div class="row"><button type="button" id="elq-add">+ Add row</button><button type="button" id="elq-pastebtn">Paste rows from a sheet</button></div>'+
+  '<div id="elq-paste" hidden style="margin-top:8px"><div class="mu" style="font-size:12px">Copy cells from Google Sheets (Particulars, Expense type, Qty, Item price) and paste here.</div><textarea id="elq-pt" rows="4" style="width:100%"></textarea><div class="row"><button type="button" id="elq-padd">Add pasted rows</button></div></div>':'')+
+  '<div id="elq-sum" style="margin-top:12px"></div><div class="row">'+(o.canEdit?'<button class="pri" type="button" id="elq-save">Save</button>':'')+'<button type="button" id="elq-print">🖨 Print</button><button type="button" id="elq-copy">Copy for Google Sheet</button><button type="button" id="elq-csv">Download CSV</button>'+(o.canEdit&&o.id?'<button type="button" id="elq-del">Delete</button>':'')+'<span id="elq-msg" class="mu"></span></div></div>'+
+  '<div class="card"><div id="elq-pv" style="overflow-x:auto"></div></div></div></div>';
+  $('elq-x').onclick=closeElq;
+  if(o.canEdit)[['elq-dept','dept'],['elq-recby','recBy'],['elq-dreq','dReq'],['elq-drec','dRec'],['elq-per','per'],['elq-req','req'],['elq-st','status']].forEach(a=>{$(a[0]).oninput=$(a[0]).onchange=e=>{ELQ[a[1]]=e.target.value;elqPaint()}});
+  elqWire();
+  if(o.canEdit){
+    $('elq-add').onclick=()=>{ELQ.rows.push({p:'',t:ELQ.rows[ELQ.rows.length-1].t||'',q:1,pr:0});elqWire();$('elq-rows').querySelector('[data-i="'+(ELQ.rows.length-1)+'"][data-k="p"]').focus()};
+    $('elq-pastebtn').onclick=()=>{$('elq-paste').hidden=!$('elq-paste').hidden};
+    $('elq-padd').onclick=()=>{const L=$('elq-pt').value.split(/\r?\n/).map(x=>x.split('\t')).filter(x=>x[0]&&x[0].trim());if(!L.length)return elqMsg('Nothing to add. Paste tab-separated rows.',0);
+      const num=v=>parseFloat(String(v||'').replace(/[₱,\s]/g,''))||0;if(ELQ.rows.length===1&&!ELQ.rows[0].p&&!ELQ.rows[0].pr)ELQ.rows=[];
+      L.forEach(x=>{const t=LQ_TYPES.find(y=>nkey(y)===nkey(x[1]))||'';ELQ.rows.push({p:x[0].trim(),t,q:num(x[2])||1,pr:num(x[3])})});$('elq-pt').value='';$('elq-paste').hidden=true;elqWire();elqMsg(L.length+' row'+(L.length>1?'s':'')+' added. Check any row with no expense type.')};
+    $('elq-save').onclick=elqSave;
+    const dl=$('elq-del');if(dl)dl.onclick=async()=>{if(!confirm('Delete the liquidation of “'+ELQ.event+'”?'))return;try{await deleteDoc(doc(DB,'event_liquidations',ELQ.id));ELQ.id='';ELQ.by='';elqMsg('Deleted.');renderElq()}catch(e){elqMsg('Could not delete: '+((e&&e.code)||'error'),0)}}}
+  $('elq-print').onclick=()=>lqPrint(ELQ);
+  $('elq-copy').onclick=async()=>{try{await navigator.clipboard.writeText(lqTsv(ELQ).map(r=>r.join('\t')).join('\n'));elqMsg('Copied. Paste it into your Google Sheet.')}catch(e){elqMsg('Copy failed.',0)}};
+  $('elq-csv').onclick=()=>{const c=lqTsv(ELQ).map(r=>r.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='event-liquidation.csv';a.click()}}
+/* the Liquidation button inside Event Games opens the overlay here and stays on Event Games */
+addEventListener('message',e=>{const d=e.data;if(e.origin!==location.origin||!d||d.type!=='gphi-liquidation')return;if(!canMod('gam'))return;openElq(d)});
+
+/* ================= EMPLOYEE ACCESS: HR chooses which features each employee can use ================= */
+let ACCU=[],PVNAME='';
+function myFeats(){if(PREVIEW)return PREVIEW;if(!ME||ME.isHR)return FEATS.map(f=>f[0]);const f=ME.dir&&ME.dir.features;return Array.isArray(f)?f:FEATS.map(f=>f[0])}
+function canMod(m){return myFeats().includes(m)}
+function noFeat(){
+  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'].forEach(k=>{const e=$('v-'+k);if(e)e.hidden=true});
+  document.querySelectorAll('.navg').forEach(g=>{g.hidden=true});document.querySelectorAll('#mods [data-mod]').forEach(b=>b.classList.remove('on'));
+  const n=$('v-none');n.innerHTML='<div class="card"><b>No features assigned yet</b><div class="mu" style="margin-top:6px">HR has not given your account access to any feature yet. Please ask HR, then refresh this page.</div></div>';n.hidden=false;
+  const tm=$('tb-m');if(tm)tm.textContent='Event Hub';const p=$('tb-p');if(p)p.textContent=''}
+function applyAccess(){
+  const A=myFeats(),hrOn=!!(ME&&ME.isHR&&!PREVIEW);
+  document.querySelectorAll('#mods [data-mod]').forEach(b=>{b.hidden=!A.includes(b.dataset.mod)});
+  if($('t-hr'))$('t-hr').hidden=!hrOn;if($('t-acc'))$('t-acc').hidden=!hrOn;
+  const pb=$('pvbar');if(pb){pb.hidden=!PREVIEW;if(PREVIEW){pb.innerHTML='<b>Preview:</b> this is what '+esc(PVNAME)+' sees. Only the allowed tabs are shown. <button type="button" id="pv-x">Exit preview</button>';$('pv-x').onclick=exitPv}}
+  if(!ME||document.querySelector('.tabs').hidden)return;
+  const cur=document.querySelector('#mods [data-mod].on');
+  if(!A.length){noFeat();return}
+  if(!cur||!A.includes(cur.dataset.mod))show(MODDEF[A[0]])}
+function exitPv(){PREVIEW=null;PVNAME='';applyAccess();show('acc')}
+async function renderAcc(){
+  const b=$('v-acc');if(!ME||!ME.isHR){b.innerHTML='<div class="card bad">This page is for the HR account only.</div>';return}
+  b.innerHTML='<div class="card mu">Loading…</div>';
+  try{
+    const ds=await getDocs(collection(DB,'directory'));
+    ACCU=ds.docs.map(d=>d.data()).filter(u=>u.status==='active'&&!(ME.hr&&u.uid===ME.hr.uid)).sort((x,y)=>String(x.name).localeCompare(String(y.name)));
+    ACCU.forEach(u=>{u._f=Array.isArray(u.features)?u.features.slice():FEATS.map(f=>f[0])});
+    b.innerHTML='<div class="card"><b>Employee Access</b><div class="mu" style="margin-top:4px;font-size:12px">Tick the features each employee can use. They only see the tabs you allow. Changes apply to them right away, or the next time they open Event Hub. HR always has everything. An employee you have not set yet can use everything.</div><input id="acc-q" type="search" placeholder="Search employee…" style="margin-top:8px;max-width:320px"></div><div id="acc-list"></div>';
+    $('acc-q').oninput=paintAcc;paintAcc();
+  }catch(e){b.innerHTML='<div class="card bad">Could not load: '+esc((e&&e.code)||'error')+'</div>'}
+}
+function paintAcc(){
+  const q=nkey($('acc-q')?$('acc-q').value:''),L=ACCU.filter(u=>!q||nkey(u.name+' '+u.emp+' '+u.dept).includes(q));
+  $('acc-list').innerHTML=L.length?'<div class="card scroll" style="padding:0"><table class="lqt" style="width:100%;min-width:640px"><thead><tr><th>Employee</th>'+FEATS.map(f=>'<th style="text-align:center">'+f[1]+'</th>').join('')+'<th></th></tr></thead><tbody>'+
+    L.map(u=>'<tr><td><b>'+esc(u.name)+'</b><div class="mu" style="font-size:12px">'+esc(u.emp)+' · '+esc(u.dept)+(Array.isArray(u.features)?'':' · not set yet (can use all)')+'</div></td>'+
+      FEATS.map(f=>'<td style="text-align:center"><input type="checkbox" style="width:auto" data-u="'+escA(u.uid)+'" data-f="'+f[0]+'"'+(u._f.includes(f[0])?' checked':'')+' aria-label="'+escA(u.name+' '+f[1])+'"></td>').join('')+
+      '<td style="white-space:nowrap"><button class="pri" type="button" data-sv="'+escA(u.uid)+'">Save</button> <button type="button" data-pv="'+escA(u.uid)+'">👁 Preview</button> <span class="mu" id="ac-m-'+escA(u.uid)+'"></span></td></tr>').join('')+'</tbody></table></div>':'<div class="card mu">No active employees found.</div>';
+  const L2=$('acc-list');
+  L2.querySelectorAll('input[data-u]').forEach(c=>c.onchange=()=>{const u=ACCU.find(x=>x.uid===c.dataset.u);if(!u)return;u._f=FEATS.map(f=>f[0]).filter(k=>k===c.dataset.f?c.checked:u._f.includes(k))});
+  L2.querySelectorAll('[data-sv]').forEach(b=>b.onclick=async()=>{const u=ACCU.find(x=>x.uid===b.dataset.sv),m=$('ac-m-'+b.dataset.sv);if(!u)return;
+    try{await updateDoc(doc(DB,'directory',u.uid),{features:u._f});u.features=u._f.slice();m.textContent='Saved ✓';m.classList.remove('bad')}catch(e){m.textContent='Could not save: '+((e&&e.code)||'error');m.classList.add('bad')}});
+  L2.querySelectorAll('[data-pv]').forEach(b=>b.onclick=()=>{const u=ACCU.find(x=>x.uid===b.dataset.pv),m=$('ac-m-'+b.dataset.pv);if(!u)return;
+    if(!u._f.length){m.textContent='No features ticked: they would see “No features assigned yet”.';PREVIEW=[];PVNAME=u.name;applyAccess();return}
+    PREVIEW=u._f.slice();PVNAME=u.name;applyAccess();show(MODDEF[PREVIEW[0]])})}
 
 /* ================= ADDITIONS: inventory approvals, categories, labels, boxes ================= */
 const CAT_ORDER=['Merchandise','Event Supplies','Event Collaterals'];
