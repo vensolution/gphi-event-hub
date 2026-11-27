@@ -198,5 +198,17 @@ service cloud.firestore {
         allow update, delete: if false;
       }
     }
+
+    // profile details and photo: everyone approved can read, each person edits only their own
+    match /profiles/{uid} {
+      allow read: if isActive();
+      allow write: if isActive() && request.auth.uid == uid;
+    }
+
+    // website logo: anyone can read it (shown on the sign-in page), only HR can change it
+    match /config/brand {
+      allow get: if true;
+      allow write: if isHR();
+    }
   }
 }

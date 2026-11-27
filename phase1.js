@@ -12,6 +12,7 @@
   function apply(m){root.setAttribute('data-theme',m);try{localStorage.setItem(KEY,m)}catch(e){};if(btn)btn.textContent=m==='dark'?'☀️ Light':'🌙 Dark'}
   var start=saved()||(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
   var btn;
+  window.hubTheme={get:function(){return root.getAttribute('data-theme')||start},set:function(m){apply(m)}};
   function mount(){
     btn=document.createElement('button');btn.id='themeBtn';btn.type='button';btn.setAttribute('aria-label','Switch dark or light mode');
     btn.onclick=function(){apply(root.getAttribute('data-theme')==='dark'?'light':'dark')};

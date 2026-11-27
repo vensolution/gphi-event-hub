@@ -835,7 +835,7 @@ function startData(){
   DUN.push(onSnapshot(doc(DB,'config','inv'),s=>{INVCFG=s.exists()?s.data():null;subReq();invRefresh()},()=>{}));subReq()}catch(e){}
   getDocs(query(collection(DB,'directory'),where('status','==','active'))).then(s=>{PEOPLE=s.docs.map(d=>d.data().name).filter(Boolean).sort();fillDl()}).catch(()=>{});
 }
-function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];INVCFG=null;REQS=[];RETS=[];THR=[];if(RETU){try{RETU()}catch(e){}RETU=null}if(MSGU){try{MSGU()}catch(e){}MSGU=null}EVLIQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
+function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];INVCFG=null;REQS=[];RETS=[];THR=[];MYPROF=null;if(RETU){try{RETU()}catch(e){}RETU=null}if(MSGU){try{MSGU()}catch(e){}MSGU=null}EVLIQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
 function invRefresh(){
   iBadge();
   if(!$('v-idash').hidden)renderIDash();if(!$('v-iin').hidden)renderIIn(true);if(!$('v-iout').hidden)renderIOut(true);if(!$('v-irem').hidden)renderIRem(true);
@@ -1200,7 +1200,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     catch(e){$('msg').textContent='Could not save: '+((e&&e.code)||'error')}
   };
   function showVerify(u){authReady=true;ref=null;
-    $('who').textContent='Signed in as '+u.email+' (email not confirmed yet)';
+    $('who').textContent='PROFILE · '+u.email+' (email not confirmed yet)';
     if(pendingProfile){try{localStorage.setItem('gphi-pp:'+u.uid,JSON.stringify(pendingProfile))}catch(e){}pendingProfile=null}
     $('login').hidden=true;document.querySelector('.tabs').hidden=true;$('a-out').hidden=true;
     ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq','acc'].forEach(k=>{$('v-'+k).hidden=true});
@@ -1228,7 +1228,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   });
   async function enter(u){
     state.profile=defaults();state.rows=[];state.ot=[];state.chg={};state.log=[];
-    const empNo=isFake(u.email)?u.email.split('@')[0].toUpperCase():'';$('who').textContent='Signed in as '+(empNo||u.email);renderAcct(u);
+    const empNo=isFake(u.email)?u.email.split('@')[0].toUpperCase():'';$('who').textContent='PROFILE · '+(empNo||u.email);renderAcct(u);
     ref=doc(fsdb,'users',u.uid);
     let existed=false;
     try{
@@ -1385,7 +1385,7 @@ const catList=()=>[...new Set([...CATS,...INV.map(i=>i.category).filter(Boolean)
 const catOpts=cur=>catList().map(c=>'<option'+(c===cur?' selected':'')+'>'+esc(c)+'</option>').join('')+'<option value="__new">＋ Add new category…</option>';
 const idCats=()=>{const c=catList();return [...CAT_ORDER,...c.filter(x=>!CAT_ORDER.includes(x))]};
 function subReq(){if(REQU){try{REQU()}catch(e){}REQU=null}const u=AUTH&&AUTH.currentUser;if(!u||!DB)return;
-  subRet();if(!MSGU)startMsgs();REQU=onSnapshot((canOut()||(ME&&ME.isHR))?collection(DB,'stock_requests'):query(collection(DB,'stock_requests'),where('by','==',u.uid)),s=>{REQS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));invRefresh();popAppr()},()=>{})}
+  subRet();if(!MSGU)startMsgs();if(!MYPROF)loadMyProfile();REQU=onSnapshot((canOut()||(ME&&ME.isHR))?collection(DB,'stock_requests'):query(collection(DB,'stock_requests'),where('by','==',u.uid)),s=>{REQS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));invRefresh();popAppr()},()=>{})}
 function iBadge(){const b=$('t-iout');if(!b)return;let e=$('iout-n');if(!e){e=document.createElement('span');e.id='iout-n';e.className='nbadge';b.appendChild(e)}const n=canOut()?REQS.filter(r=>r.status==='pending').length:0;e.textContent=n;e.hidden=!n}
 /* ---- dashboard: split by category, with In stock integrated into the stock levels ---- */
 function renderIDash(){
@@ -1606,16 +1606,17 @@ function openThread(id){OPENT=id;if(MSGC){try{MSGC()}catch(e){}MSGC=null}const v
   $('ch-s').onclick=send;$('ch-i').onkeydown=e=>{if(e.key==='Enter')send()}}
 
 /* ================= PHASE 5: tiles, tabs and the extra views ================= */
-function plusShow(v){const hid=['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'];
-  if(v!=='msg'&&v!=='lv'){['v-msg','v-lv'].forEach(i=>{const e=$(i);if(e)e.hidden=true});['t-msg','t-lv'].forEach(i=>{const e=$(i);if(e)e.classList.remove('on')});if(OPENT&&MSGC){try{MSGC()}catch(e){}MSGC=null;OPENT=null}return false}
+function plusShow(v){const hid=['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'],mine=['msg','lv','prof'];
+  if(!mine.includes(v)){mine.forEach(k=>{const e=$('v-'+k);if(e)e.hidden=true;const t=$('t-'+k);if(t)t.classList.remove('on')});if(OPENT&&MSGC){try{MSGC()}catch(e){}MSGC=null;OPENT=null}return false}
   if(!canUse(MODOF[v]))return false;unswap();setMod(MODOF[v]);
   hid.forEach(k=>{const e=$('v-'+k);if(e)e.hidden=true;const t=$('t-'+k);if(t)t.classList.remove('on')});const nf=$('nofeat');if(nf)nf.hidden=true;
-  ['msg','lv'].forEach(k=>{$('v-'+k).hidden=k!==v;$('t-'+k).classList.toggle('on',k===v)});
+  mine.forEach(k=>{$('v-'+k).hidden=k!==v;$('t-'+k).classList.toggle('on',k===v)});
+  if(v==='prof'){document.querySelectorAll('.navg').forEach(g=>{g.hidden=true});document.querySelectorAll('#mods [data-mod]').forEach(x=>x.classList.remove('on'))}
   const l=$('t-'+v).querySelector('.lbl'),p=$('tb-p');if(p)p.textContent=l?' / '+l.textContent:'';
-  if(v==='lv')renderLv();if(v==='msg')renderMsgs();return true}
+  if(v==='lv')renderLv();if(v==='msg')renderMsgs();if(v==='prof')renderProf();return true}
 (function plusInit(){
-  MODOF.msg='msg';MODOF.lv='hr';MODDEF.msg='msg';MODN.msg='Messages';
-  const host=$('v-acc').parentNode;['lv','msg'].forEach(k=>{const d=document.createElement('div');d.id='v-'+k;d.hidden=true;host.appendChild(d)});
+  MODOF.msg='msg';MODOF.prof='msg';MODOF.lv='hr';MODDEF.msg='msg';MODN.msg='Messages';
+  const host=$('v-acc').parentNode;['lv','msg','prof'].forEach(k=>{const d=document.createElement('div');d.id='v-'+k;d.hidden=true;host.appendChild(d)});{const t=document.createElement('button');t.id='t-prof';t.hidden=true;t.innerHTML='<span class="lbl">Profile</span>';document.body.appendChild(t);const su=document.querySelector('.sb-user');if(su){su.style.cursor='pointer';su.title='Open your profile';su.onclick=()=>show('prof')}loadBrand();setTimeout(loadBrand,2500)}
   const lq=document.querySelector('#mods [data-mod="liq"]');
   if(lq){const t=lq.cloneNode(true);t.dataset.mod='msg';t.className='';t.querySelector('.lbl').textContent='MESSAGES';t.querySelector('svg').innerHTML='<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>';t.onclick=()=>{setMod('msg');show('msg')};lq.parentNode.appendChild(t)}
   const tabs=document.querySelector('nav.tabs'),ac=$('t-acc'),ch=$('t-chg');
@@ -1623,6 +1624,41 @@ function plusShow(v){const hid=['enc','ob','rd','ot','chg','log','req','apr','hr
   if(ch){const b=ch.cloneNode(true);b.id='t-lv';b.className='';b.querySelector('.lbl').textContent='Leave Application';b.querySelector('svg').innerHTML='<path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/>';b.onclick=()=>show('lv');ch.parentNode.insertBefore(b,ch.nextSibling)}
   const st=document.createElement('style');st.textContent='#rq-list .ogrp{cursor:pointer}#rq-list .ogrp>div>.mu{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}#rq-list .ogrp.open>div>.mu{-webkit-line-clamp:unset}';document.head.appendChild(st);
 })();
+
+
+/* ================= PROFILE (replaces "Signed in as"), logo change, name-change approval ================= */
+var MYPROF=null;
+function imgToData(file,max,square,q,type){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{let w=im.width,h=im.height,sx=0,sy=0,sw=w,sh=h,cw,ch;
+  if(square){const m=Math.min(w,h);sx=(w-m)/2;sy=(h-m)/2;sw=sh=m;cw=ch=max}else{const k=Math.min(1,max/w);cw=Math.round(w*k);ch=Math.round(h*k)}
+  const c=document.createElement('canvas');c.width=cw;c.height=ch;c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,cw,ch);res(c.toDataURL(type,q))};im.onerror=rej;im.src=r.result};r.onerror=rej;r.readAsDataURL(file)})}
+function applyLogo(src){document.querySelectorAll('img.glogo').forEach(i=>{i.src=src})}
+async function loadBrand(){try{const s=await getDoc(doc(DB,'config','brand'));if(s.exists()&&s.data().logo)applyLogo(s.data().logo)}catch(e){}}
+function paintAvatar(){const sb=document.querySelector('.sb-user');if(!sb)return;const p=MYPROF&&MYPROF.photo;if(!p)return;let a=sb.querySelector('.avt');
+  if(!a){a=document.createElement('img');a.className='avt';a.alt='';a.style.cssText='width:30px;height:30px;border-radius:50%;object-fit:cover;flex:none';const sv=sb.querySelector('svg');if(sv)sv.replaceWith(a);else sb.prepend(a)}a.src=p}
+async function loadMyProfile(){try{const u=myUid();if(!u)return;const s=await getDoc(doc(DB,'profiles',u));MYPROF=s.exists()?s.data():{};paintAvatar()}catch(e){MYPROF=MYPROF||{}}}
+async function renderProf(){const v=$('v-prof'),u=AUTH.currentUser,d=(ME&&ME.dir)||{};if(!MYPROF)await loadMyProfile();const P=MYPROF||{};
+  let pend=null;try{const s=await getDocs(query(collection(DB,'profile_requests'),where('uid','==',u.uid),where('status','==','pending')));pend=s.docs.length?s.docs[0].data():null}catch(e){}
+  const th=(window.hubTheme&&window.hubTheme.get())||'light',ini=esc((d.name||'?').trim().charAt(0).toUpperCase());
+  v.innerHTML='<div class="card"><div class="row" style="align-items:center;gap:14px"><div id="pf-av" style="width:84px;height:84px;border-radius:50%;background:var(--ac);color:var(--acx);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700;overflow:hidden">'+(P.photo?'<img src="'+P.photo+'" alt="" style="width:100%;height:100%;object-fit:cover">':ini)+'</div><div><b style="font-size:18px">'+esc(d.name||'')+'</b><div class="mu">'+esc(u.email||'')+'</div><div class="row" style="margin-top:6px"><label class="btnlike" style="cursor:pointer;border:1px solid var(--bd);border-radius:10px;padding:6px 12px">📷 Change photo<input id="pf-ph" type="file" accept="image/*" hidden></label>'+(P.photo?'<button type="button" id="pf-rm">Remove</button>':'')+'</div></div></div><div class="mu" id="pf-pm" style="margin-top:6px"></div></div>'
+  +'<div class="card"><b>Work details</b><div class="mu" style="font-size:12px;margin:2px 0 8px">Only Admin can change these.</div><div class="grid"><div><label>Employee no.</label><input value="'+escI(d.emp||'')+'" disabled></div><div><label>Department</label><input value="'+escI(d.dept||'')+'" disabled></div><div><label>Role</label><input value="'+(ME.isHR?'HR / Admin':'Employee')+'" disabled></div><div><label>Status</label><input value="'+escI(d.status||'')+'" disabled></div></div></div>'
+  +'<div class="card"><b>Name</b><div class="mu" style="font-size:12px;margin:2px 0 8px">A name change needs Admin approval.</div>'+(pend?'<div>'+pill('Waiting for Admin approval','warn')+' <span class="mu">Requested: '+esc(pend.newName)+'</span></div>':'<div class="row"><input id="pf-nn" placeholder="New full name" style="max-width:320px"><button type="button" id="pf-nreq">Request change</button><span id="pf-nm"></span></div>')+'</div>'
+  +'<div class="card"><b>Personal details</b><div class="mu" style="font-size:12px;margin:2px 0 8px">These save right away, no approval needed.</div><div class="grid"><div><label>Mobile number</label><input id="pf-phone" inputmode="tel" value="'+escI(P.phone||'')+'"></div><div><label>Birthday</label><input id="pf-bd" type="date" value="'+escI(P.birthday||'')+'"></div><div><label>Home address</label><input id="pf-addr" value="'+escI(P.address||'')+'"></div><div><label>Emergency contact name</label><input id="pf-en" value="'+escI(P.ecName||'')+'"></div><div><label>Emergency contact number</label><input id="pf-ep" inputmode="tel" value="'+escI(P.ecPhone||'')+'"></div></div><div class="row"><button class="pri" type="button" id="pf-save">Save details</button><span id="pf-m"></span></div></div>'
+  +'<div class="card"><b>Appearance</b><div class="row" style="margin-top:6px"><button type="button" data-th="light" class="'+(th==='light'?'pri':'')+'">☀️ Light</button><button type="button" data-th="dark" class="'+(th==='dark'?'pri':'')+'">🌙 Dark</button></div></div>'
+  +(ME.isHR?'<div class="card"><b>Website logo (Admin)</b><div class="mu" style="font-size:12px;margin:2px 0 8px">Changes the logo for everyone, on the sign-in page and the sidebar.</div><div class="row" style="align-items:center"><img class="glogo" alt="" style="max-height:48px"><label style="cursor:pointer;border:1px solid var(--bd);border-radius:10px;padding:6px 12px">Upload new logo<input id="pf-logo" type="file" accept="image/*" hidden></label><button type="button" id="pf-lreset">Reset to default</button><span id="pf-lm"></span></div></div><div class="card" id="pf-reqs"><b>Name change requests</b><div id="pf-rl" class="mu" style="margin-top:6px">Loading…</div></div>':'');
+  $('pf-ph').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const data=await imgToData(f,160,true,.8,'image/jpeg');await setDoc(doc(DB,'profiles',u.uid),{...(MYPROF||{}),photo:data,uid:u.uid,updatedAt:Date.now()});MYPROF={...(MYPROF||{}),photo:data};paintAvatar();renderProf()}catch(er){say('pf-pm','Could not save the photo: '+((er&&er.code)||'try a smaller image'))}};
+  const rm=$('pf-rm');if(rm)rm.onclick=async()=>{try{const o={...(MYPROF||{})};delete o.photo;await setDoc(doc(DB,'profiles',u.uid),{...o,uid:u.uid,photo:'',updatedAt:Date.now()});MYPROF={...o,photo:''};location.reload()}catch(er){}};
+  const nr=$('pf-nreq');if(nr)nr.onclick=async()=>{const n=$('pf-nn').value.trim().replace(/\s+/g,' ');if(n.length<3)return say('pf-nm','Enter the full name.');if(n===d.name)return say('pf-nm','That is already your name.');
+    try{await addDoc(collection(DB,'profile_requests'),{uid:u.uid,name:d.name||'',newName:n,status:'pending',at:Date.now()});renderProf()}catch(er){say('pf-nm','Could not send: '+((er&&er.code)||'error'))}};
+  $('pf-save').onclick=async()=>{const o={uid:u.uid,photo:(MYPROF&&MYPROF.photo)||'',phone:$('pf-phone').value.trim(),birthday:$('pf-bd').value,address:$('pf-addr').value.trim(),ecName:$('pf-en').value.trim(),ecPhone:$('pf-ep').value.trim(),updatedAt:Date.now()};
+    try{await setDoc(doc(DB,'profiles',u.uid),o);MYPROF=o;say('pf-m','Saved ✓',true)}catch(er){say('pf-m','Could not save: '+((er&&er.code)||'error'))}};
+  v.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{if(window.hubTheme)window.hubTheme.set(b.dataset.th);renderProf()});
+  if(ME.isHR){loadBrand();
+    $('pf-logo').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const data=await imgToData(f,480,false,.92,'image/png');await setDoc(doc(DB,'config','brand'),{logo:data,by:ME.uid,at:Date.now()});applyLogo(data);say('pf-lm','Logo changed ✓',true)}catch(er){say('pf-lm','Could not save: '+((er&&er.code)||'image too large'))}};
+    $('pf-lreset').onclick=async()=>{if(!confirm('Go back to the original logo?'))return;try{await deleteDoc(doc(DB,'config','brand'));location.reload()}catch(er){say('pf-lm','Could not reset')}};
+    try{const s=await getDocs(query(collection(DB,'profile_requests'),where('status','==','pending')));const R=s.docs.map(x=>({id:x.id,...x.data()}));
+      $('pf-rl').innerHTML=R.length?R.map(r=>'<div class="ogrp"><div><b>'+esc(r.name)+'</b> → <b>'+esc(r.newName)+'</b><div class="mu" style="font-size:12px">'+esc(new Date(r.at).toLocaleString())+'</div></div><div class="row"><button class="pri" data-ok="'+escI(r.id)+'">Approve</button><button type="button" data-no="'+escI(r.id)+'">Reject</button></div></div>').join(''):'No pending requests.';
+      $('pf-rl').querySelectorAll('[data-ok]').forEach(b=>b.onclick=async()=>{const r=R.find(x=>x.id===b.dataset.ok);try{await updateDoc(doc(DB,'directory',r.uid),{name:r.newName});await updateDoc(doc(DB,'profile_requests',r.id),{status:'approved',decidedBy:ME.uid,decidedAt:Date.now()});renderProf()}catch(er){b.textContent='Failed: '+((er&&er.code)||'error')}});
+      $('pf-rl').querySelectorAll('[data-no]').forEach(b=>b.onclick=async()=>{try{await updateDoc(doc(DB,'profile_requests',b.dataset.no),{status:'rejected',decidedBy:ME.uid,decidedAt:Date.now()});renderProf()}catch(er){}})}catch(er){$('pf-rl').textContent='Could not load requests.'}}}
 
 </script>
 <script src="phase1.js"></script>

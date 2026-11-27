@@ -21,6 +21,8 @@ WHAT IS IN HERE
   Phase 3  Inventory: category tiles + Location on stock-out requests, tap a request to expand it,
            "Event cancelled? Return items" (Return to stock / Move to another event), approver confirms in Stock Out.
   Phase 4  ONE Google Doc for ALL promoters (Event Games > Post Event Report).
+  Profile  Click your name at the top of the sidebar (now says PROFILE): photo, personal details, name-change request,
+           Light/Dark, and for HR: change the website logo + approve name changes.
   Phase 5  Leave Application (HR Forms tab, prints 2 copies, goes manager > Admin > HR) and Messages (new tile).
 
 TEST (5 minutes)
@@ -29,3 +31,4 @@ TEST (5 minutes)
   4. HR Forms > Leave Application > fill > Print. Submit it and check it reaches your manager.
   5. Messages tile: start a chat with a colleague, send a message, check the other person sees it.
   6. HR: Messages > Announcement.
+  7. Click PROFILE (top of sidebar): add a photo, save details, request a name change; as HR approve it and upload a new logo.
