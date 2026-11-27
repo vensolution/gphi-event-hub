@@ -193,7 +193,8 @@ service cloud.firestore {
       match /msgs/{mid} {
         allow read: if isActive() && request.auth.uid in get(/databases/$(database)/documents/threads/$(id)).data.members;
         allow create: if isActive() && request.resource.data.from == request.auth.uid
-          && request.auth.uid in get(/databases/$(database)/documents/threads/$(id)).data.members;
+          && request.auth.uid in get(/databases/$(database)/documents/threads/$(id)).data.members
+          && (get(/databases/$(database)/documents/threads/$(id)).data.get('announce', false) == false || isHR());
         allow update, delete: if false;
       }
     }

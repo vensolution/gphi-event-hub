@@ -348,7 +348,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches&&e.
 window.addEventListener('resize',autosizeAll);
 const mode=m=>{$('si').hidden=m!=='in';$('su').hidden=m!=='up';$('l-title').textContent=m==='in'?'Sign in':'Create account';$('a-msg').textContent=''};
 $('go-up').onclick=()=>mode('up');$('go-in').onclick=()=>mode('in');
-function show(v){unswap();v=featGuard(v);if(v===null){NOFEAT();return}
+function show(v){if(plusShow(v))return;unswap();v=featGuard(v);if(v===null){NOFEAT();return}
   setMod(MODOF[v]||'hr');{const _t=todayStr();if(state.profile.filed!==_t){state.profile.filed=_t;const _e=$('p-filed');if(_e)_e.value=_t}}
   ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'].forEach(k=>{$('v-'+k).hidden=k!==v;$('t-'+k).classList.toggle('on',k===v)});
   if(v==='enc')autosizeAll();withSaved(v,()=>{if(v==='ob')renderOB();if(v==='rd')renderRD();if(v==='ot')renderOTView();if(v==='chg')renderChgView()});if(v==='liq')renderLiq();if(v==='acc')renderAcc();FONTS_READY.then(()=>{unswap();unsavedBanner(v)});if(v==='log')renderLog();if(v==='req')renderReq();if(v==='apr')renderApr();if(v==='hr')renderHR();if(v==='ntf')renderNtf();if(v==='idash')renderIDash();if(v==='iin')renderIIn();if(v==='iout')renderIOut();if(v==='irem')renderIRem();if(v==='sch')renderSch();
@@ -651,7 +651,7 @@ window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.return
 const defaults=()=>({name:'',dept:'',pos:'',emp:'',per:'',off:'Sunday',filed:'',dstart:'09:00',dend:'18:00'});
 let DB=null,AUTH=null,ME=null,loginAs='employee';
 const slug=s=>String(s||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-const TL={ob:'Official Business',ot:'Overtime',rd:'Rest Day Duty',chg:'Change Schedule/OFF'};
+const TL={ob:'Official Business',ot:'Overtime',rd:'Rest Day Duty',chg:'Change Schedule/OFF',lv:'Leave Application'};
 const fdt=t=>t?new Date(t).toLocaleString():'';
 const BC={pending:'#f59e0b',approved:'#22c55e',rejected:'#ef4444',cancelled:'#94a3b8',waiting:'#94a3b8',accepted:'#22c55e',declined:'#ef4444'};
 const badge=s=>'<span style="background:'+BC[s]+'22;color:'+BC[s]+';border:1px solid '+BC[s]+'66;border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600">'+s+'</span>';
@@ -659,6 +659,7 @@ function timeline(r){return '<div style="display:flex;flex-direction:column;gap:
 function summ(r){const p=r.payload||{},L=[];
   if(r.type==='ob')(p.rows||[]).forEach(x=>L.push(fmtDate(x.date)+' · '+(x.loc||'')+' · '+fmtTime(x.in)+' to '+fmtTime(x.out)+' · '+(x.purpose||'')));
   else if(r.type==='ot')(p.rows||[]).forEach(x=>L.push(fmtDate(x.date)+' · '+fmtTime(x.from)+' to '+fmtTime(x.to)+' · '+(x.reason||'')));
+  else if(r.type==='lv'){const x=p.lv||{};L.push((x.type||'')+' · '+(x.from||'')+' to '+(x.to||'')+' · '+(x.days||'')+' day(s) · '+(x.reason||''))}
   else if(r.type==='rd')(p.rows||[]).forEach(x=>L.push(fmtDate(x.date)+' · '+fmtTime(rdIn(x))+' to '+fmtTime(x.out)+' · '+(x.purpose||'')+(rdIn(x)!==x.in?' (left for Official Business at '+fmtTime(x.in)+')':'')));
   else{const cc=p.chg||{};(cc.rows||[cc]).forEach(c=>{const tt=(a,b)=>a||b?' '+fmtTime(a)+(b?' to '+fmtTime(b):''):'';L.push('From '+fmtDate(c.fd)+' ('+(c.fday||'')+tt(c.ff,c.ft)+') to '+fmtDate(c.td)+' ('+(c.tday||'')+tt(c.tf,c.tt)+')');L.push('Reason: '+(c.reason||''))})}
   return '<div class="mu" style="font-size:12px;margin-top:6px">'+L.map(esc).join('<br>')+'</div>'}
@@ -834,7 +835,7 @@ function startData(){
   DUN.push(onSnapshot(doc(DB,'config','inv'),s=>{INVCFG=s.exists()?s.data():null;subReq();invRefresh()},()=>{}));subReq()}catch(e){}
   getDocs(query(collection(DB,'directory'),where('status','==','active'))).then(s=>{PEOPLE=s.docs.map(d=>d.data().name).filter(Boolean).sort();fillDl()}).catch(()=>{});
 }
-function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];INVCFG=null;REQS=[];EVLIQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
+function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];INVCFG=null;REQS=[];RETS=[];THR=[];if(RETU){try{RETU()}catch(e){}RETU=null}if(MSGU){try{MSGU()}catch(e){}MSGU=null}EVLIQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
 function invRefresh(){
   iBadge();
   if(!$('v-idash').hidden)renderIDash();if(!$('v-iin').hidden)renderIIn(true);if(!$('v-iout').hidden)renderIOut(true);if(!$('v-irem').hidden)renderIRem(true);
@@ -1379,12 +1380,12 @@ addEventListener('keydown',e=>{if(e.key==='Escape'&&$('evliq-ov'))closeEventLiq(
 /* ================= ADDITIONS: inventory approvals, categories, labels, boxes ================= */
 const CAT_ORDER=['Merchandise','Event Supplies','Event Collaterals'];
 const escI=v=>esc(v).replace(/"/g,'&quot;');
-const canOut=()=>{const u=AUTH&&AUTH.currentUser;if(!u||!ME)return false;return INVCFG&&INVCFG.approverUid?INVCFG.approverUid===u.uid:!!ME.isHR};
+const canOut=()=>{const u=AUTH&&AUTH.currentUser;if(!u||!ME)return false;const L=(INVCFG&&INVCFG.approverUids)||[];if(INVCFG&&(INVCFG.approverUid||L.length))return INVCFG.approverUid===u.uid||L.includes(u.uid);return !!ME.isHR};
 const catList=()=>[...new Set([...CATS,...INV.map(i=>i.category).filter(Boolean),...EXTRA_CATS])];
 const catOpts=cur=>catList().map(c=>'<option'+(c===cur?' selected':'')+'>'+esc(c)+'</option>').join('')+'<option value="__new">＋ Add new category…</option>';
 const idCats=()=>{const c=catList();return [...CAT_ORDER,...c.filter(x=>!CAT_ORDER.includes(x))]};
 function subReq(){if(REQU){try{REQU()}catch(e){}REQU=null}const u=AUTH&&AUTH.currentUser;if(!u||!DB)return;
-  REQU=onSnapshot((canOut()||(ME&&ME.isHR))?collection(DB,'stock_requests'):query(collection(DB,'stock_requests'),where('by','==',u.uid)),s=>{REQS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));invRefresh()},()=>{})}
+  subRet();if(!MSGU)startMsgs();REQU=onSnapshot((canOut()||(ME&&ME.isHR))?collection(DB,'stock_requests'):query(collection(DB,'stock_requests'),where('by','==',u.uid)),s=>{REQS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));invRefresh();popAppr()},()=>{})}
 function iBadge(){const b=$('t-iout');if(!b)return;let e=$('iout-n');if(!e){e=document.createElement('span');e.id='iout-n';e.className='nbadge';b.appendChild(e)}const n=canOut()?REQS.filter(r=>r.status==='pending').length:0;e.textContent=n;e.hidden=!n}
 /* ---- dashboard: split by category, with In stock integrated into the stock levels ---- */
 function renderIDash(){
@@ -1418,7 +1419,7 @@ function soChange(el,sc){
 }
 /* ---- approver: pending requests ---- */
 function renderPend(){const box=$('so-pend');if(!box)return;const P=REQS.filter(r=>r.status==='pending');
-  box.innerHTML=P.length?'<div class="card" style="border-color:#f59e0b"><b>Stock out requests waiting for your approval ('+P.length+')</b>'+P.map(r=>'<div class="card" id="rq-'+r.id+'" style="margin:8px 0 0"><div class="ihead"><b>'+esc(r.event)+'</b><span class="mu" style="font-size:12px">Requested by '+esc(r.byName||'')+' · '+esc(new Date(r.at).toLocaleString())+'</span></div>'+((r.to||r.note)?'<div class="mu" style="font-size:12px">'+esc([r.to?'For: '+r.to:'',r.note].filter(Boolean).join(' · '))+'</div>':'')+'<div class="scroll"><table class="enc itbl"><thead><tr><th>Item</th><th>Requested</th><th>Available</th><th>Box</th><th>Label</th></tr></thead><tbody>'+(r.items||[]).map((x,k)=>{const ex=INV.find(i=>i.id===x.id),av=ex?ex.qty:0;return '<tr data-k="'+k+'"><td>'+esc(x.name)+'</td><td>'+fq(x.qty)+' '+esc(x.unit)+'</td><td style="color:'+(av<x.qty?'#dc2626':'inherit')+'">'+fq(av)+' '+esc(x.unit)+(av<x.qty?' ⚠ not enough':'')+'</td><td><select class="so-box">'+boxOpts('Box 1','#rq-'+r.id)+'</select></td><td><select class="so-label">'+labelOpts('')+'</select></td></tr>'}).join('')+'</tbody></table></div><div class="row"><button class="pri" data-ap="'+r.id+'">Approve and deduct stock</button><button data-rj="'+r.id+'">Reject</button><span class="mu" id="rm-'+r.id+'"></span></div></div>').join('')+'</div>':'';
+  box.innerHTML=P.length?'<div class="card" style="border-color:#f59e0b"><b>Stock out requests waiting for your approval ('+P.length+')</b>'+P.map(r=>'<div class="card" id="rq-'+r.id+'" style="margin:8px 0 0"><div class="ihead"><b>'+esc(r.event)+'</b><span class="mu" style="font-size:12px">Requested by '+esc(r.byName||'')+' · '+esc(new Date(r.at).toLocaleString())+'</span></div>'+((r.loc||r.to||r.note)?'<div class="mu" style="font-size:12px">'+esc([r.loc?'Location: '+r.loc:'',r.to?'For: '+r.to:'',r.note].filter(Boolean).join(' · '))+'</div>':'')+'<div class="scroll"><table class="enc itbl"><thead><tr><th>Item</th><th>Requested</th><th>Available</th><th>Box</th><th>Label</th></tr></thead><tbody>'+(r.items||[]).map((x,k)=>{const ex=INV.find(i=>i.id===x.id),av=ex?ex.qty:0;return '<tr data-k="'+k+'"><td>'+esc(x.name)+'</td><td>'+fq(x.qty)+' '+esc(x.unit)+'</td><td style="color:'+(av<x.qty?'#dc2626':'inherit')+'">'+fq(av)+' '+esc(x.unit)+(av<x.qty?' ⚠ not enough':'')+'</td><td><select class="so-box">'+boxOpts('Box 1','#rq-'+r.id)+'</select></td><td><select class="so-label">'+labelOpts('')+'</select></td></tr>'}).join('')+'</tbody></table></div><div class="row"><button class="pri" data-ap="'+r.id+'">Approve and deduct stock</button><button data-rj="'+r.id+'">Reject</button><span class="mu" id="rm-'+r.id+'"></span></div></div>').join('')+'</div>':'';
   box.querySelectorAll('.card[id^="rq-"]').forEach(c=>c.querySelectorAll('select').forEach(el=>el.onchange=()=>soChange(el,'#'+c.id)));
   box.querySelectorAll('[data-ap]').forEach(b=>b.onclick=()=>approveReq(b.dataset.ap));
   box.querySelectorAll('[data-rj]').forEach(b=>b.onclick=()=>rejectReq(b.dataset.rj))}
@@ -1432,39 +1433,45 @@ async function approveReq(id){const r=REQS.find(x=>x.id===id),m=$('rm-'+id),card
     await bt.commit();m.textContent='Approved ✓'}catch(e){m.textContent='Could not approve: '+((e&&e.code)||'error')}}
 async function rejectReq(id){const why=prompt('Reason for rejecting (optional)');if(why===null)return;try{await updateDoc(doc(DB,'stock_requests',id),{status:'rejected',reason:why.trim(),rejectedBy:ME.uid,rejectedByName:ME.dir.name,rejectedAt:Date.now()})}catch(e){const m=$('rm-'+id);if(m)m.textContent='Could not reject: '+((e&&e.code)||'error')}}
 /* ---- requester: request stock out, with availability ---- */
-const reqOpts=()=>'<option value="">Select item</option>'+[...INV].sort((a,b)=>a.name.localeCompare(b.name)).map(i=>'<option value="'+escI(i.id)+'"'+(i.qty<=0?' disabled':'')+'>'+esc(i.name)+' — '+(i.qty<=0?'OUT OF STOCK':fq(i.qty)+' '+esc(i.unit)+' available')+'</option>').join('');
+const reqOpts=()=>'<option value="">Select item</option>'+[...INV].filter(i=>RQCAT==='all'||i.category===RQCAT).sort((a,b)=>a.name.localeCompare(b.name)).map(i=>'<option value="'+escI(i.id)+'"'+(i.qty<=0?' disabled':'')+'>'+esc(i.name)+' — '+(i.qty<=0?'OUT OF STOCK':fq(i.qty)+' '+esc(i.unit)+' available')+'</option>').join('');
 function rqAv(r){const ex=INV.find(i=>i.id===r.querySelector('.rq-item').value),q=parseFloat(r.querySelector('.rq-qty').value)||0,a=r.querySelector('.rq-av');
   if(!ex){a.textContent='';return}a.innerHTML=q>ex.qty?'<b style="color:#dc2626">Only '+fq(ex.qty)+' '+esc(ex.unit)+' available</b>':'<span style="color:#16a34a">Available: '+fq(ex.qty)+' '+esc(ex.unit)+'</span>'}
 function rqAdd(){const c=$('rq-rows'),d=document.createElement('div');d.className='sorow';d.innerHTML='<div class="so-wide"><label>Item</label><select class="rq-item"></select></div><div><label>Qty needed</label><input class="rq-qty" type="number" min="0" step="any" inputmode="decimal"></div><div><label>Availability</label><div class="rq-av" style="padding:9px 0"></div></div><div><button type="button" class="so-x" title="Remove row">✕</button></div>';
   c.appendChild(d);d.querySelector('.rq-item').innerHTML=reqOpts();d.querySelector('.rq-item').onchange=d.querySelector('.rq-qty').oninput=()=>rqAv(d);
   d.querySelector('.so-x').onclick=()=>{if(c.children.length>1)d.remove();else{d.querySelector('.rq-item').value='';d.querySelector('.rq-qty').value='';d.querySelector('.rq-av').textContent=''}}}
 function myReqHtml(){const L=REQS.filter(r=>r.by===(AUTH.currentUser&&AUTH.currentUser.uid));
-  return L.length?L.slice(0,20).map(r=>'<div class="ogrp"><div><b>'+esc(r.event)+'</b> '+(r.status==='approved'?pill('Approved','ok'):r.status==='rejected'?pill('Rejected','bad'):r.status==='cancelled'?pill('Cancelled','warn'):pill('Waiting for approval','warn'))+'<div class="mu" style="font-size:12px">'+esc(new Date(r.at).toLocaleString())+' · '+(r.items||[]).map(x=>esc(x.name)+' × '+fq(x.qty)+(x.box?' ('+esc(x.box)+(x.label?', '+esc(x.label):'')+')':'')).join(', ')+(r.status==='approved'?' · approved by '+esc(r.approvedByName||''):'')+(r.status==='rejected'&&r.reason?' · reason: '+esc(r.reason):'')+'</div></div>'+(r.status==='pending'?'<button type="button" data-cx="'+escI(r.id)+'">Cancel request</button>':'')+'</div>').join(''):'<div class="mu">No requests yet.</div>'}
+  return L.length?L.slice(0,20).map(r=>'<div class="ogrp" data-rid="'+escI(r.id)+'"><div><b>'+esc(r.event)+'</b> '+(r.status==='approved'?pill('Approved','ok'):r.status==='rejected'?pill('Rejected','bad'):r.status==='cancelled'?pill('Cancelled','warn'):pill('Waiting for approval','warn'))+'<div class="mu" style="font-size:12px">'+esc(new Date(r.at).toLocaleString())+' · '+(r.items||[]).map(x=>esc(x.name)+' × '+fq(x.qty)+(x.box?' ('+esc(x.box)+(x.label?', '+esc(x.label):'')+')':'')).join(', ')+(r.status==='approved'?' · approved by '+esc(r.approvedByName||''):'')+(r.status==='rejected'&&r.reason?' · reason: '+esc(r.reason):'')+'</div></div>'+(r.status==='pending'?'<button type="button" data-cx="'+escI(r.id)+'">Cancel request</button>':'')+'</div>').join(''):'<div class="mu">No requests yet.</div>'}
 function renderIOutReq(snap){const b=$('v-iout');
-  if(snap&&$('rq-form')){document.querySelectorAll('#rq-rows .sorow').forEach(r=>{const s=r.querySelector('.rq-item'),v=s.value;s.innerHTML=reqOpts();s.value=v;rqAv(r)});$('rq-list').innerHTML=myReqHtml();wireCx();return}
-  b.innerHTML='<div class="card" id="rq-form"><b>Request stock out</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Choose what you need for your event. You can see how many are available. '+(INVCFG&&INVCFG.approverName?'<b>'+esc(INVCFG.approverName)+'</b> approves your request, then the stock is released.':'An approver has not been assigned yet. Ask HR to assign one in HR Admin.')+'</div><div class="grid"><div><label>Event Name</label><input id="rq-ev" list="dl-events" autocomplete="off"></div><div><label>Needed for / released to (optional)</label><input id="rq-to" autocomplete="off"></div></div><div id="rq-rows"></div><div class="row"><button type="button" id="rq-add">+ Add item</button></div><div style="margin-top:10px"><label>Note (optional)</label><input id="rq-note"></div><datalist id="dl-events"></datalist><div class="row"><button class="pri" id="rq-go">Send request for approval</button><span id="rq-msg"></span></div></div><div class="card"><b>My stock out requests</b><div id="rq-list" style="margin-top:6px"></div></div>';
-  rqAdd();fillDl();$('rq-list').innerHTML=myReqHtml();wireCx();$('rq-add').onclick=rqAdd;
+  if(snap&&$('rq-form')){document.querySelectorAll('#rq-rows .sorow').forEach(r=>{const s=r.querySelector('.rq-item'),v=s.value;s.innerHTML=reqOpts();s.value=v;rqAv(r)});$('rq-list').innerHTML=myReqHtml();wireCx();rqTiles();return}
+  b.innerHTML='<div class="card" id="rq-form"><b>Request stock out</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Choose what you need for your event. You can see how many are available. '+(INVCFG&&INVCFG.approverName?'<b>'+esc(INVCFG.approverName)+'</b> approves your request, then the stock is released.':'An approver has not been assigned yet. Ask HR to assign one in HR Admin.')+'</div><div class="grid"><div><label>Event Name</label><input id="rq-ev" list="dl-events" autocomplete="off"></div><div><label>Needed for / released to (optional)</label><input id="rq-to" autocomplete="off"></div><div><label>Location of the event</label><input id="rq-loc" autocomplete="off"></div></div><div id="rq-cats" class="row" style="gap:8px;flex-wrap:wrap;margin:4px 0 8px"></div><div id="rq-rows"></div><div class="row"><button type="button" id="rq-add">+ Add item</button></div><div style="margin-top:10px"><label>Note (optional)</label><input id="rq-note"></div><datalist id="dl-events"></datalist><div class="row"><button class="pri" id="rq-go">Send request for approval</button><span id="rq-msg"></span></div></div><div class="card"><b>My stock out requests</b><div id="rq-list" style="margin-top:6px"></div></div>';
+  rqAdd();rqTiles();fillDl();$('rq-list').innerHTML=myReqHtml();wireCx();$('rq-add').onclick=rqAdd;
   $('rq-go').onclick=async()=>{const ev=$('rq-ev').value.trim().replace(/\s+/g,' ');if(!ev)return say('rq-msg','Enter the event name.');
     const items=[],seen={};let n=0;for(const r of document.querySelectorAll('#rq-rows .sorow')){n++;const id=r.querySelector('.rq-item').value,qv=r.querySelector('.rq-qty').value.trim();if(!id&&!qv)continue;const ex=INV.find(i=>i.id===id),q=parseFloat(qv);
       if(!ex)return say('rq-msg','Row '+n+': select the item.');if(!(q>0))return say('rq-msg','Row '+n+': enter the quantity.');if(seen[id])return say('rq-msg','Row '+n+': '+ex.name+' is already on another row.');if(q>ex.qty)return say('rq-msg','Row '+n+': only '+fq(ex.qty)+' '+ex.unit+' of '+ex.name+' available.');seen[id]=1;items.push({id:ex.id,name:ex.name,unit:ex.unit,qty:q})}
     if(!items.length)return say('rq-msg','Add at least one item with a quantity.');
-    try{await addDoc(collection(DB,'stock_requests'),{event:ev,to:$('rq-to').value.trim(),note:$('rq-note').value.trim(),items,status:'pending',by:ME.uid,byName:ME.dir.name,at:Date.now(),approverUid:(INVCFG&&INVCFG.approverUid)||'',approverName:(INVCFG&&INVCFG.approverName)||''});
-      say('rq-msg','Sent ✓ Waiting for approval.',true);['rq-ev','rq-to','rq-note'].forEach(k=>{$(k).value=''});$('rq-rows').innerHTML='';rqAdd()}catch(e){say('rq-msg','Could not send: '+((e&&e.code)||'error'))}}}
+    try{await addDoc(collection(DB,'stock_requests'),{event:ev,loc:$('rq-loc').value.trim(),to:$('rq-to').value.trim(),note:$('rq-note').value.trim(),items,status:'pending',by:ME.uid,byName:ME.dir.name,at:Date.now(),approverUid:(INVCFG&&INVCFG.approverUid)||'',approverName:(INVCFG&&INVCFG.approverName)||''});
+      say('rq-msg','Sent ✓ Waiting for approval.',true);['rq-ev','rq-to','rq-loc','rq-note'].forEach(k=>{$(k).value=''});$('rq-rows').innerHTML='';rqAdd()}catch(e){say('rq-msg','Could not send: '+((e&&e.code)||'error'))}}}
 function wireCx(){document.querySelectorAll('#rq-list [data-cx]').forEach(b=>b.onclick=async()=>{if(!confirm('Cancel this request?'))return;try{await updateDoc(doc(DB,'stock_requests',b.dataset.cx),{status:'cancelled'})}catch(e){}})}
 /* ---- HR assigns the stock out approver ---- */
 let APPR=null;
 async function invApprCard(){if(!ME||!ME.isHR)return;const hr=$('v-hr');if(!hr||$('inv-appr'))return;
   const c=document.createElement('div');c.className='card';c.id='inv-appr';
-  c.innerHTML='<b>Inventory: who approves stock out</b><div class="mu" style="font-size:12px;margin:2px 0 8px">The person you choose approves every stock out request. Until someone is assigned, HR approves.</div><div class="row" style="margin-top:0"><select id="ia-sel" style="max-width:320px"><option>Loading…</option></select><button class="pri" type="button" id="ia-save">Assign approver</button><span id="ia-msg"></span></div><div class="mu" style="font-size:12px;margin-top:6px" id="ia-cur"></div>';
-  hr.prepend(c);const cur=()=>{$('ia-cur').textContent=INVCFG&&INVCFG.approverName?'Current approver: '+INVCFG.approverName:'No approver assigned yet (HR approves for now).'};
+  c.innerHTML='<b>Inventory: who approves stock out</b><div class="mu" style="font-size:12px;margin:2px 0 8px">Add as many approvers as you need. Any ONE of them can approve a request. Until someone is added, HR approves.</div><div id="ia-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px"></div><div class="row" style="margin-top:0"><select id="ia-sel" style="max-width:320px"><option>Loading…</option></select><button type="button" id="ia-add">+ Add approver</button></div><div class="mu" id="ia-msg" style="font-size:12px;margin-top:6px"></div>';
+  hr.prepend(c);
   try{if(!APPR){const s=await getDocs(query(collection(DB,'directory'),where('status','==','active')));APPR=s.docs.map(d=>({uid:d.id,name:d.data().name||d.data().email||d.id})).sort((a,b)=>a.name.localeCompare(b.name))}}catch(e){APPR=[]}
-  const sel=$('ia-sel');if(!sel)return;sel.innerHTML='<option value="">Select a person</option>'+APPR.map(p=>'<option value="'+escI(p.uid)+'"'+(INVCFG&&INVCFG.approverUid===p.uid?' selected':'')+'>'+esc(p.name)+'</option>').join('');cur();
-  $('ia-save').onclick=async()=>{const p=APPR.find(x=>x.uid===sel.value);if(!p)return say('ia-msg','Select a person.');try{await setDoc(doc(DB,'config','inv'),{approverUid:p.uid,approverName:p.name,by:ME.uid,at:Date.now()});say('ia-msg','Saved ✓ '+p.name+' now approves stock out.',true)}catch(e){say('ia-msg','Could not save: '+((e&&e.code)||'error'))}}}
+  let CUR=(INVCFG&&INVCFG.approvers&&INVCFG.approvers.length)?INVCFG.approvers.slice():(INVCFG&&INVCFG.approverUid?[{uid:INVCFG.approverUid,name:INVCFG.approverName||INVCFG.approverUid}]:[]);
+  const sel=$('ia-sel');if(!sel)return;
+  const draw=()=>{sel.innerHTML='<option value="">Select a person</option>'+APPR.filter(p=>!CUR.some(x=>x.uid===p.uid)).map(p=>'<option value="'+escI(p.uid)+'">'+esc(p.name)+'</option>').join('');
+    $('ia-list').innerHTML=CUR.length?CUR.map(p=>'<span class="pill ok" style="display:inline-flex;gap:6px;align-items:center">'+esc(p.name)+' <button type="button" data-rm="'+escI(p.uid)+'" style="padding:0 6px;min-height:0" aria-label="Remove">✕</button></span>').join(''):'<span class="mu">No approver yet. HR approves for now.</span>';
+    $('ia-list').querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>save(CUR.filter(x=>x.uid!==b.dataset.rm),'Removed ✓'))};
+  const save=async(list,msg)=>{try{await setDoc(doc(DB,'config','inv'),{approverUids:list.map(x=>x.uid),approvers:list,approverUid:list[0]?list[0].uid:'',approverName:list[0]?list[0].name:'',by:ME.uid,at:Date.now()});CUR=list;draw();say('ia-msg',msg,true)}catch(e){say('ia-msg','Could not save: '+((e&&e.code)||'error'))}};
+  $('ia-add').onclick=()=>{const p=APPR.find(x=>x.uid===sel.value);if(!p)return say('ia-msg','Select a person first.');save(CUR.concat([p]),'Added ✓ '+p.name+' can now approve stock out.')};
+  draw()}
 new MutationObserver(()=>{if(!$('inv-appr'))invApprCard()}).observe($('v-hr'),{childList:true});
 
 /* ================= ADDITIONS: which features each employee can use ================= */
 const FEATS=[['hr','HR Forms'],['inv','Inventory'],['sch','Assets/Links'],['gam','Event Games'],['liq','Liquidation']];
-const canUse=k=>!ME||!ME.dir||ME.isHR||!Array.isArray(ME.dir.features)||ME.dir.features.includes(k);
+const canUse=k=>k==='msg'||!ME||!ME.dir||ME.isHR||!Array.isArray(ME.dir.features)||ME.dir.features.includes(k);
 function applyFeatures(){document.querySelectorAll('#mods [data-mod]').forEach(b=>{b.hidden=!canUse(b.dataset.mod)});const nf=$('nofeat');if(nf)nf.hidden=true}
 function featGuard(v){const m=MODOF[v]||'hr';if(canUse(m)){const nf=$('nofeat');if(nf)nf.hidden=true;return v}const f=FEATS.find(x=>canUse(x[0]));return f?MODDEF[f[0]]:null}
 function NOFEAT(){['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'].forEach(k=>{const e=$('v-'+k);if(e)e.hidden=true});document.querySelectorAll('.navg').forEach(g=>{g.hidden=true});const nf=$('nofeat');if(nf)nf.hidden=false}
@@ -1480,6 +1487,142 @@ async function renderAcc(){
         try{await updateDoc(doc(DB,'directory',tr.dataset.u),{features:feats});const p=L.find(x=>x.uid===tr.dataset.u);if(p)p.features=feats;m.textContent='Saved ✓'}catch(e){m.textContent='Could not save: '+((e&&e.code)||'error')}}})};
   draw();$('acc-q').oninput=draw}
 $('t-acc').onclick=()=>show('acc');
+
+
+/* ================= ADDITIONS: approver pop-up + badge on the Inventory tile ================= */
+let POPSEEN=-1;
+function popAppr(){try{
+  const tile=document.querySelector('#mods [data-mod="inv"]');let bd=tile&&tile.querySelector('.bdg');
+  const n=canOut()?REQS.filter(r=>r.status==='pending').length+RETS.filter(r=>r.status==='pending').length:0;
+  if(tile){if(!bd){bd=document.createElement('span');bd.className='bdg';bd.style.cssText='background:#dc2626;color:#fff;border-radius:999px;font-size:11px;font-weight:700;padding:1px 6px;margin-left:4px';tile.appendChild(bd)}bd.textContent=n;bd.hidden=!n}
+  if(!n){POPSEEN=0;return}if(n===POPSEEN)return;POPSEEN=n;
+  const o=document.createElement('div');o.id='apprPop';o.style.cssText='position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px';
+  o.innerHTML='<div class="card" style="max-width:380px;width:100%;text-align:center"><div style="font-size:34px">📦</div><b style="font-size:17px">'+n+' stock out / return item'+(n>1?'s':'')+' waiting for your action</b><div class="mu" style="margin:6px 0 12px">Open Inventory to approve or reject.</div><div class="row" style="justify-content:center"><button type="button" id="ap-go" class="pri">Open Inventory</button><button type="button" id="ap-later">Later</button></div></div>';
+  const old=$('apprPop');if(old)old.remove();document.body.appendChild(o);
+  $('ap-later').onclick=()=>o.remove();$('ap-go').onclick=()=>{o.remove();setMod('inv');show('iout')};
+}catch(e){}}
+
+/* ================= PHASE 3: Inventory (category tiles, Location, expandable requests, returns) ================= */
+var RQCAT='all',RETU=null,RETS=[],MSGU=null,THR=[];
+function rqTiles(){const box=$('rq-cats');if(!box)return;const cats=['all',...new Set(INV.map(i=>i.category).filter(Boolean))];
+  box.innerHTML=cats.map(c=>{const n=c==='all'?INV.length:INV.filter(i=>i.category===c).length;return '<button type="button" data-rc="'+escI(c)+'" class="'+(RQCAT===c?'pri':'')+'" style="border-radius:999px">'+(c==='all'?'All':esc(c))+' ('+n+')</button>'}).join('');
+  box.querySelectorAll('[data-rc]').forEach(b=>b.onclick=()=>{RQCAT=b.dataset.rc;rqTiles();document.querySelectorAll('#rq-rows .sorow').forEach(r=>{const s=r.querySelector('.rq-item'),v=s.value;s.innerHTML=reqOpts();s.value=v;rqAv(r)})})}
+document.addEventListener('click',e=>{const g=e.target.closest('#rq-list .ogrp[data-rid]');if(!g||e.target.closest('button'))return;
+  g.classList.toggle('open');let d=g.querySelector('.rqd');if(!g.classList.contains('open')){if(d)d.remove();return}
+  const r=REQS.find(x=>x.id===g.dataset.rid);if(!r)return;d=document.createElement('div');d.className='rqd';d.style.cssText='margin-top:8px;padding:8px;border:1px dashed var(--bd);border-radius:10px;font-size:13px';
+  const rets=RETS.filter(x=>x.requestId===r.id);
+  d.innerHTML=[['Event',r.event],['Location',r.loc],['For',r.to],['Note',r.note],['Requested',new Date(r.at).toLocaleString()],['Approved by',r.approvedByName],['Reason',r.reason]].filter(x=>x[1]).map(x=>'<div><span class="mu">'+x[0]+':</span> '+esc(x[1])+'</div>').join('')
+   +'<div style="margin-top:6px">'+(r.items||[]).map(x=>'• '+esc(x.name)+' × '+fq(x.qty)+' '+esc(x.unit||'')+(x.box?' ('+esc(x.box)+(x.label?', '+esc(x.label):'')+')':'')).join('<br>')+'</div>'
+   +rets.map(x=>'<div style="margin-top:6px">↩ Return: '+(x.status==='confirmed'?pill('Received','ok'):x.status==='rejected'?pill('Rejected','bad'):pill('Waiting for approver','warn'))+'</div>').join('')
+   +(r.status==='approved'&&!rets.some(x=>x.status!=='rejected')?'<div style="margin-top:8px"><button type="button" data-rt="'+escI(r.id)+'">Event cancelled? Return items</button></div>':'');
+  g.appendChild(d);const b=d.querySelector('[data-rt]');if(b)b.onclick=()=>retDialog(r)});
+function retDialog(r){const o=document.createElement('div');o.style.cssText='position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:12px';
+  o.innerHTML='<div class="card" style="max-width:560px;width:100%;max-height:92vh;overflow:auto"><b>Return items — '+esc(r.event)+'</b><div class="mu" style="font-size:12px;margin:2px 0 8px">Choose what happens to the items. The approver confirms when they are received.</div><label>Reason</label><select id="rt-why"><option>Event cancelled</option><option>Event postponed</option><option>Not needed anymore</option><option>Other</option></select><label style="margin-top:8px">What to do</label><select id="rt-act"><option value="stock">Return to stock</option><option value="move">Move to another event</option></select><div id="rt-mv" hidden style="margin-top:8px"><label>New event name</label><input id="rt-to" autocomplete="off"></div><div style="margin-top:10px">'
+   +(r.items||[]).map((x,k)=>'<div class="row" data-k="'+k+'" style="align-items:center;margin:4px 0"><div style="flex:1"><b>'+esc(x.name)+'</b><div class="mu" style="font-size:12px">Released: '+fq(x.qty)+' '+esc(x.unit||'')+'</div></div><input type="number" class="rt-q" min="0" max="'+x.qty+'" step="any" value="'+x.qty+'" style="width:90px"><select class="rt-c"><option>Good</option><option>Damaged</option></select></div>').join('')
+   +'</div><div class="row"><button class="pri" id="rt-go">Send return</button><button type="button" id="rt-x">Close</button><span id="rt-m"></span></div></div>';
+  document.body.appendChild(o);$('rt-act').onchange=()=>{$('rt-mv').hidden=$('rt-act').value!=='move'};$('rt-x').onclick=()=>o.remove();
+  $('rt-go').onclick=async()=>{const items=[...o.querySelectorAll('[data-k]')].map(row=>{const x=r.items[row.dataset.k],q=Math.min(parseFloat(row.querySelector('.rt-q').value)||0,x.qty);return{id:x.id,name:x.name,unit:x.unit||'',qty:q,cond:row.querySelector('.rt-c').value}}).filter(x=>x.qty>0);
+    const act=$('rt-act').value,to=$('rt-to').value.trim();if(!items.length)return say('rt-m','Enter a quantity to return.');if(act==='move'&&!to)return say('rt-m','Enter the new event name.');
+    try{await addDoc(collection(DB,'stock_returns'),{requestId:r.id,event:r.event,loc:r.loc||'',reason:$('rt-why').value,action:act,moveTo:to,items,status:'pending',by:ME.uid,byName:ME.dir.name,at:Date.now()});say('rt-m','Sent ✓ Waiting for the approver.',true);setTimeout(()=>o.remove(),900)}catch(e){say('rt-m','Could not send: '+((e&&e.code)||'error'))}}}
+function subRet(){if(RETU){try{RETU()}catch(e){}RETU=null}const u=AUTH&&AUTH.currentUser;if(!u||!DB)return;
+  RETU=onSnapshot((canOut()||(ME&&ME.isHR))?collection(DB,'stock_returns'):query(collection(DB,'stock_returns'),where('by','==',u.uid)),s=>{RETS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));retBox();popAppr()},()=>{})}
+function retBox(){if(!canOut()){const o=$('ret-box');if(o)o.remove();return}const v=$('v-iout');if(!v)return;let b=$('ret-box');if(!b){b=document.createElement('div');b.id='ret-box';v.prepend(b)}
+  const P=RETS.filter(r=>r.status==='pending');
+  b.innerHTML=P.length?'<div class="card" style="border-color:#f59e0b"><b>Returns waiting ('+P.length+')</b>'+P.map(r=>'<div class="card" style="margin:8px 0 0"><div class="ihead"><b>'+esc(r.event)+'</b><span class="mu" style="font-size:12px">'+esc(r.byName||'')+' · '+esc(r.reason||'')+' · '+(r.action==='move'?'Move to: '+esc(r.moveTo):'Return to stock')+'</span></div>'+(r.items||[]).map(x=>'<div>• '+esc(x.name)+' × '+fq(x.qty)+' '+esc(x.unit)+' — '+esc(x.cond)+'</div>').join('')+'<div class="row"><button class="pri" data-rc2="'+escI(r.id)+'">Confirm received</button><button type="button" data-rj2="'+escI(r.id)+'">Reject</button><span class="mu" id="rcm-'+escI(r.id)+'"></span></div></div>').join('')+'</div>':'';
+  b.querySelectorAll('[data-rc2]').forEach(x=>x.onclick=()=>confirmRet(x.dataset.rc2));
+  b.querySelectorAll('[data-rj2]').forEach(x=>x.onclick=async()=>{try{await updateDoc(doc(DB,'stock_returns',x.dataset.rj2),{status:'rejected',decidedBy:ME.uid,decidedByName:ME.dir.name,decidedAt:Date.now()})}catch(e){}})}
+new MutationObserver(()=>{if(canOut()&&!$('ret-box'))retBox()}).observe($('v-iout'),{childList:true});
+async function confirmRet(id){const r=RETS.find(x=>x.id===id),m=$('rcm-'+id);if(!r)return;const at=Date.now(),batch=at.toString(36);
+  try{const bt=writeBatch(DB);
+    if(r.action==='stock')(r.items||[]).forEach(x=>{const ex=INV.find(i=>i.id===x.id);if(!ex||x.cond!=='Good')return;
+      bt.update(doc(DB,'stock_items',ex.id),{qty:increment(x.qty),totalOut:increment(-x.qty),updatedAt:at});
+      bt.set(doc(collection(DB,'stock_moves')),{itemId:ex.id,itemName:ex.name,category:ex.category,unit:ex.unit,type:'in',qty:x.qty,total:ex.totalIn||0,rem:ex.qty+x.qty,event:r.event,note:'Returned from '+r.event+' ('+r.reason+')',batch,at,by:ME.uid,byName:ME.dir.name})});
+    bt.update(doc(DB,'stock_returns',id),{status:'confirmed',decidedBy:ME.uid,decidedByName:ME.dir.name,decidedAt:at});
+    await bt.commit();if(m)m.textContent='Done ✓'}catch(e){if(m)m.textContent='Could not confirm: '+((e&&e.code)||'error')}}
+
+/* ================= PHASE 5a: Leave Application (same approval chain as other forms) ================= */
+const LTY=['Sick Leave (Paid)','Sick Leave (Unpaid)','Condolence Leave','Casual Leave','SIL','Emergency Leave','Maternity Leave','Others'];
+const phToday=()=>new Date(Date.now()+8*36e5).toISOString().slice(0,10);
+let LV=null;
+const lvDays=()=>Math.max(0,Math.round((new Date(LV.to)-new Date(LV.f))/864e5)+1);
+const lvMD=x=>x?x.slice(5,7)+'/'+x.slice(8)+'/'+x.slice(2,4):'';
+function lvSheet(){const L=LV,ck=i=>L.t==i?'☒':'☐',d=lvDays(),dd=ME&&ME.dir||{};
+  return '<div class="lvf"><div style="text-align:center;padding:6px"><b style="font-size:16px;letter-spacing:.5px">GLOBALPLAYHUB</b></div><div class="bar">Leave Application Form</div><table><tr><td style="width:62%">Employee Name: <b>'+esc(dd.name||'')+'</b></td><td>Department: '+esc(dd.dept||'')+'<br>Position: '+esc(L.pos)+'</td></tr><tr><td>Date Hired: '+esc(L.hired)+'</td><td>ID Number: '+esc(L.idn||dd.emp||'')+'</td></tr><tr><td colspan="2"><div style="display:flex;justify-content:space-between"><div>Type of Leave<br></div><div>1. Sick Leave Paid '+ck(0)+' Unpaid '+ck(1)+'<br>2. Condolence Leave '+ck(2)+'<br>3. Casual Leave '+ck(3)+'</div><div>4. SIL '+ck(4)+'<br>5. Emergency Leave '+ck(5)+'<br>6. Maternity Leave '+ck(6)+'</div><div>7. Others '+ck(7)+'</div></div></td></tr></table>'
+   +'<table><tr><th rowspan="2">Type of Leave</th><th colspan="2">Date</th><th rowspan="2">Total Days of Leave</th><th rowspan="2">Approved by Department Supervisor/Manager</th><th rowspan="2">Approved by HR Department</th></tr><tr><th>From (MM/DD/YY)</th><th>To (MM/DD/YY)</th></tr><tr style="height:26px"><td>'+esc(LTY[L.t].split(' (')[0])+'</td><td>'+lvMD(L.f)+'</td><td>'+lvMD(L.to)+'</td><td style="text-align:center">'+d+'</td><td></td><td></td></tr><tr style="height:26px"><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr style="height:26px"><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td colspan="6" style="text-align:center">Note : Please submit the original copy to Human Resource Department.</td></tr><tr><td colspan="6" style="height:46px;vertical-align:top">Notes/ Remarks: '+esc(L.n)+'</td></tr><tr><td colspan="6" style="height:70px;vertical-align:top">Reason: '+esc(L.r)+'</td></tr></table></div>'}
+const LVCSS='.lvp{background:#fff;color:#000;font:12px Arial,sans-serif;max-width:620px;margin:0 auto}.lvf{border:2px solid #000}.lvf table{width:100%;border-collapse:collapse}.lvf td,.lvf th{border:1px solid #000;padding:3px 6px;color:#000;background:#fff;font-size:12px;font-weight:400}.lvf .bar{background:#111;color:#fff;text-align:center;font-weight:700;padding:2px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cut{border-top:2px dashed #000;margin:14px 0}';
+function renderLv(){const v=$('v-lv');if(!LV)LV={t:0,f:phToday(),to:phToday(),r:'',n:'',pos:'',hired:'',idn:''};
+  v.innerHTML='<style>'+LVCSS+'</style><div class="card"><b>Leave Application</b><div class="mu" style="font-size:12px;margin:2px 0 8px">Fill in the form, then print it or submit it. It goes to your direct manager, then Admin, then HR.</div><div class="grid"><div><label>Type of leave</label><select id="lv-t">'+LTY.map((t,i)=>'<option value="'+i+'"'+(LV.t==i?' selected':'')+'>'+esc(t)+'</option>').join('')+'</select></div><div><label>From</label><input id="lv-f" type="date" value="'+LV.f+'"></div><div><label>To</label><input id="lv-to" type="date" value="'+LV.to+'"></div><div><label>Total days</label><div style="padding:9px 0"><b id="lv-d">'+lvDays()+'</b> day(s)</div></div><div><label>Position</label><input id="lv-pos" value="'+escI(LV.pos)+'"></div><div><label>Date hired</label><input id="lv-hired" value="'+escI(LV.hired)+'" placeholder="MM/DD/YY"></div><div><label>ID number</label><input id="lv-idn" value="'+escI(LV.idn||(ME.dir&&ME.dir.emp)||'')+'"></div></div><div style="margin-top:8px"><label>Reason</label><input id="lv-r" value="'+escI(LV.r)+'"></div><div style="margin-top:8px"><label>Notes / remarks</label><input id="lv-n" value="'+escI(LV.n)+'"></div><div class="row"><button type="button" class="pri" id="lv-sub">Submit for approval</button><button type="button" id="lv-print">🖨 Print (2 copies)</button><span id="lv-m"></span></div></div><div class="lvp" id="lv-sheet">'+lvSheet()+'</div>';
+  const upd=()=>{LV.t=+$('lv-t').value;LV.f=$('lv-f').value;LV.to=$('lv-to').value;LV.pos=$('lv-pos').value;LV.hired=$('lv-hired').value;LV.idn=$('lv-idn').value;LV.r=$('lv-r').value;LV.n=$('lv-n').value;$('lv-d').textContent=lvDays();$('lv-sheet').innerHTML=lvSheet()};
+  ['lv-t','lv-f','lv-to','lv-pos','lv-hired','lv-idn','lv-r','lv-n'].forEach(i=>$(i).oninput=upd);
+  $('lv-print').onclick=()=>{upd();printDoc('Leave Application','<style>'+LVCSS+'</style><div class="lvp">'+lvSheet()+'<div class="cut"></div>'+lvSheet()+'</div>')};
+  $('lv-sub').onclick=async()=>{upd();if(!(LV.f&&LV.to)||lvDays()<1)return say('lv-m','Choose the leave dates.');if(!LV.r.trim())return say('lv-m','Enter the reason.');
+    if(!ME||!ME.dir||ME.dir.status!=='active')return say('lv-m','Your account is not active yet.');
+    try{const ds=await getDoc(doc(DB,'depts',ME.dir.deptId));if(!ds.exists())return say('lv-m','Your department ('+ME.dir.dept+') has no approvers yet. Ask HR.');
+      const d=ds.data(),hr=ME.hr&&ME.hr.uid;if(!d.manager||!d.admin||!hr)return say('lv-m','Approvers are not complete for your department. Ask HR.');
+      if(d.manager===ME.uid||d.admin===ME.uid)return say('lv-m','You are an approver in your department. Ask HR for a different approver for your own requests.');
+      const chain=[{label:'Direct manager',uid:d.manager,name:d.managerName||'',status:'pending'},{label:'Admin',uid:d.admin,name:d.adminName||'',status:'waiting'},{label:'HR approval',uid:hr,name:ME.hr.name||'HR',status:'waiting'}];
+      await addDoc(collection(DB,'requests'),{ownerUid:ME.uid,ownerName:ME.dir.name,emp:ME.dir.emp,dept:ME.dir.dept,deptId:ME.dir.deptId,type:'lv',title:'Leave · '+LTY[LV.t]+' · '+lvDays()+' day(s)',payload:{profile:{name:ME.dir.name,emp:ME.dir.emp,dept:ME.dir.dept},lv:{type:LTY[LV.t],from:lvMD(LV.f),to:lvMD(LV.to),days:lvDays(),reason:LV.r,notes:LV.n,pos:LV.pos,hired:LV.hired,idn:LV.idn}},chain,current:0,status:'pending',viewers:[d.manager,d.admin,hr,ME.uid],createdAt:Date.now()});
+      say('lv-m','Submitted ✓ Waiting for '+(d.managerName||'your direct manager')+'. Track it in My Requests.',true)}catch(e){say('lv-m','Could not submit: '+((e&&e.code)||'error'))}}}
+
+/* ================= PHASE 5b: Messages ================= */
+var OPENT=null,MSGC=null,MPEOPLE=null;
+const myUid=()=>AUTH&&AUTH.currentUser&&AUTH.currentUser.uid;
+const unreadN=()=>THR.filter(t=>t.lastBy&&t.lastBy!==myUid()&&(t.lastAt||0)>((t.reads||{})[myUid()]||0)).length;
+function msgBadge(){const t=document.querySelector('#mods [data-mod="msg"]');if(!t)return;let b=t.querySelector('.bdg2');if(!b){b=document.createElement('span');b.className='bdg2';b.style.cssText='background:#dc2626;color:#fff;border-radius:999px;font-size:11px;font-weight:700;padding:1px 6px;margin-left:4px';t.appendChild(b)}const n=unreadN();b.textContent=n;b.hidden=!n}
+function startMsgs(){if(MSGU)return;const u=AUTH&&AUTH.currentUser;if(!u||!DB)return;
+  MSGU=onSnapshot(query(collection(DB,'threads'),where('members','array-contains',u.uid)),s=>{THR=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.lastAt||0)-(a.lastAt||0));msgBadge();if(!$('v-msg').hidden&&!OPENT)drawMsgs()},()=>{})}
+const thTitle=t=>t.title||Object.entries(t.names||{}).filter(x=>x[0]!==myUid()).map(x=>x[1]).join(', ')||'Chat';
+function renderMsgs(){OPENT=null;if(MSGC){try{MSGC()}catch(e){}MSGC=null}drawMsgs()}
+function drawMsgs(){const v=$('v-msg'),me=myUid();
+  v.innerHTML='<div class="card"><div class="ihead"><b>Messages</b><span><button type="button" class="pri" id="mg-new">+ New chat</button>'+(ME&&ME.isHR?' <button type="button" id="mg-ann">📢 Announcement</button>':'')+'</span></div><input id="mg-q" placeholder="Search chats…" style="margin:8px 0"><div id="mg-list"></div></div>';
+  const draw=()=>{const q=nkey($('mg-q').value);const L=THR.filter(t=>!q||nkey(thTitle(t)+' '+(t.last||'')).includes(q));
+    $('mg-list').innerHTML=L.length?L.map(t=>{const un=t.lastBy&&t.lastBy!==me&&(t.lastAt||0)>((t.reads||{})[me]||0);return '<div class="ogrp" data-t="'+escI(t.id)+'" style="cursor:pointer"><div><b>'+(t.announce?'📢 ':'')+esc(thTitle(t))+'</b>'+(un?' <span class="ipill bad">new</span>':'')+'<div class="mu" style="font-size:12px">'+esc(t.last||'No messages yet')+(t.lastAt?' · '+esc(new Date(t.lastAt).toLocaleString([],{dateStyle:'medium',timeStyle:'short'})):'')+'</div></div></div>'}).join(''):'<div class="mu">No chats yet. Tap “New chat” to message a colleague.</div>';
+    $('mg-list').querySelectorAll('[data-t]').forEach(x=>x.onclick=()=>openThread(x.dataset.t))};
+  draw();$('mg-q').oninput=draw;$('mg-new').onclick=()=>newChat(false);const a=$('mg-ann');if(a)a.onclick=()=>newChat(true)}
+async function loadPeople(){if(MPEOPLE)return MPEOPLE;try{const s=await getDocs(query(collection(DB,'directory'),where('status','==','active')));MPEOPLE=s.docs.map(d=>({uid:d.id,name:d.data().name||d.data().email||d.id,dept:d.data().dept||''})).filter(p=>p.uid!==myUid()).sort((a,b)=>a.name.localeCompare(b.name))}catch(e){MPEOPLE=[]}return MPEOPLE}
+async function newChat(ann){const P=await loadPeople(),o=document.createElement('div');o.style.cssText='position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:12px';
+  o.innerHTML='<div class="card" style="max-width:480px;width:100%;max-height:92vh;overflow:auto"><b>'+(ann?'📢 New announcement (sent to everyone)':'New chat')+'</b>'+(ann?'':'<div class="mu" style="font-size:12px;margin:2px 0 6px">Pick one person for a private chat, or several for a group.</div><input id="nc-q" placeholder="Search people…" style="margin:6px 0"><div id="nc-l" style="max-height:34vh;overflow:auto"></div><input id="nc-t" placeholder="Group name (optional)" style="margin-top:6px">')+(ann?'<input id="nc-t" placeholder="Title" style="margin-top:8px"><textarea id="nc-m" rows="4" placeholder="Announcement" style="margin-top:8px;width:100%"></textarea>':'')+'<div class="row"><button class="pri" id="nc-go">'+(ann?'Post':'Start chat')+'</button><button type="button" id="nc-x">Close</button><span id="nc-msg"></span></div></div>';
+  document.body.appendChild(o);$('nc-x').onclick=()=>o.remove();const sel=new Set();
+  if(!ann){const dr=()=>{const q=nkey($('nc-q').value);$('nc-l').innerHTML=P.filter(p=>!q||nkey(p.name+' '+p.dept).includes(q)).map(p=>'<label style="display:flex;gap:8px;align-items:center;margin:2px 0"><input type="checkbox" data-u="'+escI(p.uid)+'"'+(sel.has(p.uid)?' checked':'')+' style="width:auto"> '+esc(p.name)+' <span class="mu" style="font-size:12px">'+esc(p.dept)+'</span></label>').join('');
+    $('nc-l').querySelectorAll('[data-u]').forEach(c=>c.onchange=()=>{c.checked?sel.add(c.dataset.u):sel.delete(c.dataset.u)})};dr();$('nc-q').oninput=dr}
+  $('nc-go').onclick=async()=>{const me=ME.uid,at=Date.now();try{
+    if(ann){const txt=$('nc-m').value.trim();if(!txt)return say('nc-msg','Write the announcement.');const names={[me]:ME.dir.name};P.forEach(p=>names[p.uid]=p.name);
+      const r=await addDoc(collection(DB,'threads'),{members:Object.keys(names),names,title:$('nc-t').value.trim()||'Announcement',announce:true,last:txt.slice(0,80),lastAt:at,lastBy:me,reads:{[me]:at},createdBy:me});
+      await addDoc(collection(DB,'threads',r.id,'msgs'),{from:me,fromName:ME.dir.name,text:txt,at});o.remove();openThread(r.id);return}
+    const ids=[...sel];if(!ids.length)return say('nc-msg','Pick at least one person.');const names={[me]:ME.dir.name};ids.forEach(u=>names[u]=(P.find(p=>p.uid===u)||{}).name||'');
+    if(ids.length===1){const id='d_'+[me,ids[0]].sort().join('_');if(!THR.some(t=>t.id===id))await setDoc(doc(DB,'threads',id),{members:[me,ids[0]],names,title:'',announce:false,last:'',lastAt:at,lastBy:'',reads:{[me]:at},createdBy:me});o.remove();openThread(id)}
+    else{const r=await addDoc(collection(DB,'threads'),{members:[me,...ids],names,title:$('nc-t').value.trim()||'Group chat',announce:false,last:'',lastAt:at,lastBy:'',reads:{[me]:at},createdBy:me});o.remove();openThread(r.id)}
+  }catch(e){say('nc-msg','Could not start: '+((e&&e.code)||'error'))}}}
+function openThread(id){OPENT=id;if(MSGC){try{MSGC()}catch(e){}MSGC=null}const v=$('v-msg'),me=myUid();
+  v.innerHTML='<div class="card"><div class="ihead"><span><button type="button" id="ch-back">← Back</button> <b id="ch-t"></b></span></div><div id="ch-m" style="max-height:55vh;overflow:auto;margin:10px 0;display:flex;flex-direction:column;gap:6px"></div><div id="ch-in" class="row"><input id="ch-i" placeholder="Type a message…" autocomplete="off" style="flex:1"><button class="pri" id="ch-s">Send</button></div></div>';
+  $('ch-back').onclick=()=>renderMsgs();
+  const mark=()=>{const at=Date.now();updateDoc(doc(DB,'threads',id),{['reads.'+me]:at}).catch(()=>{})};
+  MSGC=onSnapshot(query(collection(DB,'threads',id,'msgs'),orderBy('at')),s=>{const t=THR.find(x=>x.id===id)||{},M=s.docs.map(d=>d.data()),others=(t.members||[]).filter(u=>u!==me);
+    $('ch-t').textContent=thTitle(t);$('ch-in').hidden=!!(t.announce&&!(ME&&ME.isHR));
+    $('ch-m').innerHTML=M.map(m=>{const mine=m.from===me,seen=mine&&others.length&&others.every(u=>((t.reads||{})[u]||0)>=m.at);return '<div style="align-self:'+(mine?'flex-end':'flex-start')+';max-width:80%;background:'+(mine?'var(--ac)':'var(--bg)')+';color:'+(mine?'var(--acx)':'var(--tx)')+';padding:8px 10px;border-radius:12px;border:1px solid var(--bd)">'+(mine?'':'<div style="font-size:11px;opacity:.7">'+esc(m.fromName||'')+'</div>')+esc(m.text)+'<div style="font-size:10px;opacity:.7;text-align:right">'+esc(new Date(m.at).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}))+(mine?(seen?' ✓✓':' ✓'):'')+'</div></div>'}).join('')||'<div class="mu">Say hello 👋</div>';
+    const b=$('ch-m');b.scrollTop=b.scrollHeight;mark()},()=>{});
+  const send=async()=>{const i=$('ch-i'),txt=i.value.trim();if(!txt)return;i.value='';const at=Date.now();
+    try{await addDoc(collection(DB,'threads',id,'msgs'),{from:me,fromName:ME.dir.name,text:txt,at});await updateDoc(doc(DB,'threads',id),{last:txt.slice(0,80),lastAt:at,lastBy:me,['reads.'+me]:at})}catch(e){i.value=txt}};
+  $('ch-s').onclick=send;$('ch-i').onkeydown=e=>{if(e.key==='Enter')send()}}
+
+/* ================= PHASE 5: tiles, tabs and the extra views ================= */
+function plusShow(v){const hid=['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'];
+  if(v!=='msg'&&v!=='lv'){['v-msg','v-lv'].forEach(i=>{const e=$(i);if(e)e.hidden=true});['t-msg','t-lv'].forEach(i=>{const e=$(i);if(e)e.classList.remove('on')});if(OPENT&&MSGC){try{MSGC()}catch(e){}MSGC=null;OPENT=null}return false}
+  if(!canUse(MODOF[v]))return false;unswap();setMod(MODOF[v]);
+  hid.forEach(k=>{const e=$('v-'+k);if(e)e.hidden=true;const t=$('t-'+k);if(t)t.classList.remove('on')});const nf=$('nofeat');if(nf)nf.hidden=true;
+  ['msg','lv'].forEach(k=>{$('v-'+k).hidden=k!==v;$('t-'+k).classList.toggle('on',k===v)});
+  const l=$('t-'+v).querySelector('.lbl'),p=$('tb-p');if(p)p.textContent=l?' / '+l.textContent:'';
+  if(v==='lv')renderLv();if(v==='msg')renderMsgs();return true}
+(function plusInit(){
+  MODOF.msg='msg';MODOF.lv='hr';MODDEF.msg='msg';MODN.msg='Messages';
+  const host=$('v-acc').parentNode;['lv','msg'].forEach(k=>{const d=document.createElement('div');d.id='v-'+k;d.hidden=true;host.appendChild(d)});
+  const lq=document.querySelector('#mods [data-mod="liq"]');
+  if(lq){const t=lq.cloneNode(true);t.dataset.mod='msg';t.className='';t.querySelector('.lbl').textContent='MESSAGES';t.querySelector('svg').innerHTML='<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>';t.onclick=()=>{setMod('msg');show('msg')};lq.parentNode.appendChild(t)}
+  const tabs=document.querySelector('nav.tabs'),ac=$('t-acc'),ch=$('t-chg');
+  if(tabs&&ac){const g=document.createElement('div');g.className='navg';g.dataset.g='msg';g.hidden=true;const b=ac.cloneNode(true);b.id='t-msg';b.className='';b.querySelector('.lbl').textContent='Chats';b.querySelector('svg').innerHTML='<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>';b.onclick=()=>show('msg');g.appendChild(b);tabs.appendChild(g)}
+  if(ch){const b=ch.cloneNode(true);b.id='t-lv';b.className='';b.querySelector('.lbl').textContent='Leave Application';b.querySelector('svg').innerHTML='<path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/>';b.onclick=()=>show('lv');ch.parentNode.insertBefore(b,ch.nextSibling)}
+  const st=document.createElement('style');st.textContent='#rq-list .ogrp{cursor:pointer}#rq-list .ogrp>div>.mu{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}#rq-list .ogrp.open>div>.mu{-webkit-line-clamp:unset}';document.head.appendChild(st);
+})();
 
 </script>
 <script src="phase1.js"></script>

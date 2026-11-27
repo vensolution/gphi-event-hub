@@ -1,26 +1,31 @@
-EVENT HUB - UPDATE STEPS (do them in this order)
+EVENT HUB - COMPLETE UPDATE (Phases 1 to 5). Do the 3 steps in this order.
 
-STEP 1  GitHub (website files)
-  - Open your repo > Add file > Upload files.
-  - Drag in the CONTENTS of this folder (index.html, phase1.js, bybet folder, the .js and .gs files). Keep the "bybet" folder and ".nojekyll".
-  - Commit changes. Wait 1-3 minutes. Hard refresh: Ctrl+Shift+R (phone: close and reopen the tab).
-
-STEP 2  Firebase rules
-  - Firebase console > Firestore Database > Rules.
-  - Copy your current rules somewhere as a backup.
-  - Paste everything from firestore.rules > Publish.
-
-STEP 3  Apps Script for the promoter Doc
-  - script.google.com > open the project behind your Post Event Report (the one with doPost and makeDoc).
-  - Delete older promoterFolder_/promoterPhoto_/promoterDoc_ if present, paste the ones from promoter-doc.gs at the bottom.
-  - In doPost, before  if (!d.action) return makeReport(d);  add:
-      if (d.action === 'promoterFolder') return json(promoterFolder_(d));
-      if (d.action === 'promoterPhoto')  return json(promoterPhoto_(d));
-      if (d.action === 'promoterDoc')    return json(promoterDoc_(d));
+STEP 1  Apps Script (Post Event Report)  - only if you did not already paste it
+  - script.google.com > your Post Event Report project > Code.gs > select all > delete.
+  - Paste the whole file apps-script-COMPLETE-Post-Event-Report.gs.
+  - Project Settings > Script properties: ADMIN_PASSCODE must exist (same passcode as ByBet Admin).
   - Deploy > Manage deployments > pencil > New version > Deploy.
 
-STEP 4  Liquidation sync (already set up)
-  - liquidation-sync.gs and liquidation-config.js are unchanged.
+STEP 2  Firebase rules  (CHANGED - paste again, even if you did it before)
+  - Firebase console > Firestore Database > Rules. Back up the old rules.
+  - Select all, delete, paste the whole firestore.rules from this folder, then Publish.
 
-STEP 5  Test
-  - Dark/Light button, Caps Lock warning on a password box, Philippine time on saved records, sign in, open Inventory.
+STEP 3  GitHub
+  - Repo > Add file > Upload files. Drag in EVERYTHING in this folder (keep the bybet folder and .nojekyll).
+  - Commit. Wait 1-3 minutes. Hard refresh (Ctrl+Shift+R; on a phone close and reopen the tab).
+
+WHAT IS IN HERE
+  Phase 1  Dark/Light button, Philippine time, Caps Lock warning, button effects, phone polish.
+  Phase 2  Several stock-out approvers (HR Forms > HR Admin), approver pop-up and red badge on Inventory.
+           Employee access tabs already existed (HR > Employee access).
+  Phase 3  Inventory: category tiles + Location on stock-out requests, tap a request to expand it,
+           "Event cancelled? Return items" (Return to stock / Move to another event), approver confirms in Stock Out.
+  Phase 4  ONE Google Doc for ALL promoters (Event Games > Post Event Report).
+  Phase 5  Leave Application (HR Forms tab, prints 2 copies, goes manager > Admin > HR) and Messages (new tile).
+
+TEST (5 minutes)
+  1. Sign in as HR: HR Forms > HR Admin > add 2 approvers.  2. Employee: Inventory > Stock Out: tap a category tile, fill Location, send.
+  3. Approver: pop-up appears. Employee: tap the approved request > Event cancelled? Return items. Approver: Confirm received.
+  4. HR Forms > Leave Application > fill > Print. Submit it and check it reaches your manager.
+  5. Messages tile: start a chat with a colleague, send a message, check the other person sees it.
+  6. HR: Messages > Announcement.
