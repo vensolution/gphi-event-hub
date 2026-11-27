@@ -588,7 +588,7 @@ var PER_CONFIG = {
           '<label>Promoter\u2019s photo link (optional, filled in automatically when you create the Doc)</label><input type="text" data-pi="' + i + '" data-pf="photo" value="' + esc(p.docUrl || p.photo || '') + '">' +
           '<label>Promoter\u2019s photos</label><div class="drop" data-pdrop="' + i + '"><div class="big">\uD83D\uDCF7 Add photos of this promoter</div><div class="m">Tap, or drag and drop them here</div><input type="file" data-pfile="' + i + '" accept="image/*" multiple hidden></div>' +
           '<div class="grid" id="per-pgrid-' + i + '"></div><div class="m" id="per-pmsg-' + i + '"></div>' +
-          '<div class="btns" style="margin-top:6px"><button type="button" class="sav" data-pdoc="' + i + '">Create Google Doc for this promoter</button></div><div class="lnks" id="per-plink-' + i + '"></div></div>';
+          '<div class="btns" style="margin-top:6px"><button type="button" class="sav" data-pdoc="' + i + '">Create ONE Google Doc for all promoters</button></div><div class="lnks" id="per-plink-' + i + '"></div></div>';
       }).join('');
       PRL.forEach(function (p, i) { renderP(i); });
     }
@@ -610,27 +610,35 @@ var PER_CONFIG = {
       pm.textContent = bad ? bad + ' photo(s) could not be read (try JPG or PNG).' : (pPh[i].length ? pPh[i].length + ' photo' + (pPh[i].length > 1 ? 's' : '') + ' ready.' : '');
     }
     async function makePDoc(i) {
-      var p = PRL[i], pm = $('per-pmsg-' + i), L2 = pPh[i] || [];
-      if (!p.name) { pm.textContent = 'Enter this promoter\u2019s name first.'; return; }
-      if (!L2.length) { pm.textContent = 'Add at least one photo of this promoter first.'; return; }
-      var btn = ov.querySelector('[data-pdoc="' + i + '"]'); btn.disabled = true;
+      var pm = $('per-pmsg-' + i), ready = [];
+      PRL.forEach(function (p, j) { if (p && p.name && (pPh[j] || []).length) ready.push(j); });
+      if (!ready.length) { pm.textContent = 'Enter a promoter name and add at least one photo first.'; return; }
+      var btns = [].slice.call(ov.querySelectorAll('[data-pdoc]')); btns.forEach(function (b) { b.disabled = true; });
       try {
         var fu = (window.__perStatus && window.__perStatus(key).folderUrl) || '';
         pm.textContent = 'Creating promoter folder...';
-        var f = await postRetry({ action: 'promoterFolder', eventName: ev.name, eventDateText: mdy(ev.date), parentFolderUrl: fu, promoter: p.name }, 1);
-        for (var k = 0; k < L2.length; k++) {
-          pm.textContent = 'Uploading photos (' + (k + 1) + ' of ' + L2.length + ')...';
-          await postRetry({ action: 'promoterPhoto', folderId: f.folderId, index: k + 1, replace: k === 0, mime: 'image/jpeg', data: await toB64(L2[k].blob) }, 2);
+        var f = await postRetry({ action: 'promoterFolder', eventName: ev.name, eventDateText: mdy(ev.date), parentFolderUrl: fu }, 1);
+        var plist = [];
+        for (var n = 0; n < ready.length; n++) {
+          var j = ready[n], L2 = pPh[j], p = PRL[j];
+          for (var k = 0; k < L2.length; k++) {
+            pm.textContent = 'Uploading ' + p.name + ' (' + (k + 1) + ' of ' + L2.length + ')...';
+            await postRetry({ action: 'promoterPhoto', folderId: f.folderId, promoterIndex: n + 1, index: k + 1, mime: 'image/jpeg', data: await toB64(L2[k].blob) }, 2);
+          }
+          plist.push({ name: p.name, user: p.user || '', type: p.type || '' });
         }
-        pm.textContent = 'Creating Google Doc...';
-        var d = await postRetry({ action: 'promoterDoc', folderId: f.folderId, eventName: ev.name, location: val('venue'), dateLong: longDate(ev.date), promoterName: p.name, promoterUser: p.user || '', promoterType: p.type || '' }, 1);
-        p.docUrl = d.docUrl; p.folderUrl = f.folderUrl || ''; savePrs(); renderP(i);
-        ov.querySelector('[data-pi="' + i + '"][data-pf="photo"]').value = d.docUrl;
-        pm.innerHTML = '<span class="okk">\u2705 Doc created for ' + esc(p.name) + '. Its link is now in Event Details.</span>';
+        pm.textContent = 'Creating ONE Google Doc for ' + plist.length + ' promoter' + (plist.length > 1 ? 's' : '') + '...';
+        var d = await postRetry({ action: 'promoterDoc', folderId: f.folderId, eventName: ev.name, location: val('venue'), dateLong: longDate(ev.date), promoters: plist }, 1);
+        ready.forEach(function (j) {
+          PRL[j].docUrl = d.docUrl; PRL[j].folderUrl = f.folderUrl || '';
+          var inp = ov.querySelector('[data-pi="' + j + '"][data-pf="photo"]'); if (inp) inp.value = d.docUrl;
+        });
+        savePrs(); PRL.forEach(function (_, j) { renderP(j); });
+        pm.innerHTML = '<span class="okk">\u2705 One Google Doc created for ' + plist.length + ' promoter' + (plist.length > 1 ? 's' : '') + '. The link is now in Event Details.</span>';
       } catch (e) {
-        pm.innerHTML = '<span class="bad">Could not create the Doc: ' + esc(e.message) + '. If it says unknown action, add promoter-doc.gs to your Apps Script and redeploy.</span>';
+        pm.innerHTML = '<span class="bad">Could not create the Doc: ' + esc(e.message) + '. If it says unknown action, redeploy the Apps Script as a New version.</span>';
       }
-      btn.disabled = false;
+      btns.forEach(function (b) { b.disabled = false; });
     }
     function prInput(e) {
       var t = e.target; if (!t.dataset || t.dataset.pf == null) return;
