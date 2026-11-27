@@ -159,6 +159,15 @@ service cloud.firestore {
     }
 
     // team schedule: everyone approved can read; the person who encoded it (or HR) can edit or delete
+    // Profile change requests (employee asks, HR approves)
+    match /profile_changes/{id} {
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'pending';
+      allow get, list: if signedIn() && (isHR() || resource.data.uid == request.auth.uid);
+      allow update: if isHR();
+      allow delete: if false;
+    }
+
     match /schedules/{id} {
       allow read: if isActive();
       allow create: if isActive() && request.resource.data.by == request.auth.uid;

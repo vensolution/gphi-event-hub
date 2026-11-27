@@ -173,6 +173,11 @@ body:has(#v-gadm:not([hidden])) .wrap.main{max-width:none}
 .elq{position:fixed;inset:0;z-index:60;background:#0009;overflow:auto;padding:16px;display:flex;justify-content:center;align-items:flex-start}.elq[hidden]{display:none}.elq .eb{background:var(--bg);border:1px solid var(--bd);border-radius:14px;padding:16px;width:100%;max-width:1150px}
 .app:has(:is(#login,#verify,#gatecard,#acctform):not([hidden])) #v-none{display:none}
 </style>
+<script>/* PH time: every date/time shown uses Philippine Time (UTC+8) */
+(function(){var tz='Asia/Manila';['toLocaleString','toLocaleDateString','toLocaleTimeString'].forEach(function(m){var o=Date.prototype[m];Date.prototype[m]=function(l,op){op=Object.assign({},op||{});if(!op.timeZone)op.timeZone=tz;return o.call(this,l,op)}})})();
+try{var _t=localStorage.getItem('eh_theme');if(_t)document.documentElement.dataset.theme=_t}catch(e){}
+</script>
+<style>button{transition:transform .1s,filter .15s,box-shadow .15s}button:hover:not(:disabled){filter:brightness(1.06)}button:active:not(:disabled){transform:scale(.97)}</style>
 </head>
 <body>
 <div class="app">
@@ -1205,7 +1210,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     catch(e){$('msg').textContent='Could not save: '+((e&&e.code)||'error')}
   };
   function showVerify(u){authReady=true;ref=null;
-    $('who').textContent='Signed in as '+u.email+' (email not confirmed yet)';
+    $('who').textContent='Profile: '+u.email+' (email not confirmed yet)';
     if(pendingProfile){try{localStorage.setItem('gphi-pp:'+u.uid,JSON.stringify(pendingProfile))}catch(e){}pendingProfile=null}
     $('login').hidden=true;document.querySelector('.tabs').hidden=true;$('a-out').hidden=true;
     ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq','acc'].forEach(k=>{$('v-'+k).hidden=true});
@@ -1233,7 +1238,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   });
   async function enter(u){
     state.profile=defaults();state.rows=[];state.ot=[];state.chg={};state.log=[];
-    const empNo=isFake(u.email)?u.email.split('@')[0].toUpperCase():'';$('who').textContent='Signed in as '+(empNo||u.email);renderAcct(u);
+    const empNo=isFake(u.email)?u.email.split('@')[0].toUpperCase():'';$('who').textContent='Profile: '+(empNo||u.email);renderAcct(u);
     ref=doc(fsdb,'users',u.uid);
     let existed=false;
     try{
@@ -1555,6 +1560,77 @@ async function invApprCard(){if(!ME||!ME.isHR)return;const hr=$('v-hr');if(!hr||
   $('ia-save').onclick=async()=>{const p=APPR.find(x=>x.uid===sel.value);if(!p)return say('ia-msg','Select a person.');try{await setDoc(doc(DB,'config','inv'),{approverUid:p.uid,approverName:p.name,by:ME.uid,at:Date.now()});say('ia-msg','Saved ✓ '+p.name+' now approves stock out.',true)}catch(e){say('ia-msg','Could not save: '+((e&&e.code)||'error'))}}}
 new MutationObserver(()=>{if(!$('inv-appr'))invApprCard()}).observe($('v-hr'),{childList:true});
 
+/* ===== V4 add-on: Profile + Leave Application (additive, nothing removed) ===== */
+(function(){
+const st=document.createElement('style');
+st.textContent='.pfo{position:fixed;inset:0;z-index:80;background:#0009;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:16px}.pfo[hidden]{display:none}.pfb{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:14px;padding:16px;max-width:640px;width:100%}.pfb h2,.pfb h3{margin:0 0 6px}.pfb h3{margin-top:14px}.pfav{width:72px;height:72px;border-radius:50%;object-fit:cover;background:var(--bd);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:26px;flex:none}.pfr{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.pfg{display:grid;grid-template-columns:130px 1fr;gap:4px 10px;margin:10px 0}.pfg dt{color:var(--mu)}.pfg dd{margin:0;word-break:break-word}.pfb button{min-height:40px}.pfp{background:#fff;color:#000;border-radius:8px;padding:8px;overflow:auto;margin-top:8px}.sb-user[role=button]{cursor:pointer}';
+document.head.appendChild(st);
+const ov=document.createElement('div');ov.className='pfo noprint';ov.hidden=true;ov.innerHTML='<div class="pfb" id="pf-box"></div>';document.body.appendChild(ov);
+const box=ov.querySelector('#pf-box');
+ov.onclick=e=>{if(e.target===ov)ov.hidden=true};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')ov.hidden=true});
+const dir=()=>(ME&&ME.dir)||{};
+const eff=()=>document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+function setTheme(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('eh_theme',t)}catch(e){}const b=$('thm');if(b)b.textContent=eff()==='dark'?'\u2600\ufe0f Light mode':'\uD83C\uDF19 Dark mode'}
+const phk=()=>'eh_photo_'+((ME&&ME.uid)||'x');
+const when=t=>new Date(t).toLocaleString([],{dateStyle:'medium',timeStyle:'short'})+' PHT';
+const FIELDS=[['name','Name'],['dept','Department'],['pos','Position'],['emp','Employee No.']];
+function resize(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=160,c=document.createElement('canvas');c.width=c.height=s;const m=Math.min(im.width,im.height);c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,s,s);cb(c.toDataURL('image/jpeg',.8))};im.src=r.result};r.readAsDataURL(file)}
+function openProfile(){
+ const d=dir();let ph='';try{ph=localStorage.getItem(phk())||''}catch(e){}
+ const em=(AUTH&&AUTH.currentUser&&AUTH.currentUser.email)||d.email||'';
+ box.innerHTML='<div class="pfr" style="justify-content:space-between"><h2>Profile</h2><button id="pf-x" type="button">Close</button></div>'+
+ '<div class="pfr">'+(ph?'<img class="pfav" alt="Profile photo" src="'+ph+'">':'<div class="pfav">'+esc((d.name||'?').trim().charAt(0).toUpperCase())+'</div>')+'<div><b style="font-size:16px">'+esc(d.name||'')+'</b><div class="mu">'+esc(d.pos||'')+(d.dept?' / '+esc(d.dept):'')+'</div></div></div>'+
+ '<div class="pfr" style="margin-top:8px"><label class="mu" style="margin:0">Photo (kept on this device)</label><input type="file" id="pf-ph" accept="image/*" style="width:auto"></div>'+
+ '<dl class="pfg"><dt>Name</dt><dd>'+esc(d.name||'')+'</dd><dt>Employee No.</dt><dd>'+esc(d.emp||'')+'</dd><dt>Department</dt><dd>'+esc(d.dept||'')+'</dd><dt>Position</dt><dd>'+esc(d.pos||'')+'</dd><dt>Email</dt><dd>'+esc(em)+'</dd><dt>Role</dt><dd>'+(ME&&ME.isHR?'HR':'Employee')+'</dd></dl>'+
+ '<h3>Appearance</h3><div class="pfr">'+[['light','Light'],['dark','Dark']].map(t=>'<button type="button" class="'+(eff()===t[0]?'pri':'')+'" data-th="'+t[0]+'">'+t[1]+' mode</button>').join('')+'</div>'+
+ '<h3>Request a change</h3><div class="mu">Changes to your details need HR approval.</div><div class="pfr"><select id="pf-f" style="width:auto">'+FIELDS.map(f=>'<option value="'+f[0]+'">'+f[1]+'</option>').join('')+'</select><input id="pf-v" placeholder="New value" style="flex:1;min-width:160px"></div><input id="pf-r" placeholder="Reason (optional)" style="margin-top:6px"><div class="pfr" style="margin-top:6px"><button type="button" class="pri" id="pf-s">Send for approval</button><span class="mu" id="pf-m"></span></div>'+
+ '<h3>My requests</h3><div id="pf-mine" class="mu">Loading\u2026</div>'+(ME&&ME.isHR?'<h3>Waiting for your approval</h3><div id="pf-pend" class="mu">Loading\u2026</div>':'');
+ ov.hidden=false;
+ $('pf-x').onclick=()=>ov.hidden=true;
+ $('pf-ph').onchange=e=>{const f=e.target.files[0];if(f)resize(f,u=>{try{localStorage.setItem(phk(),u)}catch(x){}openProfile()})};
+ box.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{setTheme(b.dataset.th);openProfile()});
+ $('pf-s').onclick=async()=>{const key=$('pf-f').value,nv=$('pf-v').value.trim(),m=$('pf-m');if(!nv){m.textContent='Type the new value.';return}
+  try{await addDoc(collection(DB,'profile_changes'),{uid:ME.uid,name:d.name||'',emp:d.emp||'',key,label:FIELDS.find(f=>f[0]===key)[1],old:d[key]||'',new:nv,reason:$('pf-r').value.trim(),status:'pending',at:Date.now()});$('pf-v').value='';$('pf-r').value='';m.textContent='Sent \u2713';loadMine()}catch(e){m.textContent='Could not send ('+((e&&e.code)||'error')+'). Publish the updated firestore.rules.'}};
+ loadMine();if(ME&&ME.isHR)loadPend();
+}
+async function loadMine(){const el=$('pf-mine');if(!el)return;try{const s=await getDocs(query(collection(DB,'profile_changes'),where('uid','==',ME.uid)));const L=s.docs.map(x=>x.data()).sort((a,b)=>b.at-a.at);
+ el.innerHTML=L.length?L.map(c=>'<div style="padding:6px 0;border-top:1px solid var(--bd)"><b>'+esc(c.label)+'</b>: '+esc(c.old||'-')+' \u2192 '+esc(c.new)+' <span class="mu">('+esc(c.status)+', '+when(c.at)+')</span></div>').join(''):'No requests yet.'}catch(e){el.textContent='Could not load.'}}
+async function loadPend(){const el=$('pf-pend');if(!el)return;try{const s=await getDocs(query(collection(DB,'profile_changes'),where('status','==','pending')));const L=s.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>a.at-b.at);
+ el.innerHTML=L.length?L.map(c=>'<div style="padding:8px 0;border-top:1px solid var(--bd)"><b>'+esc(c.name)+'</b> ('+esc(c.emp)+'): '+esc(c.label)+' '+esc(c.old||'-')+' \u2192 <b>'+esc(c.new)+'</b>'+(c.reason?'<div class="mu">'+esc(c.reason)+'</div>':'')+'<div class="pfr" style="margin-top:4px"><button type="button" class="pri" data-ok="'+c.id+'">Approve</button><button type="button" data-no="'+c.id+'">Reject</button></div></div>').join(''):'Nothing waiting.';
+ el.querySelectorAll('[data-ok],[data-no]').forEach(b=>b.onclick=async()=>{const id=b.dataset.ok||b.dataset.no,c=L.find(x=>x.id===id);try{if(b.dataset.ok)await updateDoc(doc(DB,'directory',c.uid),{[c.key]:c.new});await updateDoc(doc(DB,'profile_changes',id),{status:b.dataset.ok?'approved':'rejected',by:ME.uid,decidedAt:Date.now()});loadPend()}catch(e){el.insertAdjacentHTML('afterbegin','<div class="bad">Could not save.</div>')}})}catch(e){el.textContent='Could not load.'}}
+const su=document.querySelector('.sb-user');if(su){su.setAttribute('role','button');su.tabIndex=0;su.title='Open Profile';su.onclick=()=>{if(ME&&ME.uid)openProfile()};su.onkeydown=e=>{if(e.key==='Enter'&&ME&&ME.uid)openProfile()}}
+/* ---- Leave Application Form (same layout as the paper form) ---- */
+const LT=['Sick Leave (Paid)','Sick Leave (Unpaid)','Condolence Leave','Casual Leave','SIL','Emergency Leave','Maternity Leave','Others'];
+const md=x=>{if(!x)return'';const p=x.split('-');return p[1]+'/'+p[2]+'/'+p[0].slice(2)};
+const days=(a,b)=>a&&b?Math.max(1,Math.round((new Date(b)-new Date(a))/864e5)+1):'';
+const T='border:1px solid #000;padding:4px 6px;vertical-align:top;font-size:12px';
+function paper(v){const used=v.rows.map(r=>r.t).filter(Boolean);const ck=n=>used.includes(n)?'\u2612':'\u2610';
+ const logo=typeof LOGO_SQ!=='undefined'?'<img src="'+LOGO_SQ+'" style="height:34px;vertical-align:middle;margin-right:8px">':'';
+ return '<table style="width:100%;border-collapse:collapse;border:2px solid #000;font-family:Arial,sans-serif;color:#000;margin:0 auto"><tr><td colspan="6" style="'+T+';text-align:center;font-size:15px;font-weight:bold">'+logo+'GLOBAL PLAYHUB</td></tr><tr><td colspan="6" style="background:#111;color:#fff;text-align:center;font-size:12px;padding:3px;border:1px solid #000">Leave Application Form</td></tr>'+
+ '<tr><td colspan="4" style="'+T+'">Employee Name: <b>'+esc(v.name)+'</b></td><td colspan="2" style="'+T+'">Department: <b>'+esc(v.dept)+'</b><br>Position: <b>'+esc(v.pos)+'</b></td></tr>'+
+ '<tr><td colspan="4" style="'+T+'">Date Hired: <b>'+esc(md(v.hired))+'</b></td><td colspan="2" style="'+T+'">ID Number: <b>'+esc(v.emp)+'</b></td></tr>'+
+ '<tr><td colspan="6" style="'+T+'">Type of Leave:&nbsp; 1. Sick Leave Paid '+ck('Sick Leave (Paid)')+' Unpaid '+ck('Sick Leave (Unpaid)')+' &nbsp; 2. Condolence Leave '+ck('Condolence Leave')+' &nbsp; 3. Casual Leave '+ck('Casual Leave')+' &nbsp; 4. SIL '+ck('SIL')+' &nbsp; 5. Emergency Leave '+ck('Emergency Leave')+' &nbsp; 6. Maternity Leave '+ck('Maternity Leave')+' &nbsp; 7. Others '+ck('Others')+'</td></tr>'+
+ '<tr style="text-align:center"><td style="'+T+'">Type of Leave</td><td style="'+T+'">From (MM/DD/YY)</td><td style="'+T+'">To (MM/DD/YY)</td><td style="'+T+'">Total Days of Leave</td><td style="'+T+'">Approved by Department Supervisor/Manager</td><td style="'+T+'">Approved by HR Department</td></tr>'+
+ v.rows.map(r=>'<tr style="height:26px"><td style="'+T+'">'+esc(r.t)+'</td><td style="'+T+'">'+esc(md(r.f))+'</td><td style="'+T+'">'+esc(md(r.to))+'</td><td style="'+T+';text-align:center">'+days(r.f,r.to)+'</td><td style="'+T+'"></td><td style="'+T+'"></td></tr>').join('')+
+ '<tr><td colspan="6" style="'+T+';text-align:center">Note: Please submit the original copy to Human Resource Department.</td></tr><tr><td colspan="6" style="'+T+';height:34px">Notes/ Remarks: '+esc(v.notes)+'</td></tr><tr><td colspan="6" style="'+T+';height:54px">Reason: '+esc(v.reason)+'</td></tr></table>'}
+const two=v=>paper(v)+'<div style="border-top:2px dashed #000;margin:18px 0"></div>'+paper(v);
+function vals(){const g=i=>($(i)||{}).value||'';return{name:g('lv-n'),dept:g('lv-d'),pos:g('lv-p'),emp:g('lv-e'),hired:g('lv-h'),notes:g('lv-no'),reason:g('lv-r'),rows:[1,2,3].map(i=>({t:g('lv-t'+i),f:g('lv-f'+i),to:g('lv-o'+i)}))}}
+function openLeave(){const d=dir(),p=(typeof state!=='undefined'&&state.profile)||{};
+ const row=i=>'<div class="pfr" style="margin-top:6px"><select id="lv-t'+i+'" style="flex:2;min-width:140px"><option value="">Type of leave '+i+'</option>'+LT.map(t=>'<option>'+t+'</option>').join('')+'</select><input type="date" id="lv-f'+i+'" style="flex:1;min-width:130px" aria-label="From"><input type="date" id="lv-o'+i+'" style="flex:1;min-width:130px" aria-label="To"></div>';
+ box.innerHTML='<div class="pfr" style="justify-content:space-between"><h2>Leave Application Form</h2><button id="lv-x" type="button">Close</button></div><div class="pfr"><input id="lv-n" placeholder="Employee name" value="'+esc(d.name||p.name||'')+'" style="flex:2;min-width:160px"><input id="lv-e" placeholder="ID number" value="'+esc(d.emp||p.emp||'')+'" style="flex:1;min-width:100px"></div><div class="pfr" style="margin-top:6px"><input id="lv-d" placeholder="Department" value="'+esc(d.dept||p.dept||'')+'" style="flex:1;min-width:130px"><input id="lv-p" placeholder="Position" value="'+esc(d.pos||p.pos||'')+'" style="flex:1;min-width:130px"><label class="mu" style="margin:0">Date hired <input type="date" id="lv-h"></label></div>'+row(1)+row(2)+row(3)+'<input id="lv-no" placeholder="Notes / Remarks" style="margin-top:6px"><textarea id="lv-r" rows="2" placeholder="Reason" style="margin-top:6px"></textarea><div class="pfr" style="margin-top:8px"><button type="button" class="pri" id="lv-pr">Print (2 copies per page)</button></div><h3>Preview</h3><div class="pfp" id="lv-pv"></div>';
+ const pv=()=>{$('lv-pv').innerHTML=paper(vals())};pv();box.oninput=pv;box.onchange=pv;
+ $('lv-x').onclick=()=>ov.hidden=true;$('lv-pr').onclick=()=>printDoc('Leave Application Form',two(vals()));ov.hidden=false}
+const t0=document.getElementById('t-enc');if(t0){const b=t0.cloneNode(true);[...b.attributes].forEach(a=>{if(a.name.startsWith('data-'))b.removeAttribute(a.name)});b.id='t-leave';b.classList.remove('on');const sp=b.querySelector('.lbl');if(sp)sp.textContent='Leave Application';b.onclick=e=>{e.preventDefault();openLeave()};t0.parentNode.appendChild(b)}
+})();
+
+</script>
+<script>/* Dark / Light mode button */
+(function(){function eff(){return document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}
+function init(){var f=document.querySelector('.sb-foot');if(!f||document.getElementById('thm'))return;var b=document.createElement('button');b.id='thm';b.type='button';
+function lab(){b.textContent=eff()==='dark'?'☀️ Light mode':'🌙 Dark mode'}lab();
+b.onclick=function(){var n=eff()==='dark'?'light':'dark';document.documentElement.dataset.theme=n;try{localStorage.setItem('eh_theme',n)}catch(e){}lab()};f.insertBefore(b,f.firstChild)}
+if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init)})();
 </script>
 </body>
 </html>
