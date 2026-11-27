@@ -42,19 +42,9 @@ One static site: HR Forms, Inventory, Assets/Links and Event Games (Spin the Whe
 - **Inventory:** HR picks the stock out approver in HR Admin. Requesters see availability and send a request; the approver sets Box (unlimited) and Label (dropdown with "Add new label") and approves, which deducts the stock. Stock In category is a dropdown with "Add new category". The dashboard is split into Merchandise, Event Supplies and Event Collaterals with the In stock level integrated.
 - **Firestore rules:** republish `firestore.rules` (new `stock_requests`, `config/inv`, and stock out is limited to the approver).
 
-## Update: separate Liquidation, many promoters, Employee Access (V4)
-- **Liquidation is its own tile** in the sidebar (LIQUIDATION), beside HR FORMS, INVENTORY, ASSETS/LINKS and EVENT GAMES. It is no longer a tab inside Event Games.
-- **Event Liquidation (inside Event Games):** the Liquidation button beside Post Event Report on every event and game now opens a window on top of Event Games. Closing it (Close button or Esc) brings you back to the same event list. It is separate from the Liquidation tile: one per event, saved in Firestore `event_liquidations` and sent to the `EVENT LIQUIDATION` tab of your Google Sheet. Everyone approved can view it; the person who made it (or HR) can edit it.
-- **Post Event Report > Promoter's Details:** you can add as many promoters as needed (Add another promoter / Remove). Each promoter has name, username, Old/New, photos and their own Google Doc. Event Details lists them numbered (names and photo links) and Copy for message includes all. Details saved with the old single-promoter format still show.
-- **Employee Access (HR only):** HR Forms > HR Admin area > **Employee Access**. Tick HR Forms, Inventory, Assets/Links, Event Games, Liquidation for each employee, Save, or use Preview to see exactly what they see. Employees only see the tabs they are allowed. An employee HR has not set yet can use everything (so nobody is locked out after this update). HR always sees everything.
-- **Deploy:** upload all files to GitHub (replace the old ones), publish `firestore.rules` in Firebase, and replace the Apps Script code with `liquidation-sync.gs` (plus `promoter-doc.gs`) then Deploy > Manage deployments > Edit > New version.
-- **Note:** the hidden tabs are enforced in the app. Firestore rules still only check that a person is signed in and approved, so this controls what employees see, not a hard security wall per collection.
-
-## Update: V4 improvements (nothing removed)
-- **Event Data fix (Physical Games):** every game showed the same totals because the count used all players instead of that game's players. Each game now counts only its own players (`bybet/admin.html`).
-- **Philippine Time:** all dates and times shown use Asia/Manila (UTC+8) on Event Hub and ByBet Admin.
-- **Dark / Light mode button** at the bottom of the sidebar. The choice is remembered on the device.
-- **Buttons:** press and hover effect on every button.
-- **Sidebar:** "Signed in as" now reads "Profile:".
-- **Profile:** click the sidebar user block (now labeled Profile). Shows your details, photo (kept on this device), Light/Dark mode and **Request a change**; HR approves or rejects inside the same window and an approval updates the directory. **Republish `firestore.rules`** (new `profile_changes`).
-- **Leave Application:** new button in the HR Forms menu. Same layout as the paper form, live preview, **Print (2 copies per page)**.
+## Update: separate Liquidation, many promoters, employee access
+- **Liquidation** is its own module tile again (with HR Forms, Inventory, Assets/Links, Event Games). Records are in `liquidations` and sync to the `LIQUIDATION` sheet tab.
+- **Liquidation inside Event Games** (button beside Post Event Report) opens as a window over the page and stays on Event Games, like Post Event Report. It is one liquidation per event, kept separately in `event_liquidations`, and syncs to the `EVENT LIQUIDATION` sheet tab. Update `liquidation-sync.gs` in your Apps Script (it now reads `data.sheet`) and create a new version.
+- **Post Event Report - Promoter's Details:** add as many promoters as needed. Each has name, username, Old/New, their own photos and their own Google Doc. Event Details lists every promoter (numbered when more than one) and every promoter photo Doc link.
+- **Employee Access** (HR only, in HR Forms): tick which features each employee can use (HR Forms, Inventory, Assets/Links, Event Games, Liquidation). Employees only see the tiles and tabs they are allowed. New or untouched employees keep full access until HR changes it.
+- **Firestore rules:** republish `firestore.rules` (new `event_liquidations`).

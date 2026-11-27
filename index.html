@@ -170,29 +170,21 @@ body:has(:is(#gatecard,#acctform):not([hidden])){background:#0e1217 radial-gradi
 .app:has(:is(#login,#verify,#gatecard,#acctform):not([hidden])) .topbar{display:none}
 .gfr{display:block;width:100%;height:calc(100vh - 92px);min-height:520px;border:0;border-radius:12px;background:#fff}
 body:has(#v-gadm:not([hidden])) .wrap.main{max-width:none}
-.elq{position:fixed;inset:0;z-index:60;background:#0009;overflow:auto;padding:16px;display:flex;justify-content:center;align-items:flex-start}.elq[hidden]{display:none}.elq .eb{background:var(--bg);border:1px solid var(--bd);border-radius:14px;padding:16px;width:100%;max-width:1150px}
-.app:has(:is(#login,#verify,#gatecard,#acctform):not([hidden])) #v-none{display:none}
 </style>
-<script>/* PH time: every date/time shown uses Philippine Time (UTC+8) */
-(function(){var tz='Asia/Manila';['toLocaleString','toLocaleDateString','toLocaleTimeString'].forEach(function(m){var o=Date.prototype[m];Date.prototype[m]=function(l,op){op=Object.assign({},op||{});if(!op.timeZone)op.timeZone=tz;return o.call(this,l,op)}})})();
-try{var _t=localStorage.getItem('eh_theme');if(_t)document.documentElement.dataset.theme=_t}catch(e){}
-</script>
-<style>button{transition:transform .1s,filter .15s,box-shadow .15s}button:hover:not(:disabled){filter:brightness(1.06)}button:active:not(:disabled){transform:scale(.97)}</style>
 </head>
 <body>
 <div class="app">
 <aside class="sb noprint">
 <div class="sb-logo"><img class="glogo" alt="Global PlayHub"></div>
 <div class="sb-user"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div><b>Event Hub</b><span id="who">Loading…</span></div></div>
-<div class="mods" id="mods"><button type="button" data-mod="hr" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg><span class="lbl">HR FORMS</span></button><button type="button" data-mod="inv"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7.5L12 12.5l8.7-5M12 22V12.5"/></svg><span class="lbl">INVENTORY</span><span class="nbadge" id="inv-n" hidden></span></button><button type="button" data-mod="sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">ASSETS/LINKS</span></button><button type="button" data-mod="gam"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg><span class="lbl">EVENT GAMES</span></button><button type="button" data-mod="liq"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2v20l3-2 2 2 3-2 3 2 2-2 3 2V2l-3 2-2-2-3 2-3-2-2 2z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="lbl">LIQUIDATION</span></button></div>
-<nav class="tabs" hidden><div class="navg" data-g="hr"><button id="t-enc" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg><span class="lbl">Encode / Request</span></button><button id="t-ob"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="lbl">Official Business Form</span></button><button id="t-ot"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="lbl">Overtime</span></button><button id="t-rd"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">RD OT Form</span></button><button id="t-chg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="lbl">Change Schedule/OFF</span></button><button id="t-ntf"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="lbl">Notifications</span><span class="nbadge" id="ntf-n" hidden></span></button><button id="t-req"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><span class="lbl">My Requests</span></button><button id="t-apr"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg><span class="lbl">Approvals</span></button><button id="t-hr" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="lbl">HR Admin</span></button><button id="t-acc" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><span class="lbl">Employee Access</span></button><button id="t-log"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 106 5.3L3 8"/><path d="M12 7v5l4 2"/></svg><span class="lbl">Save Log</span></button></div><div class="navg" data-g="inv" hidden><button id="t-idash"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span class="lbl">Dashboard</span><span class="nbadge" id="idash-n" hidden></span></button><button id="t-iin"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span class="lbl">Stock In</span></button><button id="t-iout"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 19h16"/></svg><span class="lbl">Stock Out</span></button><button id="t-irem"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span class="lbl">Remaining Items</span></button></div><div class="navg" data-g="sch" hidden><button id="t-sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">Assets/Links</span></button></div><div class="navg" data-g="gam" hidden><button id="t-gadm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="lbl">ByBet Admin</span></button></div><div class="navg" data-g="liq" hidden><button id="t-liq"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2v20l3-2 2 2 3-2 3 2 2-2 3 2V2l-3 2-2-2-3 2-3-2-2 2z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="lbl">Liquidation</span></button></div></nav>
+<div class="mods" id="mods"><button type="button" data-mod="hr" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg><span class="lbl">HR FORMS</span></button><button type="button" data-mod="inv"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7.5L12 12.5l8.7-5M12 22V12.5"/></svg><span class="lbl">INVENTORY</span><span class="nbadge" id="inv-n" hidden></span></button><button type="button" data-mod="sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">ASSETS/LINKS</span></button><button type="button" data-mod="gam"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg><span class="lbl">EVENT GAMES</span></button><button type="button" data-mod="liq"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg><span class="lbl">LIQUIDATION</span></button></div>
+<nav class="tabs" hidden><div class="navg" data-g="hr"><button id="t-enc" class="on"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg><span class="lbl">Encode / Request</span></button><button id="t-ob"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="lbl">Official Business Form</span></button><button id="t-ot"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="lbl">Overtime</span></button><button id="t-rd"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">RD OT Form</span></button><button id="t-chg"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span class="lbl">Change Schedule/OFF</span></button><button id="t-ntf"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="lbl">Notifications</span><span class="nbadge" id="ntf-n" hidden></span></button><button id="t-req"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><span class="lbl">My Requests</span></button><button id="t-apr"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg><span class="lbl">Approvals</span></button><button id="t-hr" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="lbl">HR Admin</span></button><button id="t-acc" hidden><span class="lbl">Employee Access</span></button><button id="t-log"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 106 5.3L3 8"/><path d="M12 7v5l4 2"/></svg><span class="lbl">Save Log</span></button></div><div class="navg" data-g="inv" hidden><button id="t-idash"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span class="lbl">Dashboard</span><span class="nbadge" id="idash-n" hidden></span></button><button id="t-iin"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span class="lbl">Stock In</span></button><button id="t-iout"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 19h16"/></svg><span class="lbl">Stock Out</span></button><button id="t-irem"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span class="lbl">Remaining Items</span></button></div><div class="navg" data-g="sch" hidden><button id="t-sch"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><span class="lbl">Assets/Links</span></button></div><div class="navg" data-g="gam" hidden><button id="t-gadm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="lbl">ByBet Admin</span></button></div><div class="navg" data-g="liq" hidden><button id="t-liq"><span class="lbl">Liquidation</span></button></div></nav>
 <div class="sb-lang"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg><select class="langsel" id="lang2" aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="es">Español</option><option value="zh">中文</option></select></div>
 <div class="sb-ver">Event Hub v2.0</div>
 <div class="sb-foot"><button id="col" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span class="lbl">Collapse</span></button><button id="a-out" class="sb-out" type="button" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg><span class="lbl">Log Out</span></button></div>
 </aside>
 <div class="wrap main">
   <div class="topbar noprint"><div><b id="tb-m">HR Forms</b><span id="tb-p" class="mu"></span></div><span class="mu">Event Hub</span></div>
-  <div id="pvbar" class="noprint" hidden style="background:#f59e0b22;border:1px solid #f59e0b66;border-radius:10px;padding:10px 12px;margin:0 0 12px"></div>
   <div id="lgtop" class="noprint"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg><select class="langsel" id="lang1" aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="es">Español</option><option value="zh">中文</option></select></div>
   <div id="lg-brand"><img class="glogo" alt="Global PlayHub"></div>
   <div id="login" class="card lg" hidden><b id="l-title">Sign in</b>
@@ -269,13 +261,12 @@ try{var _t=localStorage.getItem('eh_theme');if(_t)document.documentElement.datas
       <div id="acct-msg" class="mu" style="margin-top:8px"></div></div>
   </div>
 
-  <div id="v-ob" hidden></div><div id="v-liq" hidden></div>
+  <div id="v-ob" hidden></div><div id="v-liq" hidden></div><div id="v-acc" hidden></div><div id="nofeat" class="card" hidden><b>No features assigned yet</b><div class="mu" style="margin-top:4px">HR has not given your account access to any feature yet. Please ask HR.</div></div>
   <div id="v-rd" hidden></div>
   <div id="v-ot" hidden></div>
   <div id="v-chg" hidden></div>
   <div id="v-log" hidden></div>
-  <div id="v-req" hidden></div><div id="v-apr" hidden></div><div id="v-hr" hidden></div><div id="v-ntf" hidden></div><div id="v-idash" hidden></div><div id="v-iin" hidden></div><div id="v-iout" hidden></div><div id="v-irem" hidden></div><div id="v-sch" hidden></div><div id="v-acc" hidden></div><div id="v-none" hidden></div>
-  <div class="elq noprint" id="elq" hidden></div>
+  <div id="v-req" hidden></div><div id="v-apr" hidden></div><div id="v-hr" hidden></div><div id="v-ntf" hidden></div><div id="v-idash" hidden></div><div id="v-iin" hidden></div><div id="v-iout" hidden></div><div id="v-irem" hidden></div><div id="v-sch" hidden></div>
   <div id="tagpop" class="noprint" hidden></div>
   <div class="noprint mu" style="text-align:center;margin:28px 0 8px;font-size:12px">Created by: Arven Franco</div>
 </div>
@@ -342,7 +333,7 @@ const $=id=>document.getElementById(id);
 const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const state={profile:{name:'',dept:'',pos:'',emp:'',per:'',off:'Sunday',filed:'',dstart:'09:00',dend:'18:00'},rows:[],ot:[],chg:{},log:[]};
 let db=null,ref=null,dirty=false,authReady=false;
-let SNAP=null,SW=null,AVIEWS=[],LIQS=[],LQ=null,INVCFG=null,REQS=[],EXTRA_CATS=[],EXTRA_LABELS=[],REQU=null,IDF='all';
+let EVLIQS=[],SNAP=null,SW=null,AVIEWS=[],LIQS=[],LQ=null,INVCFG=null,REQS=[],EXTRA_CATS=[],EXTRA_LABELS=[],REQU=null,IDF='all';
 
 function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
 function fmtDate(v){if(!v)return'';const[y,m,d]=v.split('-').map(Number);if(!y)return v;return d+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m-1]+' '+y}
@@ -357,14 +348,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches&&e.
 window.addEventListener('resize',autosizeAll);
 const mode=m=>{$('si').hidden=m!=='in';$('su').hidden=m!=='up';$('l-title').textContent=m==='in'?'Sign in':'Create account';$('a-msg').textContent=''};
 $('go-up').onclick=()=>mode('up');$('go-in').onclick=()=>mode('in');
-function show(v){{const _m=MODOF[v]||'hr';if(!canMod(_m)){const A=myFeats();if(A.length)return show(MODDEF[A[0]]);return noFeat()}}unswap();$('v-none').hidden=true;
+function show(v){unswap();v=featGuard(v);if(v===null){NOFEAT();return}
   setMod(MODOF[v]||'hr');{const _t=todayStr();if(state.profile.filed!==_t){state.profile.filed=_t;const _e=$('p-filed');if(_e)_e.value=_t}}
   ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'].forEach(k=>{$('v-'+k).hidden=k!==v;$('t-'+k).classList.toggle('on',k===v)});
-  if(v==='enc')autosizeAll();withSaved(v,()=>{if(v==='ob')renderOB();if(v==='rd')renderRD();if(v==='ot')renderOTView();if(v==='chg')renderChgView()});if(v==='liq')renderLiq();FONTS_READY.then(()=>{unswap();unsavedBanner(v)});if(v==='log')renderLog();if(v==='req')renderReq();if(v==='apr')renderApr();if(v==='hr')renderHR();if(v==='acc')renderAcc();if(v==='ntf')renderNtf();if(v==='idash')renderIDash();if(v==='iin')renderIIn();if(v==='iout')renderIOut();if(v==='irem')renderIRem();if(v==='sch')renderSch();
+  if(v==='enc')autosizeAll();withSaved(v,()=>{if(v==='ob')renderOB();if(v==='rd')renderRD();if(v==='ot')renderOTView();if(v==='chg')renderChgView()});if(v==='liq')renderLiq();if(v==='acc')renderAcc();FONTS_READY.then(()=>{unswap();unsavedBanner(v)});if(v==='log')renderLog();if(v==='req')renderReq();if(v==='apr')renderApr();if(v==='hr')renderHR();if(v==='ntf')renderNtf();if(v==='idash')renderIDash();if(v==='iin')renderIIn();if(v==='iout')renderIOut();if(v==='irem')renderIRem();if(v==='sch')renderSch();
   if(v==='gadm'&&!$('ga-f').getAttribute('src'))$('ga-f').src='bybet/admin.html';
   {const b=$('t-'+v),l=b&&b.querySelector('.lbl'),p=$('tb-p');if(p)p.textContent=l?' / '+l.textContent:''}
 }
-$('t-enc').onclick=()=>show('enc');$('t-ob').onclick=()=>show('ob');$('t-rd').onclick=()=>show('rd');$('t-ot').onclick=()=>show('ot');$('t-chg').onclick=()=>show('chg');$('t-log').onclick=()=>show('log');$('t-req').onclick=()=>show('req');$('t-apr').onclick=()=>show('apr');$('t-hr').onclick=()=>show('hr');$('t-acc').onclick=()=>show('acc');$('t-ntf').onclick=()=>show('ntf');
+$('t-enc').onclick=()=>show('enc');$('t-ob').onclick=()=>show('ob');$('t-rd').onclick=()=>show('rd');$('t-ot').onclick=()=>show('ot');$('t-chg').onclick=()=>show('chg');$('t-log').onclick=()=>show('log');$('t-req').onclick=()=>show('req');$('t-apr').onclick=()=>show('apr');$('t-hr').onclick=()=>show('hr');$('t-ntf').onclick=()=>show('ntf');
 
 function renderRows(){
   $('rows').innerHTML='';
@@ -776,7 +767,7 @@ async function accessFor(u,pp){
   if(loginAs==='hr'&&!ME.isHR){await signOut(AUTH);setTimeout(()=>{$('a-msg').textContent='This is not the HR account. Use the Employee tab.'},500);return false}
   if(dir.status==='pending'){block('Waiting for HR approval','Your account was created. HR must confirm that your details are correct before you can use the system. Come back later and press Check again.'+(dir.requestedRole==='hr'?' (An HR account already exists, so HR will approve you as an employee.)':''));return false}
   if(dir.status==='rejected'){block('Account not approved','HR did not approve this account. Please contact HR.');return false}
-  PREVIEW=null;applyAccess();return true;
+  $('t-hr').hidden=!ME.isHR;$('t-acc').hidden=!ME.isHR;applyFeatures();return true;
 }
 function setAs(v){loginAs=v;$('as-emp').classList.toggle('on',v==='employee');$('as-hr').classList.toggle('on',v==='hr');$('hr-note').hidden=v!=='hr'}
 $('as-emp').onclick=()=>setAs('employee');$('as-hr').onclick=()=>setAs('hr');
@@ -815,13 +806,12 @@ async function sendTag(uid){
 }
 /* ================= MODULES: HR FORMS / INVENTORY / SCHEDULE ================= */
 const MODOF={idash:'inv',iin:'inv',iout:'inv',irem:'inv',sch:'sch',gadm:'gam',liq:'liq',acc:'hr'},MODDEF={hr:'enc',inv:'idash',sch:'sch',gam:'gadm',liq:'liq'},MODN={hr:'HR Forms',inv:'Inventory',sch:'Assets/Links',gam:'Event Games',liq:'Liquidation'};
-const FEATS=[['hr','HR Forms'],['inv','Inventory'],['sch','Assets/Links'],['gam','Event Games'],['liq','Liquidation']];let PREVIEW=null,ELQS=[];
 function setMod(m){
   document.querySelectorAll('#mods [data-mod]').forEach(b=>b.classList.toggle('on',b.dataset.mod===m));
   document.querySelectorAll('.navg').forEach(g=>{g.hidden=g.dataset.g!==m});const tm=$('tb-m');if(tm)tm.textContent=MODN[m]||'Event Hub';
 }
 document.querySelectorAll('#mods [data-mod]').forEach(b=>b.onclick=()=>{setMod(b.dataset.mod);show(MODDEF[b.dataset.mod])});
-['idash','iin','iout','irem','sch','gadm','liq'].forEach(k=>{$('t-'+k).onclick=()=>show(k)});
+['idash','iin','iout','irem','sch','gadm','liq','acc'].forEach(k=>{$('t-'+k).onclick=()=>show(k)});
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 
 let INV=[],MOV=[],SCHD=[],PEOPLE=[],DUN=[];
@@ -840,12 +830,11 @@ function startData(){
   DUN.push(onSnapshot(collection(DB,'asset_links'),s=>{ASSETS=s.docs.map(d=>({id:d.id,...d.data()}));if(!$('v-sch').hidden)renderSch(true)},()=>{}));
   try{const uid=AUTH.currentUser.uid;DUN.push(onSnapshot(ME.isHR?collection(DB,'asset_views'):query(collection(DB,'asset_views'),where('ownerUid','==',uid)),s=>{AVIEWS=s.docs.map(d=>({id:d.id,...d.data()}));if(!$('v-sch').hidden&&$('as-list'))renderSch(true)},()=>{}));
   DUN.push(onSnapshot(ME.isHR?collection(DB,'liquidations'):query(collection(DB,'liquidations'),where('by','==',uid)),s=>{LIQS=s.docs.map(d=>({id:d.id,...d.data()}));if(!$('v-liq').hidden)lqList()},()=>{}));
-  DUN.push(onSnapshot(collection(DB,'event_liquidations'),s=>{ELQS=s.docs.map(d=>({id:d.id,...d.data()}))},()=>{}));
-  DUN.push(onSnapshot(doc(DB,'directory',ME.uid),s=>{if(!s.exists()||!ME)return;if(ME.dir)ME.dir.features=s.data().features;applyAccess()},()=>{}));
+  DUN.push(onSnapshot(collection(DB,'event_liquidations'),s=>{EVLIQS=s.docs.map(d=>({id:d.id,...d.data()}))},()=>{}));
   DUN.push(onSnapshot(doc(DB,'config','inv'),s=>{INVCFG=s.exists()?s.data():null;subReq();invRefresh()},()=>{}));subReq()}catch(e){}
   getDocs(query(collection(DB,'directory'),where('status','==','active'))).then(s=>{PEOPLE=s.docs.map(d=>d.data().name).filter(Boolean).sort();fillDl()}).catch(()=>{});
 }
-function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];ELQS=[];try{closeElq()}catch(e){}INVCFG=null;REQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
+function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];INVCFG=null;REQS=[];EVLIQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
 function invRefresh(){
   iBadge();
   if(!$('v-idash').hidden)renderIDash();if(!$('v-iin').hidden)renderIIn(true);if(!$('v-iout').hidden)renderIOut(true);if(!$('v-irem').hidden)renderIRem(true);
@@ -1210,7 +1199,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
     catch(e){$('msg').textContent='Could not save: '+((e&&e.code)||'error')}
   };
   function showVerify(u){authReady=true;ref=null;
-    $('who').textContent='Profile: '+u.email+' (email not confirmed yet)';
+    $('who').textContent='Signed in as '+u.email+' (email not confirmed yet)';
     if(pendingProfile){try{localStorage.setItem('gphi-pp:'+u.uid,JSON.stringify(pendingProfile))}catch(e){}pendingProfile=null}
     $('login').hidden=true;document.querySelector('.tabs').hidden=true;$('a-out').hidden=true;
     ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','liq','acc'].forEach(k=>{$('v-'+k).hidden=true});
@@ -1238,7 +1227,7 @@ if(firebaseConfig.apiKey.startsWith('PASTE')){
   });
   async function enter(u){
     state.profile=defaults();state.rows=[];state.ot=[];state.chg={};state.log=[];
-    const empNo=isFake(u.email)?u.email.split('@')[0].toUpperCase():'';$('who').textContent='Profile: '+(empNo||u.email);renderAcct(u);
+    const empNo=isFake(u.email)?u.email.split('@')[0].toUpperCase():'';$('who').textContent='Signed in as '+(empNo||u.email);renderAcct(u);
     ref=doc(fsdb,'users',u.uid);
     let existed=false;
     try{
@@ -1300,7 +1289,8 @@ const LQ_TYPES=['Activation Material','Advertising','Bank Charge - Others','Cour
 const newLq=()=>({id:'',event:'',dept:'Events & Activations',dReq:'',dRec:'',recBy:state.profile.name||'',per:'',req:0,status:'Pending',rows:[{p:'',t:'',q:1,pr:0}]});
 const peso=n=>'₱'+Number(n||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
 const lqTot=o=>(o.rows||[]).reduce((s,r)=>s+(+r.q||0)*(+r.pr||0),0);
-const lqDk=()=>'gphi-lq-draft:'+((curUser&&curUser.uid)||'');
+const LQM_MAIN={col:'liquidations',host:()=>$('v-liq'),list:()=>LIQS,sheet:'LIQUIDATION',ctx:null};let LQM=LQM_MAIN;
+const lqDk=()=>'gphi-lq-draft:'+LQM.col+':'+((curUser&&curUser.uid)||'')+(LQM.ctx?':'+LQM.ctx.key:'');
 function lqDraft(){try{localStorage.setItem(lqDk(),JSON.stringify(LQ))}catch(e){}}
 function lqMsg(t,ok=1){const m=$('lq-msg');if(m){m.textContent=t;m.style.color=ok?'':'#dc2626'}}
 function lqSheetHtml(o){const T=lqTot(o),R=(+o.req||0)-T,lg=new URL('bybet/logo.webp',location.href).href;
@@ -1316,11 +1306,11 @@ function lqPrint(o){const w=window.open('','_blank');if(!w)return lqMsg('Allow p
   w.document.close();setTimeout(()=>{w.focus();w.print()},600)}
 function lqTsv(o){const L=[['EVENT/PURPOSE NAME','DATE REQUESTED','DATE RECEIVED','RECEIVED BY','AMOUNT REQUESTED','PARTICULARS','EXPENSE TYPE','QUANTITY','ITEM PRICE','TOTAL','STATUS']];
   o.rows.filter(r=>r.p||r.pr).forEach((r,i)=>L.push([i?'':o.event,i?'':o.dReq,i?'':o.dRec,i?'':o.recBy,i?'':o.req,r.p,r.t,r.q,r.pr,(+r.q||0)*(+r.pr||0),i?'':o.status]));return L}
-function lqSync(o){const url=window.LIQ_SYNC_URL;if(!url)return false;try{fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'liquidation',id:o.id,by:state.profile.name||'',rows:lqTsv(o)})});return true}catch(e){return false}}
+function lqSync(o){const url=window.LIQ_SYNC_URL;if(!url)return false;try{fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'liquidation',sheet:LQM.sheet,id:o.id,by:state.profile.name||'',rows:lqTsv(o)})});return true}catch(e){return false}}
 async function lqSave(){const o=LQ,u=AUTH.currentUser;if(!u)return lqMsg('Please sign in first.',0);if(!o.event.trim())return lqMsg('Enter the event / purpose name first.',0);
   if(o.rows.some(r=>(r.p||r.pr)&&!r.t))return lqMsg('Choose an expense type for every row.',0);
-  const data={event:o.event.trim(),dept:o.dept,dReq:o.dReq,dRec:o.dRec,recBy:o.recBy,per:o.per,req:+o.req||0,status:o.status,rows:o.rows.filter(r=>r.p||r.pr).map(r=>({p:r.p||'',t:r.t||'',q:+r.q||0,pr:+r.pr||0})),spent:lqTot(o),updatedAt:Date.now()};
-  try{if(o.id)await updateDoc(doc(DB,'liquidations',o.id),data);else{const r=await addDoc(collection(DB,'liquidations'),{...data,by:u.uid,byName:state.profile.name||u.email,at:Date.now()});o.id=r.id}
+  const data={event:o.event.trim(),dept:o.dept,dReq:o.dReq,dRec:o.dRec,recBy:o.recBy,per:o.per,req:+o.req||0,status:o.status,rows:o.rows.filter(r=>r.p||r.pr).map(r=>({p:r.p||'',t:r.t||'',q:+r.q||0,pr:+r.pr||0})),spent:lqTot(o),updatedAt:Date.now(),...(LQM.ctx?{evKey:LQM.ctx.key}:{})};
+  try{if(o.id)await updateDoc(doc(DB,LQM.col,o.id),data);else{const r=await addDoc(collection(DB,LQM.col),{...data,by:u.uid,byName:state.profile.name||u.email,at:Date.now()});o.id=r.id}
     try{localStorage.removeItem(lqDk())}catch(e){}const sy=lqSync(o);lqMsg('Saved ✓'+(sy?' · sent to Google Sheet':' · Google Sheet sync is not connected yet (see README)'))}
   catch(e){lqMsg('Could not save: '+((e&&e.code)||'error'),0)}}
 function lqPaint(){const T=lqTot(LQ),R=(+LQ.req||0)-T;
@@ -1333,16 +1323,16 @@ function lqWireRows(){const tb=$('lq-rows');tb.innerHTML=lqRowsHtml();
     el.onkeydown=e=>{if(e.key==='Enter'&&el.dataset.k==='pr'&&+el.dataset.i===LQ.rows.length-1){e.preventDefault();LQ.rows.push({p:'',t:LQ.rows[LQ.rows.length-1].t||'',q:1,pr:0});lqWireRows();lqPaint();tb.querySelector('[data-i="'+(LQ.rows.length-1)+'"][data-k="p"]').focus()}}});
   tb.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{if(LQ.rows.length>1)LQ.rows.splice(+b.dataset.rm,1);else LQ.rows[0]={p:'',t:'',q:1,pr:0};lqWireRows();lqPaint()});lqPaint()}
 function lqList(){const box=$('lq-list');if(!box)return;const q=nkey($('lq-q')?$('lq-q').value:'');
-  const L=LIQS.filter(l=>!q||nkey(l.event).includes(q)).sort((a,b)=>(b.updatedAt||b.at||0)-(a.updatedAt||a.at||0));
-  box.innerHTML=L.map(l=>'<div class="card" style="margin:8px 0 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>'+esc(l.event)+'</b><span class="mu" style="font-size:12px">'+esc(l.status||'Pending')+' · updated '+esc(fmtStamp(l.updatedAt||l.at))+'</span></div><div class="mu" style="font-size:12px;margin-top:2px">Requested '+peso(l.req)+' · Spent '+peso(l.spent)+' · Remaining '+peso((l.req||0)-(l.spent||0))+(ME&&ME.isHR?' · by '+esc(l.byName||''):'')+'</div><div class="row" style="margin-top:6px"><button type="button" data-lo="'+escA(l.id)+'">Open / edit</button><button type="button" data-lp="'+escA(l.id)+'">Print</button><button type="button" data-ld="'+escA(l.id)+'">Delete</button></div></div>').join('')||'<div class="mu" style="margin-top:8px">'+(LIQS.length?'No liquidation matches your search.':'No saved liquidations yet.')+'</div>';
-  const get=id=>{const l=LIQS.find(x=>x.id===id);return l&&{id:l.id,event:l.event,dept:l.dept||'Events & Activations',dReq:l.dReq||'',dRec:l.dRec||'',recBy:l.recBy||'',per:l.per||'',req:l.req||0,status:l.status||'Pending',rows:(l.rows||[]).map(r=>({p:r.p,t:r.t,q:r.q,pr:r.pr}))}};
+  const L=LQM.list().filter(l=>!q||nkey(l.event).includes(q)).sort((a,b)=>(b.updatedAt||b.at||0)-(a.updatedAt||a.at||0));
+  box.innerHTML=L.map(l=>'<div class="card" style="margin:8px 0 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>'+esc(l.event)+'</b><span class="mu" style="font-size:12px">'+esc(l.status||'Pending')+' · updated '+esc(fmtStamp(l.updatedAt||l.at))+'</span></div><div class="mu" style="font-size:12px;margin-top:2px">Requested '+peso(l.req)+' · Spent '+peso(l.spent)+' · Remaining '+peso((l.req||0)-(l.spent||0))+(ME&&ME.isHR?' · by '+esc(l.byName||''):'')+'</div><div class="row" style="margin-top:6px"><button type="button" data-lo="'+escA(l.id)+'">Open / edit</button><button type="button" data-lp="'+escA(l.id)+'">Print</button><button type="button" data-ld="'+escA(l.id)+'">Delete</button></div></div>').join('')||'<div class="mu" style="margin-top:8px">'+(LQM.list().length?'No liquidation matches your search.':'No saved liquidations yet.')+'</div>';
+  const get=id=>{const l=LQM.list().find(x=>x.id===id);return l&&{id:l.id,event:l.event,dept:l.dept||'Events & Activations',dReq:l.dReq||'',dRec:l.dRec||'',recBy:l.recBy||'',per:l.per||'',req:l.req||0,status:l.status||'Pending',rows:(l.rows||[]).map(r=>({p:r.p,t:r.t,q:r.q,pr:r.pr}))}};
   box.querySelectorAll('[data-lo]').forEach(b=>b.onclick=()=>{LQ=get(b.dataset.lo);if(!LQ.rows.length)LQ.rows=[{p:'',t:'',q:1,pr:0}];renderLiq();window.scrollTo(0,0)});
   box.querySelectorAll('[data-lp]').forEach(b=>b.onclick=()=>lqPrint(get(b.dataset.lp)));
-  box.querySelectorAll('[data-ld]').forEach(b=>b.onclick=async()=>{const l=LIQS.find(x=>x.id===b.dataset.ld);if(!l||!confirm('Delete “'+l.event+'”?'))return;try{await deleteDoc(doc(DB,'liquidations',l.id));if(LQ&&LQ.id===l.id)LQ=newLq();renderLiq()}catch(e){lqMsg('Could not delete: '+((e&&e.code)||'error'),0)}})}
+  box.querySelectorAll('[data-ld]').forEach(b=>b.onclick=async()=>{const l=LQM.list().find(x=>x.id===b.dataset.ld);if(!l||!confirm('Delete “'+l.event+'”?'))return;try{await deleteDoc(doc(DB,LQM.col,l.id));if(LQ&&LQ.id===l.id)LQ=newLq();renderLiq()}catch(e){lqMsg('Could not delete: '+((e&&e.code)||'error'),0)}})}
 function renderLiq(){
   if(!LQ){try{const d=JSON.parse(localStorage.getItem(lqDk())||'null');LQ=d&&d.rows?d:newLq()}catch(e){LQ=newLq()}}
   const F=(id,label,type,val,extra)=>'<div><label for="'+id+'">'+label+'</label><input id="'+id+'" type="'+type+'" value="'+escA(val)+'" '+(extra||'')+'></div>';
-  $('v-liq').innerHTML='<div class="card"><b>Liquidation</b><div class="mu" style="font-size:12px;margin-top:4px">Encode the expenses on the left. The ByBet report on the right updates as you type. Your entries are kept on this device until you click Save.</div></div>'+
+  LQM.host().innerHTML='<div class="card"><b>'+(LQM.ctx?'Event Liquidation':'Liquidation')+'</b><div class="mu" style="font-size:12px;margin-top:4px">Encode the expenses on the left. The ByBet report on the right updates as you type. Your entries are kept on this device until you click Save.</div></div>'+
   '<div class="lqg"><div class="card"><div class="grid"><div style="grid-column:1/-1"><label for="lq-event">Event / purpose name</label><input id="lq-event" value="'+escA(LQ.event)+'" placeholder="e.g. Brgy. 770 District 5 San Andres Manila - BINGO Event"></div>'+
   F('lq-dept','Department','text',LQ.dept)+F('lq-recby','Received by','text',LQ.recBy)+F('lq-dreq','Date requested','date',LQ.dReq)+F('lq-drec','Date received','date',LQ.dRec)+F('lq-per','Expense period','text',LQ.per,'placeholder="e.g. 22 Nov 2026"')+F('lq-req','Amount requested (₱)','number',LQ.req||'','min="0" step="any"')+
   '<div><label for="lq-st">Status</label><select id="lq-st">'+['Pending','Submitted','Liquidated','Approved'].map(x=>'<option'+(x===LQ.status?' selected':'')+'>'+x+'</option>').join('')+'</select></div></div>'+
@@ -1351,10 +1341,10 @@ function renderLiq(){
   '<div id="lq-paste" hidden style="margin-top:8px"><div class="mu" style="font-size:12px">Copy cells from Google Sheets (Particulars, Expense type, Qty, Item price) and paste here.</div><textarea id="lq-pt" rows="4" style="width:100%"></textarea><div class="row"><button type="button" id="lq-padd">Add pasted rows</button></div></div>'+
   '<div id="lq-sum" style="margin-top:12px"></div><div class="row"><button class="pri" type="button" id="lq-save">Save</button><button type="button" id="lq-print">🖨 Print</button><button type="button" id="lq-copy">Copy for Google Sheet</button><button type="button" id="lq-csv">Download CSV</button><button type="button" id="lq-new">New</button><span id="lq-msg" class="mu"></span></div></div>'+
   '<div class="card"><div id="lq-pv" style="overflow-x:auto"></div></div></div>'+
-  '<div class="card"><b>Saved liquidations</b><input id="lq-q" type="search" placeholder="Search by event name…" style="margin-top:8px"><div id="lq-list"></div></div>';
+  (LQM.ctx?'':'<div class="card"><b>Saved liquidations</b><input id="lq-q" type="search" placeholder="Search by event name…" style="margin-top:8px"><div id="lq-list"></div></div>');
   const bind=(id,k,num)=>{$(id).oninput=$(id).onchange=e=>{LQ[k]=e.target.value;lqPaint()}};
   [['lq-event','event'],['lq-dept','dept'],['lq-recby','recBy'],['lq-dreq','dReq'],['lq-drec','dRec'],['lq-per','per'],['lq-req','req'],['lq-st','status']].forEach(a=>bind(a[0],a[1]));
-  lqWireRows();lqList();$('lq-q').oninput=lqList;
+  lqWireRows();if($('lq-q')){lqList();$('lq-q').oninput=lqList}if(LQM.ctx){$('lq-event').readOnly=true;$('lq-new').hidden=true}
   $('lq-add').onclick=()=>{LQ.rows.push({p:'',t:LQ.rows[LQ.rows.length-1].t||'',q:1,pr:0});lqWireRows();$('lq-rows').querySelector('[data-i="'+(LQ.rows.length-1)+'"][data-k="p"]').focus()};
   $('lq-pastebtn').onclick=()=>{$('lq-paste').hidden=!$('lq-paste').hidden};
   $('lq-padd').onclick=()=>{const L=$('lq-pt').value.split(/\r?\n/).map(x=>x.split('\t')).filter(x=>x[0]&&x[0].trim());if(!L.length)return lqMsg('Nothing to add. Paste tab-separated rows.',0);
@@ -1367,112 +1357,24 @@ function renderLiq(){
 }
 $('t-liq').onclick=()=>show('liq');
 /* Liquidation button inside Event Games opens the matching liquidation */
-
-/* ================= EVENT LIQUIDATION (opened from Event Games, separate from the Liquidation tile) ================= */
-let ELQ=null;
-const newElq=()=>({id:'',by:'',byName:'',canEdit:true,event:'',dept:'Events & Activations',dReq:'',dRec:'',recBy:state.profile.name||'',per:'',req:0,status:'Pending',rows:[{p:'',t:'',q:1,pr:0}]});
-const elqFrom=l=>({id:l.id,by:l.by||'',byName:l.byName||'',canEdit:!!(ME&&(ME.isHR||l.by===ME.uid)),event:l.event,dept:l.dept||'Events & Activations',dReq:l.dReq||'',dRec:l.dRec||'',recBy:l.recBy||'',per:l.per||'',req:l.req||0,status:l.status||'Pending',rows:(l.rows||[]).length?l.rows.map(r=>({p:r.p,t:r.t,q:r.q,pr:r.pr})):[{p:'',t:'',q:1,pr:0}]});
-const elqDk=ev=>'gphi-elq-draft:'+((curUser&&curUser.uid)||'')+':'+nkey(ev||'');
-function elqMsg(t,ok=1){const m=$('elq-msg');if(m){m.textContent=t;m.style.color=ok?'':'#dc2626'}}
-function elqDraft(){if(!ELQ||ELQ.id||!ELQ.canEdit)return;try{localStorage.setItem(elqDk(ELQ.event),JSON.stringify(ELQ))}catch(e){}}
-function openElq(d){
-  const ex=ELQS.find(l=>nkey(l.event)===nkey(d.event));
-  if(ex)ELQ=elqFrom(ex);
-  else{ELQ=null;try{const x=JSON.parse(localStorage.getItem(elqDk(d.event))||'null');if(x&&x.rows)ELQ=Object.assign(newElq(),x,{id:'',canEdit:true})}catch(e){}
-    if(!ELQ)ELQ=Object.assign(newElq(),{event:d.event||'',per:d.date?fmtDate(d.date):''})}
-  renderElq();$('elq').hidden=false;$('elq').scrollTop=0;document.body.style.overflow='hidden'}
-function closeElq(){const e=$('elq');if(!e)return;e.hidden=true;e.innerHTML='';document.body.style.overflow='';ELQ=null}
-addEventListener('keydown',e=>{if(e.key==='Escape'&&$('elq')&&!$('elq').hidden)closeElq()});
-function elqRowsHtml(){const dis=ELQ.canEdit?'':' disabled';return ELQ.rows.map((r,i)=>'<tr><td><input data-i="'+i+'" data-k="p" value="'+escA(r.p)+'" placeholder="Particulars" aria-label="Particulars"'+dis+'></td><td><select data-i="'+i+'" data-k="t" aria-label="Expense type"'+dis+'><option value="">Choose…</option>'+LQ_TYPES.map(t=>'<option'+(t===r.t?' selected':'')+'>'+escA(t)+'</option>').join('')+'</select></td><td style="width:62px"><input type="number" min="0" data-i="'+i+'" data-k="q" value="'+(r.q||'')+'" aria-label="Quantity"'+dis+'></td><td style="width:92px"><input type="number" min="0" step="any" data-i="'+i+'" data-k="pr" value="'+(r.pr||'')+'" aria-label="Item price"'+dis+'></td><td style="white-space:nowrap" data-tt="'+i+'"></td><td>'+(ELQ.canEdit?'<button type="button" class="x" data-rm="'+i+'" title="Remove row">✕</button>':'')+'</td></tr>').join('')}
-function elqPaint(){const T=lqTot(ELQ),R=(+ELQ.req||0)-T;
-  document.querySelectorAll('#elq-rows [data-tt]').forEach(c=>{const r=ELQ.rows[+c.dataset.tt];c.textContent=peso((+r.q||0)*(+r.pr||0))});
-  $('elq-sum').innerHTML='Requested <b>'+peso(ELQ.req)+'</b> · Spent <b>'+peso(T)+'</b> · Remaining <b style="color:'+(R<0?'#dc2626':'inherit')+'">'+peso(R)+'</b>';
-  $('elq-pv').innerHTML=lqSheetHtml(ELQ);elqDraft()}
-function elqWire(){const tb=$('elq-rows');tb.innerHTML=elqRowsHtml();
-  tb.querySelectorAll('[data-k]').forEach(el=>{el.oninput=el.onchange=()=>{ELQ.rows[+el.dataset.i][el.dataset.k]=el.value;elqPaint()};
-    el.onkeydown=e=>{if(e.key==='Enter'&&el.dataset.k==='pr'&&+el.dataset.i===ELQ.rows.length-1){e.preventDefault();ELQ.rows.push({p:'',t:ELQ.rows[ELQ.rows.length-1].t||'',q:1,pr:0});elqWire();tb.querySelector('[data-i="'+(ELQ.rows.length-1)+'"][data-k="p"]').focus()}}});
-  tb.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{if(ELQ.rows.length>1)ELQ.rows.splice(+b.dataset.rm,1);else ELQ.rows[0]={p:'',t:'',q:1,pr:0};elqWire()});elqPaint()}
-function elqSync(o){const url=window.LIQ_SYNC_URL;if(!url)return false;try{fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'liquidation',sheet:'EVENT LIQUIDATION',id:o.id,by:state.profile.name||'',rows:lqTsv(o)})});return true}catch(e){return false}}
-async function elqSave(){const o=ELQ,u=AUTH.currentUser;if(!u)return elqMsg('Please sign in first.',0);if(!o.event.trim())return elqMsg('The event name is missing.',0);
-  if(o.rows.some(r=>(r.p||r.pr)&&!r.t))return elqMsg('Choose an expense type for every row.',0);
-  const data={event:o.event.trim(),dept:o.dept,dReq:o.dReq,dRec:o.dRec,recBy:o.recBy,per:o.per,req:+o.req||0,status:o.status,rows:o.rows.filter(r=>r.p||r.pr).map(r=>({p:r.p||'',t:r.t||'',q:+r.q||0,pr:+r.pr||0})),spent:lqTot(o),updatedAt:Date.now()};
-  try{if(o.id)await updateDoc(doc(DB,'event_liquidations',o.id),data);
-    else{const r=await addDoc(collection(DB,'event_liquidations'),{...data,by:u.uid,byName:state.profile.name||u.email,at:Date.now()});o.id=r.id;o.by=u.uid;o.byName=state.profile.name||u.email}
-    try{localStorage.removeItem(elqDk(o.event))}catch(e){}const sy=elqSync(o);elqMsg('Saved ✓'+(sy?' · sent to the EVENT LIQUIDATION sheet':' · Google Sheet sync is not connected yet (see README)'))}
-  catch(e){elqMsg((e&&e.code)==='permission-denied'?'You cannot edit this. Only the person who made it, or HR, can.':'Could not save: '+((e&&e.code)||'error'),0)}}
-function renderElq(){
-  const o=ELQ,dis=o.canEdit?'':' disabled';
-  const F=(id,label,type,val,extra)=>'<div><label for="'+id+'">'+label+'</label><input id="'+id+'" type="'+type+'" value="'+escA(val)+'" '+(extra||'')+dis+'></div>';
-  $('elq').innerHTML='<div class="eb"><div class="ihead"><div><b style="font-size:16px">Event Liquidation</b><div class="mu" style="font-size:12px">'+esc(o.event)+'</div></div><button type="button" id="elq-x">Close</button></div>'+
-  '<div class="mu" style="font-size:12px;margin:6px 0 10px">Separate from the Liquidation tile. One per event. Saved to the EVENT LIQUIDATION tab of your Google Sheet. Closing brings you back to Event Games.'+(o.canEdit?'':' <b>Made by '+esc(o.byName||'someone else')+'. You can view and print it only.</b>')+'</div>'+
-  '<div class="lqg"><div class="card"><div class="grid"><div style="grid-column:1/-1"><label for="elq-event">Event / purpose name</label><input id="elq-event" value="'+escA(o.event)+'" readonly></div>'+
-  F('elq-dept','Department','text',o.dept)+F('elq-recby','Received by','text',o.recBy)+F('elq-dreq','Date requested','date',o.dReq)+F('elq-drec','Date received','date',o.dRec)+F('elq-per','Expense period','text',o.per,'placeholder="e.g. 22 Nov 2026"')+F('elq-req','Amount requested (₱)','number',o.req||'','min="0" step="any"')+
-  '<div><label for="elq-st">Status</label><select id="elq-st"'+dis+'>'+['Pending','Submitted','Liquidated','Approved'].map(x=>'<option'+(x===o.status?' selected':'')+'>'+x+'</option>').join('')+'</select></div></div>'+
-  '<div class="scroll" style="margin-top:10px"><table class="lqt" style="width:100%;min-width:520px"><thead><tr><th>Particulars</th><th>Expense type</th><th>Qty</th><th>Item price</th><th>Total</th><th></th></tr></thead><tbody id="elq-rows"></tbody></table></div>'+
-  (o.canEdit?'<div class="row"><button type="button" id="elq-add">+ Add row</button><button type="button" id="elq-pastebtn">Paste rows from a sheet</button></div>'+
-  '<div id="elq-paste" hidden style="margin-top:8px"><div class="mu" style="font-size:12px">Copy cells from Google Sheets (Particulars, Expense type, Qty, Item price) and paste here.</div><textarea id="elq-pt" rows="4" style="width:100%"></textarea><div class="row"><button type="button" id="elq-padd">Add pasted rows</button></div></div>':'')+
-  '<div id="elq-sum" style="margin-top:12px"></div><div class="row">'+(o.canEdit?'<button class="pri" type="button" id="elq-save">Save</button>':'')+'<button type="button" id="elq-print">🖨 Print</button><button type="button" id="elq-copy">Copy for Google Sheet</button><button type="button" id="elq-csv">Download CSV</button>'+(o.canEdit&&o.id?'<button type="button" id="elq-del">Delete</button>':'')+'<span id="elq-msg" class="mu"></span></div></div>'+
-  '<div class="card"><div id="elq-pv" style="overflow-x:auto"></div></div></div></div>';
-  $('elq-x').onclick=closeElq;
-  if(o.canEdit)[['elq-dept','dept'],['elq-recby','recBy'],['elq-dreq','dReq'],['elq-drec','dRec'],['elq-per','per'],['elq-req','req'],['elq-st','status']].forEach(a=>{$(a[0]).oninput=$(a[0]).onchange=e=>{ELQ[a[1]]=e.target.value;elqPaint()}});
-  elqWire();
-  if(o.canEdit){
-    $('elq-add').onclick=()=>{ELQ.rows.push({p:'',t:ELQ.rows[ELQ.rows.length-1].t||'',q:1,pr:0});elqWire();$('elq-rows').querySelector('[data-i="'+(ELQ.rows.length-1)+'"][data-k="p"]').focus()};
-    $('elq-pastebtn').onclick=()=>{$('elq-paste').hidden=!$('elq-paste').hidden};
-    $('elq-padd').onclick=()=>{const L=$('elq-pt').value.split(/\r?\n/).map(x=>x.split('\t')).filter(x=>x[0]&&x[0].trim());if(!L.length)return elqMsg('Nothing to add. Paste tab-separated rows.',0);
-      const num=v=>parseFloat(String(v||'').replace(/[₱,\s]/g,''))||0;if(ELQ.rows.length===1&&!ELQ.rows[0].p&&!ELQ.rows[0].pr)ELQ.rows=[];
-      L.forEach(x=>{const t=LQ_TYPES.find(y=>nkey(y)===nkey(x[1]))||'';ELQ.rows.push({p:x[0].trim(),t,q:num(x[2])||1,pr:num(x[3])})});$('elq-pt').value='';$('elq-paste').hidden=true;elqWire();elqMsg(L.length+' row'+(L.length>1?'s':'')+' added. Check any row with no expense type.')};
-    $('elq-save').onclick=elqSave;
-    const dl=$('elq-del');if(dl)dl.onclick=async()=>{if(!confirm('Delete the liquidation of “'+ELQ.event+'”?'))return;try{await deleteDoc(doc(DB,'event_liquidations',ELQ.id));ELQ.id='';ELQ.by='';elqMsg('Deleted.');renderElq()}catch(e){elqMsg('Could not delete: '+((e&&e.code)||'error'),0)}}}
-  $('elq-print').onclick=()=>lqPrint(ELQ);
-  $('elq-copy').onclick=async()=>{try{await navigator.clipboard.writeText(lqTsv(ELQ).map(r=>r.join('\t')).join('\n'));elqMsg('Copied. Paste it into your Google Sheet.')}catch(e){elqMsg('Copy failed.',0)}};
-  $('elq-csv').onclick=()=>{const c=lqTsv(ELQ).map(r=>r.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='event-liquidation.csv';a.click()}}
-/* the Liquidation button inside Event Games opens the overlay here and stays on Event Games */
-addEventListener('message',e=>{const d=e.data;if(e.origin!==location.origin||!d||d.type!=='gphi-liquidation')return;if(!canMod('gam'))return;openElq(d)});
-
-/* ================= EMPLOYEE ACCESS: HR chooses which features each employee can use ================= */
-let ACCU=[],PVNAME='';
-function myFeats(){if(PREVIEW)return PREVIEW;if(!ME||ME.isHR)return FEATS.map(f=>f[0]);const f=ME.dir&&ME.dir.features;return Array.isArray(f)?f:FEATS.map(f=>f[0])}
-function canMod(m){return myFeats().includes(m)}
-function noFeat(){
-  ['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'].forEach(k=>{const e=$('v-'+k);if(e)e.hidden=true});
-  document.querySelectorAll('.navg').forEach(g=>{g.hidden=true});document.querySelectorAll('#mods [data-mod]').forEach(b=>b.classList.remove('on'));
-  const n=$('v-none');n.innerHTML='<div class="card"><b>No features assigned yet</b><div class="mu" style="margin-top:6px">HR has not given your account access to any feature yet. Please ask HR, then refresh this page.</div></div>';n.hidden=false;
-  const tm=$('tb-m');if(tm)tm.textContent='Event Hub';const p=$('tb-p');if(p)p.textContent=''}
-function applyAccess(){
-  const A=myFeats(),hrOn=!!(ME&&ME.isHR&&!PREVIEW);
-  document.querySelectorAll('#mods [data-mod]').forEach(b=>{b.hidden=!A.includes(b.dataset.mod)});
-  if($('t-hr'))$('t-hr').hidden=!hrOn;if($('t-acc'))$('t-acc').hidden=!hrOn;
-  const pb=$('pvbar');if(pb){pb.hidden=!PREVIEW;if(PREVIEW){pb.innerHTML='<b>Preview:</b> this is what '+esc(PVNAME)+' sees. Only the allowed tabs are shown. <button type="button" id="pv-x">Exit preview</button>';$('pv-x').onclick=exitPv}}
-  if(!ME||document.querySelector('.tabs').hidden)return;
-  const cur=document.querySelector('#mods [data-mod].on');
-  if(!A.length){noFeat();return}
-  if(!cur||!A.includes(cur.dataset.mod))show(MODDEF[A[0]])}
-function exitPv(){PREVIEW=null;PVNAME='';applyAccess();show('acc')}
-async function renderAcc(){
-  const b=$('v-acc');if(!ME||!ME.isHR){b.innerHTML='<div class="card bad">This page is for the HR account only.</div>';return}
-  b.innerHTML='<div class="card mu">Loading…</div>';
-  try{
-    const ds=await getDocs(collection(DB,'directory'));
-    ACCU=ds.docs.map(d=>d.data()).filter(u=>u.status==='active'&&!(ME.hr&&u.uid===ME.hr.uid)).sort((x,y)=>String(x.name).localeCompare(String(y.name)));
-    ACCU.forEach(u=>{u._f=Array.isArray(u.features)?u.features.slice():FEATS.map(f=>f[0])});
-    b.innerHTML='<div class="card"><b>Employee Access</b><div class="mu" style="margin-top:4px;font-size:12px">Tick the features each employee can use. They only see the tabs you allow. Changes apply to them right away, or the next time they open Event Hub. HR always has everything. An employee you have not set yet can use everything.</div><input id="acc-q" type="search" placeholder="Search employee…" style="margin-top:8px;max-width:320px"></div><div id="acc-list"></div>';
-    $('acc-q').oninput=paintAcc;paintAcc();
-  }catch(e){b.innerHTML='<div class="card bad">Could not load: '+esc((e&&e.code)||'error')+'</div>'}
+addEventListener('message',e=>{const d=e.data;if(e.origin!==location.origin||!d||d.type!=='gphi-liquidation')return;openEventLiq(d)});
+/* Liquidation inside Event Games: a window over the page (it stays on Event Games, like Post Event Report). Separate data from the Liquidation module. */
+function closeEventLiq(){const ov=$('evliq-ov');if(ov)ov.remove();LQM=LQM_MAIN;LQ=window.__lqMain||null;window.__lqMain=null;if(!$('v-liq').hidden)renderLiq()}
+function openEventLiq(d){
+  if($('evliq-ov'))return;
+  window.__lqMain=LQ;$('v-liq').innerHTML='';
+  const ov=document.createElement('div');ov.id='evliq-ov';ov.style.cssText='position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);overflow:auto;padding:14px';
+  ov.innerHTML='<div style="max-width:1100px;margin:0 auto;background:'+getComputedStyle(document.body).backgroundColor+';border-radius:14px;padding:14px"><div class="row" style="justify-content:space-between;margin:0 0 8px"><b>'+esc(d.event||'')+'</b><button type="button" id="evliq-x">Close</button></div><div id="evliq-host"></div></div>';
+  document.body.appendChild(ov);
+  LQM={col:'event_liquidations',host:()=>$('evliq-host'),list:()=>EVLIQS.filter(l=>l.evKey===d.key),sheet:'EVENT LIQUIDATION',ctx:{key:d.key}};
+  const ex=EVLIQS.find(l=>l.evKey===d.key);
+  if(ex)LQ={id:ex.id,event:ex.event,dept:ex.dept||'Events & Activations',dReq:ex.dReq||'',dRec:ex.dRec||'',recBy:ex.recBy||'',per:ex.per||'',req:ex.req||0,status:ex.status||'Pending',rows:(ex.rows||[]).length?ex.rows.map(r=>({p:r.p,t:r.t,q:r.q,pr:r.pr})):[{p:'',t:'',q:1,pr:0}]};
+  else{try{const dr=JSON.parse(localStorage.getItem(lqDk())||'null');LQ=dr&&dr.rows?dr:null}catch(e){LQ=null}if(!LQ){LQ=newLq();LQ.event=d.event||'';LQ.per=d.date?fmtDate(d.date):''}}
+  renderLiq();
+  $('evliq-x').onclick=closeEventLiq;ov.onclick=e=>{if(e.target===ov)closeEventLiq()};
 }
-function paintAcc(){
-  const q=nkey($('acc-q')?$('acc-q').value:''),L=ACCU.filter(u=>!q||nkey(u.name+' '+u.emp+' '+u.dept).includes(q));
-  $('acc-list').innerHTML=L.length?'<div class="card scroll" style="padding:0"><table class="lqt" style="width:100%;min-width:640px"><thead><tr><th>Employee</th>'+FEATS.map(f=>'<th style="text-align:center">'+f[1]+'</th>').join('')+'<th></th></tr></thead><tbody>'+
-    L.map(u=>'<tr><td><b>'+esc(u.name)+'</b><div class="mu" style="font-size:12px">'+esc(u.emp)+' · '+esc(u.dept)+(Array.isArray(u.features)?'':' · not set yet (can use all)')+'</div></td>'+
-      FEATS.map(f=>'<td style="text-align:center"><input type="checkbox" style="width:auto" data-u="'+escA(u.uid)+'" data-f="'+f[0]+'"'+(u._f.includes(f[0])?' checked':'')+' aria-label="'+escA(u.name+' '+f[1])+'"></td>').join('')+
-      '<td style="white-space:nowrap"><button class="pri" type="button" data-sv="'+escA(u.uid)+'">Save</button> <button type="button" data-pv="'+escA(u.uid)+'">👁 Preview</button> <span class="mu" id="ac-m-'+escA(u.uid)+'"></span></td></tr>').join('')+'</tbody></table></div>':'<div class="card mu">No active employees found.</div>';
-  const L2=$('acc-list');
-  L2.querySelectorAll('input[data-u]').forEach(c=>c.onchange=()=>{const u=ACCU.find(x=>x.uid===c.dataset.u);if(!u)return;u._f=FEATS.map(f=>f[0]).filter(k=>k===c.dataset.f?c.checked:u._f.includes(k))});
-  L2.querySelectorAll('[data-sv]').forEach(b=>b.onclick=async()=>{const u=ACCU.find(x=>x.uid===b.dataset.sv),m=$('ac-m-'+b.dataset.sv);if(!u)return;
-    try{await updateDoc(doc(DB,'directory',u.uid),{features:u._f});u.features=u._f.slice();m.textContent='Saved ✓';m.classList.remove('bad')}catch(e){m.textContent='Could not save: '+((e&&e.code)||'error');m.classList.add('bad')}});
-  L2.querySelectorAll('[data-pv]').forEach(b=>b.onclick=()=>{const u=ACCU.find(x=>x.uid===b.dataset.pv),m=$('ac-m-'+b.dataset.pv);if(!u)return;
-    if(!u._f.length){m.textContent='No features ticked: they would see “No features assigned yet”.';PREVIEW=[];PVNAME=u.name;applyAccess();return}
-    PREVIEW=u._f.slice();PVNAME=u.name;applyAccess();show(MODDEF[PREVIEW[0]])})}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&$('evliq-ov'))closeEventLiq()});
+
 
 /* ================= ADDITIONS: inventory approvals, categories, labels, boxes ================= */
 const CAT_ORDER=['Merchandise','Event Supplies','Event Collaterals'];
@@ -1560,77 +1462,26 @@ async function invApprCard(){if(!ME||!ME.isHR)return;const hr=$('v-hr');if(!hr||
   $('ia-save').onclick=async()=>{const p=APPR.find(x=>x.uid===sel.value);if(!p)return say('ia-msg','Select a person.');try{await setDoc(doc(DB,'config','inv'),{approverUid:p.uid,approverName:p.name,by:ME.uid,at:Date.now()});say('ia-msg','Saved ✓ '+p.name+' now approves stock out.',true)}catch(e){say('ia-msg','Could not save: '+((e&&e.code)||'error'))}}}
 new MutationObserver(()=>{if(!$('inv-appr'))invApprCard()}).observe($('v-hr'),{childList:true});
 
-/* ===== V4 add-on: Profile + Leave Application (additive, nothing removed) ===== */
-(function(){
-const st=document.createElement('style');
-st.textContent='.pfo{position:fixed;inset:0;z-index:80;background:#0009;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:16px}.pfo[hidden]{display:none}.pfb{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:14px;padding:16px;max-width:640px;width:100%}.pfb h2,.pfb h3{margin:0 0 6px}.pfb h3{margin-top:14px}.pfav{width:72px;height:72px;border-radius:50%;object-fit:cover;background:var(--bd);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:26px;flex:none}.pfr{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.pfg{display:grid;grid-template-columns:130px 1fr;gap:4px 10px;margin:10px 0}.pfg dt{color:var(--mu)}.pfg dd{margin:0;word-break:break-word}.pfb button{min-height:40px}.pfp{background:#fff;color:#000;border-radius:8px;padding:8px;overflow:auto;margin-top:8px}.sb-user[role=button]{cursor:pointer}';
-document.head.appendChild(st);
-const ov=document.createElement('div');ov.className='pfo noprint';ov.hidden=true;ov.innerHTML='<div class="pfb" id="pf-box"></div>';document.body.appendChild(ov);
-const box=ov.querySelector('#pf-box');
-ov.onclick=e=>{if(e.target===ov)ov.hidden=true};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')ov.hidden=true});
-const dir=()=>(ME&&ME.dir)||{};
-const eff=()=>document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
-function setTheme(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('eh_theme',t)}catch(e){}const b=$('thm');if(b)b.textContent=eff()==='dark'?'\u2600\ufe0f Light mode':'\uD83C\uDF19 Dark mode'}
-const phk=()=>'eh_photo_'+((ME&&ME.uid)||'x');
-const when=t=>new Date(t).toLocaleString([],{dateStyle:'medium',timeStyle:'short'})+' PHT';
-const FIELDS=[['name','Name'],['dept','Department'],['pos','Position'],['emp','Employee No.']];
-function resize(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=160,c=document.createElement('canvas');c.width=c.height=s;const m=Math.min(im.width,im.height);c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,s,s);cb(c.toDataURL('image/jpeg',.8))};im.src=r.result};r.readAsDataURL(file)}
-function openProfile(){
- const d=dir();let ph='';try{ph=localStorage.getItem(phk())||''}catch(e){}
- const em=(AUTH&&AUTH.currentUser&&AUTH.currentUser.email)||d.email||'';
- box.innerHTML='<div class="pfr" style="justify-content:space-between"><h2>Profile</h2><button id="pf-x" type="button">Close</button></div>'+
- '<div class="pfr">'+(ph?'<img class="pfav" alt="Profile photo" src="'+ph+'">':'<div class="pfav">'+esc((d.name||'?').trim().charAt(0).toUpperCase())+'</div>')+'<div><b style="font-size:16px">'+esc(d.name||'')+'</b><div class="mu">'+esc(d.pos||'')+(d.dept?' / '+esc(d.dept):'')+'</div></div></div>'+
- '<div class="pfr" style="margin-top:8px"><label class="mu" style="margin:0">Photo (kept on this device)</label><input type="file" id="pf-ph" accept="image/*" style="width:auto"></div>'+
- '<dl class="pfg"><dt>Name</dt><dd>'+esc(d.name||'')+'</dd><dt>Employee No.</dt><dd>'+esc(d.emp||'')+'</dd><dt>Department</dt><dd>'+esc(d.dept||'')+'</dd><dt>Position</dt><dd>'+esc(d.pos||'')+'</dd><dt>Email</dt><dd>'+esc(em)+'</dd><dt>Role</dt><dd>'+(ME&&ME.isHR?'HR':'Employee')+'</dd></dl>'+
- '<h3>Appearance</h3><div class="pfr">'+[['light','Light'],['dark','Dark']].map(t=>'<button type="button" class="'+(eff()===t[0]?'pri':'')+'" data-th="'+t[0]+'">'+t[1]+' mode</button>').join('')+'</div>'+
- '<h3>Request a change</h3><div class="mu">Changes to your details need HR approval.</div><div class="pfr"><select id="pf-f" style="width:auto">'+FIELDS.map(f=>'<option value="'+f[0]+'">'+f[1]+'</option>').join('')+'</select><input id="pf-v" placeholder="New value" style="flex:1;min-width:160px"></div><input id="pf-r" placeholder="Reason (optional)" style="margin-top:6px"><div class="pfr" style="margin-top:6px"><button type="button" class="pri" id="pf-s">Send for approval</button><span class="mu" id="pf-m"></span></div>'+
- '<h3>My requests</h3><div id="pf-mine" class="mu">Loading\u2026</div>'+(ME&&ME.isHR?'<h3>Waiting for your approval</h3><div id="pf-pend" class="mu">Loading\u2026</div>':'');
- ov.hidden=false;
- $('pf-x').onclick=()=>ov.hidden=true;
- $('pf-ph').onchange=e=>{const f=e.target.files[0];if(f)resize(f,u=>{try{localStorage.setItem(phk(),u)}catch(x){}openProfile()})};
- box.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{setTheme(b.dataset.th);openProfile()});
- $('pf-s').onclick=async()=>{const key=$('pf-f').value,nv=$('pf-v').value.trim(),m=$('pf-m');if(!nv){m.textContent='Type the new value.';return}
-  try{await addDoc(collection(DB,'profile_changes'),{uid:ME.uid,name:d.name||'',emp:d.emp||'',key,label:FIELDS.find(f=>f[0]===key)[1],old:d[key]||'',new:nv,reason:$('pf-r').value.trim(),status:'pending',at:Date.now()});$('pf-v').value='';$('pf-r').value='';m.textContent='Sent \u2713';loadMine()}catch(e){m.textContent='Could not send ('+((e&&e.code)||'error')+'). Publish the updated firestore.rules.'}};
- loadMine();if(ME&&ME.isHR)loadPend();
-}
-async function loadMine(){const el=$('pf-mine');if(!el)return;try{const s=await getDocs(query(collection(DB,'profile_changes'),where('uid','==',ME.uid)));const L=s.docs.map(x=>x.data()).sort((a,b)=>b.at-a.at);
- el.innerHTML=L.length?L.map(c=>'<div style="padding:6px 0;border-top:1px solid var(--bd)"><b>'+esc(c.label)+'</b>: '+esc(c.old||'-')+' \u2192 '+esc(c.new)+' <span class="mu">('+esc(c.status)+', '+when(c.at)+')</span></div>').join(''):'No requests yet.'}catch(e){el.textContent='Could not load.'}}
-async function loadPend(){const el=$('pf-pend');if(!el)return;try{const s=await getDocs(query(collection(DB,'profile_changes'),where('status','==','pending')));const L=s.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>a.at-b.at);
- el.innerHTML=L.length?L.map(c=>'<div style="padding:8px 0;border-top:1px solid var(--bd)"><b>'+esc(c.name)+'</b> ('+esc(c.emp)+'): '+esc(c.label)+' '+esc(c.old||'-')+' \u2192 <b>'+esc(c.new)+'</b>'+(c.reason?'<div class="mu">'+esc(c.reason)+'</div>':'')+'<div class="pfr" style="margin-top:4px"><button type="button" class="pri" data-ok="'+c.id+'">Approve</button><button type="button" data-no="'+c.id+'">Reject</button></div></div>').join(''):'Nothing waiting.';
- el.querySelectorAll('[data-ok],[data-no]').forEach(b=>b.onclick=async()=>{const id=b.dataset.ok||b.dataset.no,c=L.find(x=>x.id===id);try{if(b.dataset.ok)await updateDoc(doc(DB,'directory',c.uid),{[c.key]:c.new});await updateDoc(doc(DB,'profile_changes',id),{status:b.dataset.ok?'approved':'rejected',by:ME.uid,decidedAt:Date.now()});loadPend()}catch(e){el.insertAdjacentHTML('afterbegin','<div class="bad">Could not save.</div>')}})}catch(e){el.textContent='Could not load.'}}
-const su=document.querySelector('.sb-user');if(su){su.setAttribute('role','button');su.tabIndex=0;su.title='Open Profile';su.onclick=()=>{if(ME&&ME.uid)openProfile()};su.onkeydown=e=>{if(e.key==='Enter'&&ME&&ME.uid)openProfile()}}
-/* ---- Leave Application Form (same layout as the paper form) ---- */
-const LT=['Sick Leave (Paid)','Sick Leave (Unpaid)','Condolence Leave','Casual Leave','SIL','Emergency Leave','Maternity Leave','Others'];
-const md=x=>{if(!x)return'';const p=x.split('-');return p[1]+'/'+p[2]+'/'+p[0].slice(2)};
-const days=(a,b)=>a&&b?Math.max(1,Math.round((new Date(b)-new Date(a))/864e5)+1):'';
-const T='border:1px solid #000;padding:4px 6px;vertical-align:top;font-size:12px';
-function paper(v){const used=v.rows.map(r=>r.t).filter(Boolean);const ck=n=>used.includes(n)?'\u2612':'\u2610';
- const logo=typeof LOGO_SQ!=='undefined'?'<img src="'+LOGO_SQ+'" style="height:34px;vertical-align:middle;margin-right:8px">':'';
- return '<table style="width:100%;border-collapse:collapse;border:2px solid #000;font-family:Arial,sans-serif;color:#000;margin:0 auto"><tr><td colspan="6" style="'+T+';text-align:center;font-size:15px;font-weight:bold">'+logo+'GLOBAL PLAYHUB</td></tr><tr><td colspan="6" style="background:#111;color:#fff;text-align:center;font-size:12px;padding:3px;border:1px solid #000">Leave Application Form</td></tr>'+
- '<tr><td colspan="4" style="'+T+'">Employee Name: <b>'+esc(v.name)+'</b></td><td colspan="2" style="'+T+'">Department: <b>'+esc(v.dept)+'</b><br>Position: <b>'+esc(v.pos)+'</b></td></tr>'+
- '<tr><td colspan="4" style="'+T+'">Date Hired: <b>'+esc(md(v.hired))+'</b></td><td colspan="2" style="'+T+'">ID Number: <b>'+esc(v.emp)+'</b></td></tr>'+
- '<tr><td colspan="6" style="'+T+'">Type of Leave:&nbsp; 1. Sick Leave Paid '+ck('Sick Leave (Paid)')+' Unpaid '+ck('Sick Leave (Unpaid)')+' &nbsp; 2. Condolence Leave '+ck('Condolence Leave')+' &nbsp; 3. Casual Leave '+ck('Casual Leave')+' &nbsp; 4. SIL '+ck('SIL')+' &nbsp; 5. Emergency Leave '+ck('Emergency Leave')+' &nbsp; 6. Maternity Leave '+ck('Maternity Leave')+' &nbsp; 7. Others '+ck('Others')+'</td></tr>'+
- '<tr style="text-align:center"><td style="'+T+'">Type of Leave</td><td style="'+T+'">From (MM/DD/YY)</td><td style="'+T+'">To (MM/DD/YY)</td><td style="'+T+'">Total Days of Leave</td><td style="'+T+'">Approved by Department Supervisor/Manager</td><td style="'+T+'">Approved by HR Department</td></tr>'+
- v.rows.map(r=>'<tr style="height:26px"><td style="'+T+'">'+esc(r.t)+'</td><td style="'+T+'">'+esc(md(r.f))+'</td><td style="'+T+'">'+esc(md(r.to))+'</td><td style="'+T+';text-align:center">'+days(r.f,r.to)+'</td><td style="'+T+'"></td><td style="'+T+'"></td></tr>').join('')+
- '<tr><td colspan="6" style="'+T+';text-align:center">Note: Please submit the original copy to Human Resource Department.</td></tr><tr><td colspan="6" style="'+T+';height:34px">Notes/ Remarks: '+esc(v.notes)+'</td></tr><tr><td colspan="6" style="'+T+';height:54px">Reason: '+esc(v.reason)+'</td></tr></table>'}
-const two=v=>paper(v)+'<div style="border-top:2px dashed #000;margin:18px 0"></div>'+paper(v);
-function vals(){const g=i=>($(i)||{}).value||'';return{name:g('lv-n'),dept:g('lv-d'),pos:g('lv-p'),emp:g('lv-e'),hired:g('lv-h'),notes:g('lv-no'),reason:g('lv-r'),rows:[1,2,3].map(i=>({t:g('lv-t'+i),f:g('lv-f'+i),to:g('lv-o'+i)}))}}
-function openLeave(){const d=dir(),p=(typeof state!=='undefined'&&state.profile)||{};
- const row=i=>'<div class="pfr" style="margin-top:6px"><select id="lv-t'+i+'" style="flex:2;min-width:140px"><option value="">Type of leave '+i+'</option>'+LT.map(t=>'<option>'+t+'</option>').join('')+'</select><input type="date" id="lv-f'+i+'" style="flex:1;min-width:130px" aria-label="From"><input type="date" id="lv-o'+i+'" style="flex:1;min-width:130px" aria-label="To"></div>';
- box.innerHTML='<div class="pfr" style="justify-content:space-between"><h2>Leave Application Form</h2><button id="lv-x" type="button">Close</button></div><div class="pfr"><input id="lv-n" placeholder="Employee name" value="'+esc(d.name||p.name||'')+'" style="flex:2;min-width:160px"><input id="lv-e" placeholder="ID number" value="'+esc(d.emp||p.emp||'')+'" style="flex:1;min-width:100px"></div><div class="pfr" style="margin-top:6px"><input id="lv-d" placeholder="Department" value="'+esc(d.dept||p.dept||'')+'" style="flex:1;min-width:130px"><input id="lv-p" placeholder="Position" value="'+esc(d.pos||p.pos||'')+'" style="flex:1;min-width:130px"><label class="mu" style="margin:0">Date hired <input type="date" id="lv-h"></label></div>'+row(1)+row(2)+row(3)+'<input id="lv-no" placeholder="Notes / Remarks" style="margin-top:6px"><textarea id="lv-r" rows="2" placeholder="Reason" style="margin-top:6px"></textarea><div class="pfr" style="margin-top:8px"><button type="button" class="pri" id="lv-pr">Print (2 copies per page)</button></div><h3>Preview</h3><div class="pfp" id="lv-pv"></div>';
- const pv=()=>{$('lv-pv').innerHTML=paper(vals())};pv();box.oninput=pv;box.onchange=pv;
- $('lv-x').onclick=()=>ov.hidden=true;$('lv-pr').onclick=()=>printDoc('Leave Application Form',two(vals()));ov.hidden=false}
-const t0=document.getElementById('t-enc');if(t0){const b=t0.cloneNode(true);[...b.attributes].forEach(a=>{if(a.name.startsWith('data-'))b.removeAttribute(a.name)});b.id='t-leave';b.classList.remove('on');const sp=b.querySelector('.lbl');if(sp)sp.textContent='Leave Application';b.onclick=e=>{e.preventDefault();openLeave()};t0.parentNode.appendChild(b)}
-})();
+/* ================= ADDITIONS: which features each employee can use ================= */
+const FEATS=[['hr','HR Forms'],['inv','Inventory'],['sch','Assets/Links'],['gam','Event Games'],['liq','Liquidation']];
+const canUse=k=>!ME||!ME.dir||ME.isHR||!Array.isArray(ME.dir.features)||ME.dir.features.includes(k);
+function applyFeatures(){document.querySelectorAll('#mods [data-mod]').forEach(b=>{b.hidden=!canUse(b.dataset.mod)});const nf=$('nofeat');if(nf)nf.hidden=true}
+function featGuard(v){const m=MODOF[v]||'hr';if(canUse(m)){const nf=$('nofeat');if(nf)nf.hidden=true;return v}const f=FEATS.find(x=>canUse(x[0]));return f?MODDEF[f[0]]:null}
+function NOFEAT(){['enc','ob','rd','ot','chg','log','req','apr','hr','ntf','idash','iin','iout','irem','sch','gadm','liq','acc'].forEach(k=>{const e=$('v-'+k);if(e)e.hidden=true});document.querySelectorAll('.navg').forEach(g=>{g.hidden=true});const nf=$('nofeat');if(nf)nf.hidden=false}
+async function renderAcc(){
+  const box=$('v-acc');
+  box.innerHTML='<div class="card"><b>Employee access</b><div class="mu" style="font-size:12px;margin:2px 0 8px">Tick the features each employee can use. They only see the tabs you allow. Changes apply the next time the employee opens or refreshes Event Hub. An employee with nothing ticked sees no features. You (HR) always have everything.</div><input id="acc-q" type="search" placeholder="Search employee…" style="max-width:300px"><div id="acc-t" style="margin-top:10px">Loading…</div></div>';
+  let L=[];try{const s=await getDocs(query(collection(DB,'directory'),where('status','==','active')));L=s.docs.map(d=>({uid:d.id,...d.data()})).filter(p=>p.uid!==ME.uid&&!(ME.hr&&p.uid===ME.hr.uid)).sort((a,b)=>String(a.name).localeCompare(String(b.name)))}catch(e){$('acc-t').textContent='Could not load employees: '+((e&&e.code)||'error');return}
+  const draw=()=>{const q=nkey($('acc-q').value);const R=L.filter(p=>!q||nkey(p.name+' '+(p.emp||'')+' '+(p.dept||'')).includes(q));
+    $('acc-t').innerHTML=R.length?'<div class="scroll"><table class="enc itbl"><thead><tr><th>Employee</th>'+FEATS.map(f=>'<th style="text-align:center">'+f[1]+'</th>').join('')+'<th></th></tr></thead><tbody>'+R.map(p=>{const on=k=>!Array.isArray(p.features)||p.features.includes(k);return '<tr data-u="'+escI(p.uid)+'"><td><b>'+esc(p.name||p.email||p.uid)+'</b><div class="mu" style="font-size:12px">'+esc([p.emp,p.dept].filter(Boolean).join(' · '))+'</div></td>'+FEATS.map(f=>'<td style="text-align:center"><input type="checkbox" data-f="'+f[0]+'"'+(on(f[0])?' checked':'')+' style="width:auto"></td>').join('')+'<td style="white-space:nowrap"><button type="button" data-all>All</button> <button type="button" data-none>None</button> <button class="pri" type="button" data-save>Save</button> <span class="mu" data-m></span></td></tr>'}).join('')+'</tbody></table></div>':'<div class="mu">No employees found.</div>';
+    $('acc-t').querySelectorAll('tr[data-u]').forEach(tr=>{const set=v=>tr.querySelectorAll('[data-f]').forEach(c=>c.checked=v);
+      tr.querySelector('[data-all]').onclick=()=>set(true);tr.querySelector('[data-none]').onclick=()=>set(false);
+      tr.querySelector('[data-save]').onclick=async()=>{const m=tr.querySelector('[data-m]'),feats=[...tr.querySelectorAll('[data-f]')].filter(c=>c.checked).map(c=>c.dataset.f);
+        try{await updateDoc(doc(DB,'directory',tr.dataset.u),{features:feats});const p=L.find(x=>x.uid===tr.dataset.u);if(p)p.features=feats;m.textContent='Saved ✓'}catch(e){m.textContent='Could not save: '+((e&&e.code)||'error')}}})};
+  draw();$('acc-q').oninput=draw}
+$('t-acc').onclick=()=>show('acc');
 
 </script>
-<script>/* Dark / Light mode button */
-(function(){function eff(){return document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}
-function init(){var f=document.querySelector('.sb-foot');if(!f||document.getElementById('thm'))return;var b=document.createElement('button');b.id='thm';b.type='button';
-function lab(){b.textContent=eff()==='dark'?'☀️ Light mode':'🌙 Dark mode'}lab();
-b.onclick=function(){var n=eff()==='dark'?'light':'dark';document.documentElement.dataset.theme=n;try{localStorage.setItem('eh_theme',n)}catch(e){}lab()};f.insertBefore(b,f.firstChild)}
-if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init)})();
-</script>
+<script src="phase1.js"></script>
 </body>
 </html>

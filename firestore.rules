@@ -17,7 +17,8 @@ service cloud.firestore {
     function isApprover() {
       return request.auth != null
         && exists(/databases/$(database)/documents/config/inv)
-        && get(/databases/$(database)/documents/config/inv).data.approverUid == request.auth.uid;
+        && (get(/databases/$(database)/documents/config/inv).data.get('approverUid', '') == request.auth.uid
+            || request.auth.uid in get(/databases/$(database)/documents/config/inv).data.get('approverUids', []));
     }
 
     // the ONE central HR account (can never be changed from the website)
@@ -40,8 +41,7 @@ service cloud.firestore {
         && request.resource.data.uid == uid
         && request.resource.data.status == 'pending'
         && request.resource.data.role == 'employee'
-        && request.resource.data.requestedRole in ['employee', 'hr']
-        && !('features' in request.resource.data);
+        && request.resource.data.requestedRole in ['employee', 'hr'];
       allow update: if isHR();
       allow delete: if false;
     }
@@ -159,21 +159,43 @@ service cloud.firestore {
     }
 
     // team schedule: everyone approved can read; the person who encoded it (or HR) can edit or delete
-    // Profile change requests (employee asks, HR approves)
-    match /profile_changes/{id} {
-      allow create: if signedIn() && request.resource.data.uid == request.auth.uid
-        && request.resource.data.status == 'pending';
-      allow get, list: if signedIn() && (isHR() || resource.data.uid == request.auth.uid);
-      allow update: if isHR();
-      allow delete: if false;
-    }
-
     match /schedules/{id} {
       allow read: if isActive();
       allow create: if isActive() && request.resource.data.by == request.auth.uid;
       allow update: if isActive() && (resource.data.by == request.auth.uid || isHR())
         && request.resource.data.by == resource.data.by;
       allow delete: if isActive() && (resource.data.by == request.auth.uid || isHR());
+    }
+
+    // name-change requests: the person asks, only HR/Admin decides
+    match /profile_requests/{id} {
+      allow create: if isActive() && request.resource.data.uid == request.auth.uid && request.resource.data.status == 'pending';
+      allow read: if isActive() && (resource.data.uid == request.auth.uid || isHR());
+      allow update: if isHR();
+      allow delete: if isHR();
+    }
+
+    // return stock after a cancelled event: requester asks, approver/HR confirms
+    match /stock_returns/{id} {
+      allow create: if isActive() && request.resource.data.by == request.auth.uid && request.resource.data.status == 'pending';
+      allow read: if isActive() && (resource.data.by == request.auth.uid || isApprover() || isHR());
+      allow update: if isActive() && (isApprover() || isHR());
+      allow delete: if isHR();
+    }
+
+    // messages: only the members of a chat can read or write in it; announcements are HR only
+    match /threads/{id} {
+      allow create: if isActive() && request.auth.uid in request.resource.data.members
+        && (request.resource.data.get('announce', false) == false || isHR());
+      allow read: if isActive() && request.auth.uid in resource.data.members;
+      allow update: if isActive() && request.auth.uid in resource.data.members;
+      allow delete: if isHR();
+      match /msgs/{mid} {
+        allow read: if isActive() && request.auth.uid in get(/databases/$(database)/documents/threads/$(id)).data.members;
+        allow create: if isActive() && request.resource.data.from == request.auth.uid
+          && request.auth.uid in get(/databases/$(database)/documents/threads/$(id)).data.members;
+        allow update, delete: if false;
+      }
     }
   }
 }
