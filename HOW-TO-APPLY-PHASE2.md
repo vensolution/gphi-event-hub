@@ -13,15 +13,11 @@ Commit, wait 1 to 3 minutes, then Ctrl+Shift+R (phone: private tab).
 Firebase console > Firestore Database > Rules > paste the new `firestore.rules` > Publish.
 New: several approvers (`approverUids`) and the `stock_returns` collection. Without this you get "permission denied".
 
-## 4. Update the Apps Script (for the single promoter Doc)
-In the same script that has `doPost`:
-1. Delete the old `promoterFolder_`, `promoterPhoto_`, `promoterDoc_` functions if you pasted them before.
-2. Paste the three new functions from `promoter-doc.gs` at the very bottom.
-3. Make sure these 3 lines are in `doPost`, before `if (!d.action) return makeReport(d);`:
-   `if (d.action === 'promoterFolder') return json(promoterFolder_(d));`
-   `if (d.action === 'promoterPhoto')  return json(promoterPhoto_(d));`
-   `if (d.action === 'promoterDoc')    return json(promoterDoc_(d));`
-4. Ctrl+S > Deploy > Manage deployments > pencil > New version > Deploy.
+## 4. Replace the whole Apps Script (one file)
+1. Open your Apps Script project (Code.gs). Ctrl+A, Delete.
+2. Open `apps-script-COMPLETE-Post-Event-Report.gs` and paste the whole file.
+3. Check Project Settings > Script properties: ADMIN_PASSCODE (and GEMINI_API_KEY if you use Improve writing) are still there.
+4. Ctrl+S > Deploy > Manage deployments > pencil > Version: New version > Deploy. The URL stays the same.
 
 ## 5. Test
 Inventory (use two accounts, an employee and the approver):

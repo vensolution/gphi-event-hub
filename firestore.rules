@@ -190,5 +190,26 @@ service cloud.firestore {
         && request.resource.data.by == resource.data.by;
       allow delete: if isActive() && (resource.data.by == request.auth.uid || isHR());
     }
+
+    // messages: any approved member can message any member (1-to-1 or group); HR posts announcements read by everyone
+    match /chats/{c} {
+      allow read: if isActive() && (request.auth.uid in resource.data.members || resource.data.type == 'announce');
+      allow create: if isActive()
+        && ((request.resource.data.type in ['dm', 'group'] && request.auth.uid in request.resource.data.members)
+            || (request.resource.data.type == 'announce' && isHR()));
+      // members update the last message and their own read mark; anyone approved may mark an announcement as read
+      allow update: if isActive() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastText', 'lastAt', 'lastBy', 'reads'])
+        && ((request.auth.uid in resource.data.members && resource.data.type != 'announce')
+            || (resource.data.type == 'announce' && (isHR() || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reads']))));
+      allow delete: if false;
+
+      match /msgs/{m} {
+        function chat() { return get(/databases/$(database)/documents/chats/$(c)).data; }
+        allow read: if isActive() && (request.auth.uid in chat().members || chat().type == 'announce');
+        allow create: if isActive() && request.resource.data.by == request.auth.uid
+          && ((chat().type != 'announce' && request.auth.uid in chat().members) || (chat().type == 'announce' && isHR()));
+        allow update, delete: if false;
+      }
+    }
   }
 }

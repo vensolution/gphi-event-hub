@@ -313,6 +313,7 @@ function promoterPhoto_(d) {
   var f = DriveApp.getFolderById(d.folderId), nm;
   if (d.promoterIndex) {                                    // new: p01_03.jpg = promoter 1, photo 3
     nm = 'p' + ('0' + d.promoterIndex).slice(-2) + '_' + ('0' + d.index).slice(-2) + '.jpg';
+    if (d.replace) { var all2 = f.getFiles(); while (all2.hasNext()) { var y = all2.next(); if (String(y.getMimeType()).indexOf('image/') === 0) y.setTrashed(true); } }   // first upload of a re-send: clear old promoter photos
     var o = f.getFilesByName(nm); while (o.hasNext()) o.next().setTrashed(true);
   } else {                                                  // old site version: one folder per promoter
     nm = 'promoter_' + ('0' + d.index).slice(-2) + '.jpg';
