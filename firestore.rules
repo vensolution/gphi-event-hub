@@ -17,8 +17,7 @@ service cloud.firestore {
     function isApprover() {
       return request.auth != null
         && exists(/databases/$(database)/documents/config/inv)
-        && (get(/databases/$(database)/documents/config/inv).data.get('approverUid', '') == request.auth.uid
-            || request.auth.uid in get(/databases/$(database)/documents/config/inv).data.get('approverUids', []));
+        && get(/databases/$(database)/documents/config/inv).data.approverUid == request.auth.uid;
     }
 
     // the ONE central HR account (can never be changed from the website)
@@ -42,7 +41,10 @@ service cloud.firestore {
         && request.resource.data.status == 'pending'
         && request.resource.data.role == 'employee'
         && request.resource.data.requestedRole in ['employee', 'hr'];
-      allow update: if isHR();
+      // HR can change anything; a person can only change their own contact details and photo (name and work details need HR approval)
+      allow update: if isHR()
+        || (signedIn() && request.auth.uid == uid
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['phone', 'address', 'emerg', 'birthday', 'photo', 'updatedAt']));
       allow delete: if false;
     }
 
@@ -134,6 +136,20 @@ service cloud.firestore {
       allow write: if isHR();
     }
 
+    // website logo: everyone can read it (also on the sign-in page), only HR can change it
+    match /config/brand {
+      allow get: if true;
+      allow write: if isHR();
+    }
+
+    // requests to change name / work details: the person sends, HR decides
+    match /profile_requests/{id} {
+      allow create: if isActive() && request.resource.data.uid == request.auth.uid && request.resource.data.status == 'pending';
+      allow read: if isActive() && (resource.data.uid == request.auth.uid || isHR());
+      allow update: if isHR();
+      allow delete: if isHR() || (isActive() && resource.data.uid == request.auth.uid && resource.data.status == 'pending');
+    }
+
     // who opened / copied each Assets/Links link (written by the person who opens it; read by HR and the person who encoded the link)
     match /asset_views/{id} {
       allow create: if isActive() && request.resource.data.uid == request.auth.uid;
@@ -165,50 +181,6 @@ service cloud.firestore {
       allow update: if isActive() && (resource.data.by == request.auth.uid || isHR())
         && request.resource.data.by == resource.data.by;
       allow delete: if isActive() && (resource.data.by == request.auth.uid || isHR());
-    }
-
-    // name-change requests: the person asks, only HR/Admin decides
-    match /profile_requests/{id} {
-      allow create: if isActive() && request.resource.data.uid == request.auth.uid && request.resource.data.status == 'pending';
-      allow read: if isActive() && (resource.data.uid == request.auth.uid || isHR());
-      allow update: if isHR();
-      allow delete: if isHR();
-    }
-
-    // return stock after a cancelled event: requester asks, approver/HR confirms
-    match /stock_returns/{id} {
-      allow create: if isActive() && request.resource.data.by == request.auth.uid && request.resource.data.status == 'pending';
-      allow read: if isActive() && (resource.data.by == request.auth.uid || isApprover() || isHR());
-      allow update: if isActive() && (isApprover() || isHR());
-      allow delete: if isHR();
-    }
-
-    // messages: only the members of a chat can read or write in it; announcements are HR only
-    match /threads/{id} {
-      allow create: if isActive() && request.auth.uid in request.resource.data.members
-        && (request.resource.data.get('announce', false) == false || isHR());
-      allow read: if isActive() && request.auth.uid in resource.data.members;
-      allow update: if isActive() && request.auth.uid in resource.data.members;
-      allow delete: if isHR();
-      match /msgs/{mid} {
-        allow read: if isActive() && request.auth.uid in get(/databases/$(database)/documents/threads/$(id)).data.members;
-        allow create: if isActive() && request.resource.data.from == request.auth.uid
-          && request.auth.uid in get(/databases/$(database)/documents/threads/$(id)).data.members
-          && (get(/databases/$(database)/documents/threads/$(id)).data.get('announce', false) == false || isHR());
-        allow update, delete: if false;
-      }
-    }
-
-    // profile details and photo: everyone approved can read, each person edits only their own
-    match /profiles/{uid} {
-      allow read: if isActive();
-      allow write: if isActive() && request.auth.uid == uid;
-    }
-
-    // website logo: anyone can read it (shown on the sign-in page), only HR can change it
-    match /config/brand {
-      allow get: if true;
-      allow write: if isHR();
     }
   }
 }

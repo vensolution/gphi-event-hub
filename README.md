@@ -48,3 +48,13 @@ One static site: HR Forms, Inventory, Assets/Links and Event Games (Spin the Whe
 - **Post Event Report - Promoter's Details:** add as many promoters as needed. Each has name, username, Old/New, their own photos and their own Google Doc. Event Details lists every promoter (numbered when more than one) and every promoter photo Doc link.
 - **Employee Access** (HR only, in HR Forms): tick which features each employee can use (HR Forms, Inventory, Assets/Links, Event Games, Liquidation). Employees only see the tiles and tabs they are allowed. New or untouched employees keep full access until HR changes it.
 - **Firestore rules:** republish `firestore.rules` (new `event_liquidations`).
+
+## Phase 1 (latest)
+- **Event Data (Physical Games) fixed:** every game now counts only its own players (one per username) instead of all players of all games.
+- **Philippine Time everywhere:** all dates and times are shown in Asia/Manila (UTC+8), whatever the device clock or time zone is (`ui-extras.js`). A Philippine clock is in the top bar.
+- **Dark / Light mode:** button in the top bar and in Profile (Light, Dark, Auto). It is remembered, and the Event Games window follows it.
+- **Profile:** "Signed in as" is now **PROFILE**. Photo, contact details (save right away), name and work details (HR approves), password reset link, appearance.
+- **HR (Employee Access tab):** change the website **logo**, and approve or reject **profile change requests**.
+- **Same search box everywhere, button effects, bigger tap targets on phones, Caps Lock warning** under every password box.
+- **Firestore rules:** republish `firestore.rules` (new: `config/brand`, `profile_requests`, and people can edit their own contact details and photo).
+- New file: `ui-extras.js` (upload it next to the root `index.html`).
