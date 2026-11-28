@@ -175,6 +175,20 @@ body:has(#v-gadm:not([hidden])) .wrap.main{max-width:none}
 .tbr{display:flex;align-items:center;gap:8px}#theme-btn{min-width:38px;border-radius:99px;padding:6px 10px}
 .pf-head{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.pf-av{width:84px;height:84px;border-radius:50%;background:var(--ac) center/cover;color:var(--acx);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:28px;flex:none}
 .pf-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:1px solid var(--bd);border-radius:8px;cursor:pointer;background:var(--card);color:var(--tx);font-weight:600;font-size:13px}.pf-ro{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:8px;padding:6px 10px}
+/* inventory upgrades: category tiles, expandable requests, return + pop-up windows */
+.cattiles{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.cattile{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 14px;border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);cursor:pointer;min-width:120px;text-align:left}
+.cattile span{font-size:11.5px;color:var(--mu)}
+.cattile.on{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac) inset}
+details.rqd{border:1px solid var(--bd);border-radius:12px;margin:8px 0;background:var(--card)}
+details.rqd>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 12px}
+details.rqd>summary::-webkit-details-marker{display:none}
+details.rqd>summary::before{content:"▸";margin-right:6px;color:var(--mu)}
+details.rqd[open]>summary::before{content:"▾"}
+details.rqd .rqb{padding:0 12px 12px;border-top:1px solid var(--bd)}
+.iov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:12px}
+.imod{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:14px;padding:18px;width:100%;max-width:560px;max-height:92vh;overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.imod label.opt{display:inline-flex;align-items:center;gap:6px;margin-right:14px;font-weight:600}
 </style>
 </head>
 <body>
@@ -338,7 +352,7 @@ const $=id=>document.getElementById(id);
 const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const state={profile:{name:'',dept:'',pos:'',emp:'',per:'',off:'Sunday',filed:'',dstart:'09:00',dend:'18:00'},rows:[],ot:[],chg:{},log:[]};
 let db=null,ref=null,dirty=false,authReady=false;
-let EVLIQS=[],SNAP=null,SW=null,AVIEWS=[],LIQS=[],LQ=null,INVCFG=null,REQS=[],EXTRA_CATS=[],EXTRA_LABELS=[],REQU=null,IDF='all';
+let RETS=[],RETU=null,RQC='all',EVLIQS=[],SNAP=null,SW=null,AVIEWS=[],LIQS=[],LQ=null,INVCFG=null,REQS=[],EXTRA_CATS=[],EXTRA_LABELS=[],REQU=null,IDF='all';
 
 function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
 function fmtDate(v){if(!v)return'';const[y,m,d]=v.split('-').map(Number);if(!y)return v;return d+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m-1]+' '+y}
@@ -841,7 +855,7 @@ function startData(){
 }
 function stopData(){DUN.forEach(u=>{try{u()}catch(e){}});DUN=[];INV=[];MOV=[];SCHD=[];ASSETS=[];AVIEWS=[];LIQS=[];INVCFG=null;REQS=[];EVLIQS=[];if(REQU){try{REQU()}catch(e){}REQU=null}PEOPLE=[];lowBadge()}
 function invRefresh(){
-  iBadge();
+  iBadge();if(window.__paintAp)window.__paintAp();
   if(!$('v-idash').hidden)renderIDash();if(!$('v-iin').hidden)renderIIn(true);if(!$('v-iout').hidden)renderIOut(true);if(!$('v-irem').hidden)renderIRem(true);
   fillDl();
 }
@@ -988,7 +1002,7 @@ function soCollect(){
 function renderIOut(snap){
   const b=$('v-iout');if(!canOut())return renderIOutReq(snap);
   if(snap&&$('iout-log')){document.querySelectorAll('#so-rows .so-item').forEach(s=>{const v=s.value;s.innerHTML=outOpts();s.value=v});document.querySelectorAll('#so-rows .sorow').forEach(soCalc);$('iout-log').innerHTML=outLogHtml();renderPend();return}
-  b.innerHTML='<div id="so-pend"></div><div class="card"><b>Stock Out</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Record items released for an event. Put each item in a Box and give it a Label (e.g. PR Merch, Booth Merch). A label is printed for every box showing what is inside. The quantities are deducted from the remaining stock.</div><div class="grid">'+
+  b.innerHTML='<div id="so-pend"></div><div id="so-ret"></div><div class="card"><b>Stock Out</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Record items released for an event. Put each item in a Box and give it a Label (e.g. PR Merch, Booth Merch). A label is printed for every box showing what is inside. The quantities are deducted from the remaining stock.</div><div class="grid">'+
     '<div><label>Event Name</label><input id="so-ev" list="dl-events" autocomplete="off"></div>'+
     '<div><label>Date</label><input id="so-date" readonly></div>'+
     '<div><label>Released to (optional)</label><input id="so-to" autocomplete="off"></div></div>'+
@@ -1384,13 +1398,14 @@ addEventListener('keydown',e=>{if(e.key==='Escape'&&$('evliq-ov'))closeEventLiq(
 /* ================= ADDITIONS: inventory approvals, categories, labels, boxes ================= */
 const CAT_ORDER=['Merchandise','Event Supplies','Event Collaterals'];
 const escI=v=>esc(v).replace(/"/g,'&quot;');
-const canOut=()=>{const u=AUTH&&AUTH.currentUser;if(!u||!ME)return false;return INVCFG&&INVCFG.approverUid?INVCFG.approverUid===u.uid:!!ME.isHR};
+const apprList=()=>{const c=INVCFG||{},a=Array.isArray(c.approvers)?c.approvers.slice():[];if(c.approverUid&&!a.some(x=>x.uid===c.approverUid))a.push({uid:c.approverUid,name:c.approverName||''});return a};
+const canOut=()=>{const u=AUTH&&AUTH.currentUser;if(!u||!ME)return false;const L=apprList();return L.length?L.some(x=>x.uid===u.uid):!!ME.isHR};
 const catList=()=>[...new Set([...CATS,...INV.map(i=>i.category).filter(Boolean),...EXTRA_CATS])];
 const catOpts=cur=>catList().map(c=>'<option'+(c===cur?' selected':'')+'>'+esc(c)+'</option>').join('')+'<option value="__new">＋ Add new category…</option>';
 const idCats=()=>{const c=catList();return [...CAT_ORDER,...c.filter(x=>!CAT_ORDER.includes(x))]};
-function subReq(){if(REQU){try{REQU()}catch(e){}REQU=null}const u=AUTH&&AUTH.currentUser;if(!u||!DB)return;
-  REQU=onSnapshot((canOut()||(ME&&ME.isHR))?collection(DB,'stock_requests'):query(collection(DB,'stock_requests'),where('by','==',u.uid)),s=>{REQS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));invRefresh()},()=>{})}
-function iBadge(){const b=$('t-iout');if(!b)return;let e=$('iout-n');if(!e){e=document.createElement('span');e.id='iout-n';e.className='nbadge';b.appendChild(e)}const n=canOut()?REQS.filter(r=>r.status==='pending').length:0;e.textContent=n;e.hidden=!n}
+function subReq(){subRets();if(REQU){try{REQU()}catch(e){}REQU=null}const u=AUTH&&AUTH.currentUser;if(!u||!DB)return;
+  REQU=onSnapshot((canOut()||(ME&&ME.isHR))?collection(DB,'stock_requests'):query(collection(DB,'stock_requests'),where('by','==',u.uid)),s=>{REQS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));invRefresh();popApr()},()=>{})}
+function iBadge(){const b=$('t-iout');if(!b)return;let e=$('iout-n');if(!e){e=document.createElement('span');e.id='iout-n';e.className='nbadge';b.appendChild(e)}const n=canOut()?REQS.filter(r=>r.status==='pending').length+RETS.filter(r=>r.status==='pending').length:0;e.textContent=n;e.hidden=!n}
 /* ---- dashboard: split by category, with In stock integrated into the stock levels ---- */
 function renderIDash(){
   const low=lowItems(),F=IDF,cnt=k=>k==='all'?INV.length:INV.filter(i=>stat(i)===k).length;
@@ -1423,10 +1438,10 @@ function soChange(el,sc){
 }
 /* ---- approver: pending requests ---- */
 function renderPend(){const box=$('so-pend');if(!box)return;const P=REQS.filter(r=>r.status==='pending');
-  box.innerHTML=P.length?'<div class="card" style="border-color:#f59e0b"><b>Stock out requests waiting for your approval ('+P.length+')</b>'+P.map(r=>'<div class="card" id="rq-'+r.id+'" style="margin:8px 0 0"><div class="ihead"><b>'+esc(r.event)+'</b><span class="mu" style="font-size:12px">Requested by '+esc(r.byName||'')+' · '+esc(new Date(r.at).toLocaleString())+'</span></div>'+((r.to||r.note)?'<div class="mu" style="font-size:12px">'+esc([r.to?'For: '+r.to:'',r.note].filter(Boolean).join(' · '))+'</div>':'')+'<div class="scroll"><table class="enc itbl"><thead><tr><th>Item</th><th>Requested</th><th>Available</th><th>Box</th><th>Label</th></tr></thead><tbody>'+(r.items||[]).map((x,k)=>{const ex=INV.find(i=>i.id===x.id),av=ex?ex.qty:0;return '<tr data-k="'+k+'"><td>'+esc(x.name)+'</td><td>'+fq(x.qty)+' '+esc(x.unit)+'</td><td style="color:'+(av<x.qty?'#dc2626':'inherit')+'">'+fq(av)+' '+esc(x.unit)+(av<x.qty?' ⚠ not enough':'')+'</td><td><select class="so-box">'+boxOpts('Box 1','#rq-'+r.id)+'</select></td><td><select class="so-label">'+labelOpts('')+'</select></td></tr>'}).join('')+'</tbody></table></div><div class="row"><button class="pri" data-ap="'+r.id+'">Approve and deduct stock</button><button data-rj="'+r.id+'">Reject</button><span class="mu" id="rm-'+r.id+'"></span></div></div>').join('')+'</div>':'';
+  box.innerHTML=P.length?'<div class="card" style="border-color:#f59e0b"><b>Stock out requests waiting for your approval ('+P.length+')</b>'+P.map(r=>'<div class="card" id="rq-'+r.id+'" style="margin:8px 0 0"><div class="ihead"><b>'+esc(r.event)+'</b><span class="mu" style="font-size:12px">Requested by '+esc(r.byName||'')+' · '+esc(new Date(r.at).toLocaleString())+'</span></div>'+((r.to||r.note||r.location)?'<div class="mu" style="font-size:12px">'+esc([r.to?'For: '+r.to:'',r.location?'Location: '+r.location:'',r.note].filter(Boolean).join(' · '))+'</div>':'')+'<div class="scroll"><table class="enc itbl"><thead><tr><th>Item</th><th>Requested</th><th>Available</th><th>Box</th><th>Label</th></tr></thead><tbody>'+(r.items||[]).map((x,k)=>{const ex=INV.find(i=>i.id===x.id),av=ex?ex.qty:0;return '<tr data-k="'+k+'"><td>'+esc(x.name)+'</td><td>'+fq(x.qty)+' '+esc(x.unit)+'</td><td style="color:'+(av<x.qty?'#dc2626':'inherit')+'">'+fq(av)+' '+esc(x.unit)+(av<x.qty?' ⚠ not enough':'')+'</td><td><select class="so-box">'+boxOpts('Box 1','#rq-'+r.id)+'</select></td><td><select class="so-label">'+labelOpts('')+'</select></td></tr>'}).join('')+'</tbody></table></div><div class="row"><button class="pri" data-ap="'+r.id+'">Approve and deduct stock</button><button data-rj="'+r.id+'">Reject</button><span class="mu" id="rm-'+r.id+'"></span></div></div>').join('')+'</div>':'';
   box.querySelectorAll('.card[id^="rq-"]').forEach(c=>c.querySelectorAll('select').forEach(el=>el.onchange=()=>soChange(el,'#'+c.id)));
   box.querySelectorAll('[data-ap]').forEach(b=>b.onclick=()=>approveReq(b.dataset.ap));
-  box.querySelectorAll('[data-rj]').forEach(b=>b.onclick=()=>rejectReq(b.dataset.rj))}
+  box.querySelectorAll('[data-rj]').forEach(b=>b.onclick=()=>rejectReq(b.dataset.rj));renderRets()}
 async function approveReq(id){const r=REQS.find(x=>x.id===id),m=$('rm-'+id),card=$('rq-'+id);if(!r||!card)return;
   const sel=[...card.querySelectorAll('tbody tr')].map(tr=>({box:tr.querySelector('.so-box').value||'Box 1',label:tr.querySelector('.so-label').value}));
   const list=[];for(let k=0;k<r.items.length;k++){const x=r.items[k],ex=INV.find(i=>i.id===x.id);if(!ex){m.textContent=x.name+' no longer exists in the inventory.';return}if(x.qty>ex.qty){m.textContent='Only '+fq(ex.qty)+' '+ex.unit+' of '+ex.name+' left. Reject this request or ask for a smaller quantity.';return}list.push({ex,q:x.qty,box:sel[k].box,label:sel[k].label})}
@@ -1437,35 +1452,99 @@ async function approveReq(id){const r=REQS.find(x=>x.id===id),m=$('rm-'+id),card
     await bt.commit();m.textContent='Approved ✓'}catch(e){m.textContent='Could not approve: '+((e&&e.code)||'error')}}
 async function rejectReq(id){const why=prompt('Reason for rejecting (optional)');if(why===null)return;try{await updateDoc(doc(DB,'stock_requests',id),{status:'rejected',reason:why.trim(),rejectedBy:ME.uid,rejectedByName:ME.dir.name,rejectedAt:Date.now()})}catch(e){const m=$('rm-'+id);if(m)m.textContent='Could not reject: '+((e&&e.code)||'error')}}
 /* ---- requester: request stock out, with availability ---- */
-const reqOpts=()=>'<option value="">Select item</option>'+[...INV].sort((a,b)=>a.name.localeCompare(b.name)).map(i=>'<option value="'+escI(i.id)+'"'+(i.qty<=0?' disabled':'')+'>'+esc(i.name)+' — '+(i.qty<=0?'OUT OF STOCK':fq(i.qty)+' '+esc(i.unit)+' available')+'</option>').join('');
+const reqOpts=()=>'<option value="">Select item</option>'+[...INV].filter(i=>RQC==='all'||i.category===RQC).sort((a,b)=>a.name.localeCompare(b.name)).map(i=>'<option value="'+escI(i.id)+'"'+(i.qty<=0?' disabled':'')+'>'+esc(i.name)+' — '+(i.qty<=0?'OUT OF STOCK':fq(i.qty)+' '+esc(i.unit)+' available')+'</option>').join('');
 function rqAv(r){const ex=INV.find(i=>i.id===r.querySelector('.rq-item').value),q=parseFloat(r.querySelector('.rq-qty').value)||0,a=r.querySelector('.rq-av');
   if(!ex){a.textContent='';return}a.innerHTML=q>ex.qty?'<b style="color:#dc2626">Only '+fq(ex.qty)+' '+esc(ex.unit)+' available</b>':'<span style="color:#16a34a">Available: '+fq(ex.qty)+' '+esc(ex.unit)+'</span>'}
 function rqAdd(){const c=$('rq-rows'),d=document.createElement('div');d.className='sorow';d.innerHTML='<div class="so-wide"><label>Item</label><select class="rq-item"></select></div><div><label>Qty needed</label><input class="rq-qty" type="number" min="0" step="any" inputmode="decimal"></div><div><label>Availability</label><div class="rq-av" style="padding:9px 0"></div></div><div><button type="button" class="so-x" title="Remove row">✕</button></div>';
   c.appendChild(d);d.querySelector('.rq-item').innerHTML=reqOpts();d.querySelector('.rq-item').onchange=d.querySelector('.rq-qty').oninput=()=>rqAv(d);
   d.querySelector('.so-x').onclick=()=>{if(c.children.length>1)d.remove();else{d.querySelector('.rq-item').value='';d.querySelector('.rq-qty').value='';d.querySelector('.rq-av').textContent=''}}}
-function myReqHtml(){const L=REQS.filter(r=>r.by===(AUTH.currentUser&&AUTH.currentUser.uid));
-  return L.length?L.slice(0,20).map(r=>'<div class="ogrp"><div><b>'+esc(r.event)+'</b> '+(r.status==='approved'?pill('Approved','ok'):r.status==='rejected'?pill('Rejected','bad'):r.status==='cancelled'?pill('Cancelled','warn'):pill('Waiting for approval','warn'))+'<div class="mu" style="font-size:12px">'+esc(new Date(r.at).toLocaleString())+' · '+(r.items||[]).map(x=>esc(x.name)+' × '+fq(x.qty)+(x.box?' ('+esc(x.box)+(x.label?', '+esc(x.label):'')+')':'')).join(', ')+(r.status==='approved'?' · approved by '+esc(r.approvedByName||''):'')+(r.status==='rejected'&&r.reason?' · reason: '+esc(r.reason):'')+'</div></div>'+(r.status==='pending'?'<button type="button" data-cx="'+escI(r.id)+'">Cancel request</button>':'')+'</div>').join(''):'<div class="mu">No requests yet.</div>'}
+function myReqHtml(){return myReqHtml2()}
 function renderIOutReq(snap){const b=$('v-iout');
-  if(snap&&$('rq-form')){document.querySelectorAll('#rq-rows .sorow').forEach(r=>{const s=r.querySelector('.rq-item'),v=s.value;s.innerHTML=reqOpts();s.value=v;rqAv(r)});$('rq-list').innerHTML=myReqHtml();wireCx();return}
-  b.innerHTML='<div class="card" id="rq-form"><b>Request stock out</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Choose what you need for your event. You can see how many are available. '+(INVCFG&&INVCFG.approverName?'<b>'+esc(INVCFG.approverName)+'</b> approves your request, then the stock is released.':'An approver has not been assigned yet. Ask HR to assign one in HR Admin.')+'</div><div class="grid"><div><label>Event Name</label><input id="rq-ev" list="dl-events" autocomplete="off"></div><div><label>Needed for / released to (optional)</label><input id="rq-to" autocomplete="off"></div></div><div id="rq-rows"></div><div class="row"><button type="button" id="rq-add">+ Add item</button></div><div style="margin-top:10px"><label>Note (optional)</label><input id="rq-note"></div><datalist id="dl-events"></datalist><div class="row"><button class="pri" id="rq-go">Send request for approval</button><span id="rq-msg"></span></div></div><div class="card"><b>My stock out requests</b><div id="rq-list" style="margin-top:6px"></div></div>';
-  rqAdd();fillDl();$('rq-list').innerHTML=myReqHtml();wireCx();$('rq-add').onclick=rqAdd;
+  if(snap&&$('rq-form')){document.querySelectorAll('#rq-rows .sorow').forEach(r=>{const s=r.querySelector('.rq-item'),v=s.value;s.innerHTML=reqOpts();s.value=v;rqAv(r)});$('rq-list').innerHTML=myReqHtml();wireCx();rqTiles();return}
+  b.innerHTML='<div class="card" id="rq-form"><b>Request stock out</b><div class="mu" style="font-size:12px;margin:2px 0 10px">Choose what you need for your event. You can see how many are available. '+(apprList().length?'<b>'+esc(apprList().map(x=>x.name).join(', '))+'</b> can approve your request, then the stock is released.':'An approver has not been assigned yet. Ask HR to assign one in HR Admin.')+'</div><div class="grid"><div><label>Event Name</label><input id="rq-ev" list="dl-events" autocomplete="off"></div><div><label>Needed for / released to (optional)</label><input id="rq-to" autocomplete="off"></div><div><label>Location</label><input id="rq-loc" autocomplete="off" placeholder="e.g. mall, plaza, barangay"></div></div><div class="mu" style="font-size:12px;margin:10px 0 4px">Pick a category to show only those items:</div><div id="rq-cats" class="cattiles"></div><div id="rq-rows"></div><div class="row"><button type="button" id="rq-add">+ Add item</button></div><div style="margin-top:10px"><label>Note (optional)</label><input id="rq-note"></div><datalist id="dl-events"></datalist><div class="row"><button class="pri" id="rq-go">Send request for approval</button><span id="rq-msg"></span></div></div><div class="card"><b>My stock out requests</b><div id="rq-list" style="margin-top:6px"></div></div>';
+  rqAdd();fillDl();$('rq-list').innerHTML=myReqHtml();wireCx();$('rq-add').onclick=rqAdd;rqTiles();
   $('rq-go').onclick=async()=>{const ev=$('rq-ev').value.trim().replace(/\s+/g,' ');if(!ev)return say('rq-msg','Enter the event name.');
     const items=[],seen={};let n=0;for(const r of document.querySelectorAll('#rq-rows .sorow')){n++;const id=r.querySelector('.rq-item').value,qv=r.querySelector('.rq-qty').value.trim();if(!id&&!qv)continue;const ex=INV.find(i=>i.id===id),q=parseFloat(qv);
       if(!ex)return say('rq-msg','Row '+n+': select the item.');if(!(q>0))return say('rq-msg','Row '+n+': enter the quantity.');if(seen[id])return say('rq-msg','Row '+n+': '+ex.name+' is already on another row.');if(q>ex.qty)return say('rq-msg','Row '+n+': only '+fq(ex.qty)+' '+ex.unit+' of '+ex.name+' available.');seen[id]=1;items.push({id:ex.id,name:ex.name,unit:ex.unit,qty:q})}
     if(!items.length)return say('rq-msg','Add at least one item with a quantity.');
-    try{await addDoc(collection(DB,'stock_requests'),{event:ev,to:$('rq-to').value.trim(),note:$('rq-note').value.trim(),items,status:'pending',by:ME.uid,byName:ME.dir.name,at:Date.now(),approverUid:(INVCFG&&INVCFG.approverUid)||'',approverName:(INVCFG&&INVCFG.approverName)||''});
-      say('rq-msg','Sent ✓ Waiting for approval.',true);['rq-ev','rq-to','rq-note'].forEach(k=>{$(k).value=''});$('rq-rows').innerHTML='';rqAdd()}catch(e){say('rq-msg','Could not send: '+((e&&e.code)||'error'))}}}
-function wireCx(){document.querySelectorAll('#rq-list [data-cx]').forEach(b=>b.onclick=async()=>{if(!confirm('Cancel this request?'))return;try{await updateDoc(doc(DB,'stock_requests',b.dataset.cx),{status:'cancelled'})}catch(e){}})}
+    try{await addDoc(collection(DB,'stock_requests'),{event:ev,to:$('rq-to').value.trim(),note:$('rq-note').value.trim(),location:($('rq-loc').value||'').trim(),items,status:'pending',by:ME.uid,byName:ME.dir.name,at:Date.now(),approverUid:(INVCFG&&INVCFG.approverUid)||'',approverName:(INVCFG&&INVCFG.approverName)||'',approverUids:apprList().map(x=>x.uid)});
+      say('rq-msg','Sent ✓ Waiting for approval.',true);['rq-ev','rq-to','rq-note','rq-loc'].forEach(k=>{$(k).value=''});$('rq-rows').innerHTML='';rqAdd()}catch(e){say('rq-msg','Could not send: '+((e&&e.code)||'error'))}}}
+function wireCx(){wireRet();document.querySelectorAll('#rq-list [data-cx]').forEach(b=>b.onclick=async()=>{if(!confirm('Cancel this request?'))return;try{await updateDoc(doc(DB,'stock_requests',b.dataset.cx),{status:'cancelled'})}catch(e){}})}
 /* ---- HR assigns the stock out approver ---- */
 let APPR=null;
 async function invApprCard(){if(!ME||!ME.isHR)return;const hr=$('v-hr');if(!hr||$('inv-appr'))return;
   const c=document.createElement('div');c.className='card';c.id='inv-appr';
-  c.innerHTML='<b>Inventory: who approves stock out</b><div class="mu" style="font-size:12px;margin:2px 0 8px">The person you choose approves every stock out request. Until someone is assigned, HR approves.</div><div class="row" style="margin-top:0"><select id="ia-sel" style="max-width:320px"><option>Loading…</option></select><button class="pri" type="button" id="ia-save">Assign approver</button><span id="ia-msg"></span></div><div class="mu" style="font-size:12px;margin-top:6px" id="ia-cur"></div>';
-  hr.prepend(c);const cur=()=>{$('ia-cur').textContent=INVCFG&&INVCFG.approverName?'Current approver: '+INVCFG.approverName:'No approver assigned yet (HR approves for now).'};
-  try{if(!APPR){const s=await getDocs(query(collection(DB,'directory'),where('status','==','active')));APPR=s.docs.map(d=>({uid:d.id,name:d.data().name||d.data().email||d.id})).sort((a,b)=>a.name.localeCompare(b.name))}}catch(e){APPR=[]}
-  const sel=$('ia-sel');if(!sel)return;sel.innerHTML='<option value="">Select a person</option>'+APPR.map(p=>'<option value="'+escI(p.uid)+'"'+(INVCFG&&INVCFG.approverUid===p.uid?' selected':'')+'>'+esc(p.name)+'</option>').join('');cur();
-  $('ia-save').onclick=async()=>{const p=APPR.find(x=>x.uid===sel.value);if(!p)return say('ia-msg','Select a person.');try{await setDoc(doc(DB,'config','inv'),{approverUid:p.uid,approverName:p.name,by:ME.uid,at:Date.now()});say('ia-msg','Saved ✓ '+p.name+' now approves stock out.',true)}catch(e){say('ia-msg','Could not save: '+((e&&e.code)||'error'))}}}
+  c.innerHTML='<b>Inventory: who approves stock out</b><div class="mu" style="font-size:12px;margin:2px 0 8px">You can add as many approvers as you need. Any one of them can approve a request or confirm a return. Until someone is assigned, HR approves.</div><div id="ia-list" class="chips" style="margin-bottom:8px"></div><div class="row" style="margin-top:0"><select id="ia-sel" style="max-width:320px"><option>Loading…</option></select><button class="pri" type="button" id="ia-save">+ Add approver</button><span id="ia-msg"></span></div>';
+  hr.prepend(c);
+  try{if(!APPR){const s2=await getDocs(query(collection(DB,'directory'),where('status','==','active')));APPR=s2.docs.map(d=>({uid:d.id,name:d.data().name||d.data().email||d.id})).sort((a,b)=>a.name.localeCompare(b.name))}}catch(e){APPR=[]}
+  const sel=$('ia-sel');if(!sel)return;
+  const save=async L=>{await setDoc(doc(DB,'config','inv'),{approvers:L,approverUids:L.map(x=>x.uid),approverUid:L[0]?L[0].uid:'',approverName:L[0]?L[0].name:'',by:ME.uid,at:Date.now()})};
+  window.__paintAp=()=>{const L=apprList(),l=$('ia-list');if(!l)return;
+    l.innerHTML=L.length?L.map(x=>'<span class="chip">'+esc(x.name)+' <button type="button" data-rmap="'+escI(x.uid)+'" title="Remove" style="border:0;background:none;cursor:pointer;min-height:0;padding:0 2px">✕</button></span>').join(''):'<span class="mu" style="font-size:12px">No approver assigned yet (HR approves for now).</span>';
+    sel.innerHTML='<option value="">Select a person</option>'+APPR.filter(p=>!L.some(x=>x.uid===p.uid)).map(p=>'<option value="'+escI(p.uid)+'">'+esc(p.name)+'</option>').join('');
+    l.querySelectorAll('[data-rmap]').forEach(b=>b.onclick=async()=>{if(!confirm('Remove this approver?'))return;try{await save(apprList().filter(x=>x.uid!==b.dataset.rmap));say('ia-msg','Removed ✓',true)}catch(e){say('ia-msg','Could not save: '+((e&&e.code)||'error'))}})};
+  window.__paintAp();
+  $('ia-save').onclick=async()=>{const p=APPR.find(x=>x.uid===sel.value);if(!p)return say('ia-msg','Select a person.');try{await save([...apprList(),{uid:p.uid,name:p.name}]);say('ia-msg','Saved ✓ '+p.name+' can now approve stock out.',true)}catch(e){say('ia-msg','Could not save: '+((e&&e.code)||'error'))}}}
 new MutationObserver(()=>{if(!$('inv-appr'))invApprCard()}).observe($('v-hr'),{childList:true});
+
+/* ================= ADDITIONS: inventory upgrades (several approvers, category tiles, location, expandable requests, returns, pop-up) ================= */
+function subRets(){if(RETU){try{RETU()}catch(e){}RETU=null}const u=AUTH&&AUTH.currentUser;if(!u||!DB)return;
+  RETU=onSnapshot((canOut()||(ME&&ME.isHR))?collection(DB,'stock_returns'):query(collection(DB,'stock_returns'),where('by','==',u.uid)),s=>{RETS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));invRefresh();popApr()},()=>{})}
+function rqTiles(){const w=$('rq-cats');if(!w)return;const cs=['all',...idCats().filter(c=>INV.some(i=>i.category===c)||CAT_ORDER.includes(c))];
+  if(!cs.includes(RQC))RQC='all';
+  w.innerHTML=cs.map(c=>{const n=c==='all'?INV.length:INV.filter(i=>i.category===c).length;return '<button type="button" class="cattile'+(RQC===c?' on':'')+'" data-c="'+escI(c)+'"><b>'+(c==='all'?'All items':esc(c))+'</b><span>'+n+' item'+(n===1?'':'s')+'</span></button>'}).join('');
+  w.querySelectorAll('button').forEach(b=>b.onclick=()=>{RQC=b.dataset.c;rqTiles();document.querySelectorAll('#rq-rows .sorow').forEach(r=>{const s=r.querySelector('.rq-item'),v=s.value;s.innerHTML=reqOpts();s.value=v;rqAv(r)})})}
+function myReqHtml2(){const uid=AUTH.currentUser&&AUTH.currentUser.uid,L=REQS.filter(r=>r.by===uid);
+  if(!L.length)return '<div class="mu">No requests yet.</div>';
+  const op=new Set([...document.querySelectorAll('#rq-list details[open]')].map(d=>d.dataset.id));
+  return L.slice(0,30).map(r=>{
+    const st=r.status==='approved'?pill('Approved','ok'):r.status==='rejected'?pill('Rejected','bad'):r.status==='cancelled'?pill('Cancelled','warn'):pill('Waiting for approval','warn');
+    const rets=RETS.filter(x=>x.requestId===r.id),pend=rets.some(x=>x.status==='pending'),done=rets.some(x=>x.status==='confirmed');
+    const rp=rets.map(x=>'<div class="mu" style="font-size:12px;margin-top:6px">↩ '+esc(x.action==='move'?'Move to '+(x.newEvent||'another event'):'Return to stock')+' · '+(x.status==='confirmed'?pill('Received','ok'):pill('Waiting for approver','warn'))+(x.reason?' · '+esc(x.reason):'')+'</div>').join('');
+    const info=[r.to?'For: '+r.to:'',r.location?'Location: '+r.location:'',r.note,r.status==='approved'?'Approved by '+(r.approvedByName||''):'',r.status==='rejected'&&r.reason?'Reason: '+r.reason:''].filter(Boolean);
+    return '<details class="rqd" data-id="'+escI(r.id)+'"'+(op.has(r.id)?' open':'')+'><summary><span><b>'+esc(r.event)+'</b> '+st+(pend?' '+pill('Return pending','warn'):done?' '+pill('Returned','ok'):'')+'</span><span class="mu" style="font-size:12px">'+esc(new Date(r.at).toLocaleString())+' · '+(r.items||[]).length+' item'+((r.items||[]).length===1?'':'s')+'</span></summary><div class="rqb">'+
+      (info.length?'<div class="mu" style="font-size:12px;margin:8px 0">'+info.map(esc).join(' · ')+'</div>':'')+
+      '<div class="scroll"><table class="enc itbl"><thead><tr><th>Item</th><th>Qty</th><th>Box / Label</th></tr></thead><tbody>'+(r.items||[]).map(x=>'<tr><td>'+esc(x.name)+'</td><td>'+fq(x.qty)+' '+esc(x.unit)+'</td><td>'+(x.box?esc(x.box)+(x.label?' · '+esc(x.label):''):'—')+'</td></tr>').join('')+'</tbody></table></div>'+rp+
+      '<div class="row">'+(r.status==='pending'?'<button type="button" data-cx="'+escI(r.id)+'">Cancel request</button>':'')+(r.status==='approved'&&!pend&&!done?'<button type="button" data-ret="'+escI(r.id)+'">↩ Event cancelled? Return items</button>':'')+'</div></div></details>'}).join('')}
+function wireRet(){document.querySelectorAll('#rq-list [data-ret]').forEach(b=>b.onclick=()=>retDialog(b.dataset.ret))}
+function closeOv(id){const o=$(id);if(o)o.remove()}
+function retDialog(id){const r=REQS.find(x=>x.id===id);if(!r||$('ret-ov'))return;
+  const ov=document.createElement('div');ov.className='iov';ov.id='ret-ov';
+  ov.innerHTML='<div class="imod"><b style="font-size:16px">Return items</b><div class="mu" style="font-size:12px;margin:2px 0 10px">'+esc(r.event)+(r.location?' · '+esc(r.location):'')+'</div>'+
+    '<label>Reason</label><select id="rt-why"><option>Event cancelled</option><option>Event postponed</option><option>Items not needed anymore</option><option>Other</option></select>'+
+    '<label style="margin-top:10px">What should happen to the items?</label><div class="row" style="margin-top:4px"><label class="opt"><input type="radio" name="rt-act" value="return" checked> Return to stock</label><label class="opt"><input type="radio" name="rt-act" value="move"> Move to another event</label></div>'+
+    '<div id="rt-ne-w" hidden><label>New event name</label><input id="rt-ne" autocomplete="off"></div>'+
+    '<div class="scroll" style="margin-top:10px"><table class="enc itbl"><thead><tr><th>Item</th><th>Qty to return</th><th>Condition</th></tr></thead><tbody>'+(r.items||[]).map((x,k)=>'<tr data-k="'+k+'"><td>'+esc(x.name)+'<div class="mu" style="font-size:11px">Released: '+fq(x.qty)+' '+esc(x.unit)+'</div></td><td><input class="rt-q" type="number" min="0" max="'+x.qty+'" step="any" inputmode="decimal" value="'+x.qty+'" style="max-width:90px"></td><td><select class="rt-c"><option value="good">Good</option><option value="damaged">Damaged / missing</option></select></td></tr>').join('')+'</tbody></table></div>'+
+    '<div class="mu" style="font-size:12px;margin-top:6px">Only items in good condition are added back to stock when the approver confirms.</div>'+
+    '<div class="row"><button class="pri" type="button" id="rt-go">Send to approver</button><button type="button" id="rt-x">Close</button><span id="rt-msg"></span></div></div>';
+  document.body.appendChild(ov);
+  ov.querySelectorAll('[name=rt-act]').forEach(a=>a.onchange=()=>{$('rt-ne-w').hidden=ov.querySelector('[name=rt-act]:checked').value!=='move'});
+  $('rt-x').onclick=()=>closeOv('ret-ov');ov.addEventListener('click',e=>{if(e.target===ov)closeOv('ret-ov')});
+  $('rt-go').onclick=async()=>{const act=ov.querySelector('[name=rt-act]:checked').value,ne=$('rt-ne').value.trim().replace(/\s+/g,' ');
+    if(act==='move'&&!ne)return say('rt-msg','Enter the new event name.');
+    if(RETS.some(x=>x.requestId===id&&x.status==='pending'))return say('rt-msg','A return for this request is already waiting.');
+    const items=[];for(const tr of ov.querySelectorAll('tbody tr')){const x=r.items[+tr.dataset.k],q=parseFloat(tr.querySelector('.rt-q').value)||0;if(q>x.qty)return say('rt-msg',x.name+': you can return at most '+fq(x.qty)+'.');if(q>0)items.push({id:x.id,name:x.name,unit:x.unit,qty:q,condition:tr.querySelector('.rt-c').value})}
+    if(!items.length)return say('rt-msg','Enter a quantity for at least one item.');
+    try{await addDoc(collection(DB,'stock_returns'),{requestId:id,event:r.event,location:r.location||'',action:act,newEvent:act==='move'?ne:'',reason:$('rt-why').value,items,status:'pending',by:ME.uid,byName:ME.dir.name,at:Date.now()});closeOv('ret-ov')}catch(e){say('rt-msg','Could not send: '+((e&&e.code)||'error'))}}}
+function renderRets(){const box=$('so-ret');if(!box)return;const P=RETS.filter(r=>r.status==='pending');
+  box.innerHTML=P.length?'<div class="card" style="border-color:#3b82f6"><b>Returns waiting ('+P.length+')</b>'+P.map(r=>'<div class="card" style="margin:8px 0 0"><div class="ihead"><b>'+esc(r.event)+'</b><span class="mu" style="font-size:12px">From '+esc(r.byName||'')+' · '+esc(new Date(r.at).toLocaleString())+'</span></div><div class="mu" style="font-size:12px">'+esc(r.reason||'')+' · '+(r.action==='move'?'Move to: '+esc(r.newEvent||''):'Return to stock')+(r.location?' · Location: '+esc(r.location):'')+'</div><div class="scroll"><table class="enc itbl"><thead><tr><th>Item</th><th>Qty</th><th>Condition</th></tr></thead><tbody>'+(r.items||[]).map(x=>'<tr><td>'+esc(x.name)+'</td><td>'+fq(x.qty)+' '+esc(x.unit)+'</td><td>'+(x.condition==='good'?'Good':'<b style="color:#dc2626">Damaged / missing</b>')+'</td></tr>').join('')+'</tbody></table></div><div class="row"><button class="pri" type="button" data-rc="'+escI(r.id)+'">Confirm received</button><span class="mu" id="rtm-'+escI(r.id)+'"></span></div></div>').join('')+'</div>':'';
+  box.querySelectorAll('[data-rc]').forEach(b=>b.onclick=()=>confirmRet(b.dataset.rc))}
+async function confirmRet(id){const r=RETS.find(x=>x.id===id),m=$('rtm-'+id);if(!r)return;if(m)m.textContent='Saving…';
+  try{const bt=writeBatch(DB),at=Date.now();
+    if(r.action!=='move'){for(const x of r.items){if(x.condition!=='good'||!(x.qty>0))continue;const ex=INV.find(i=>i.id===x.id);if(!ex)continue;
+      bt.update(doc(DB,'stock_items',ex.id),{qty:increment(x.qty),totalOut:increment(-x.qty),updatedAt:at});
+      bt.set(doc(collection(DB,'stock_moves')),{itemId:ex.id,itemName:ex.name,category:ex.category,unit:ex.unit,type:'in',qty:x.qty,total:ex.totalIn||0,rem:ex.qty+x.qty,note:'Returned from '+r.event+' ('+(r.reason||'return')+') · received by '+ME.dir.name,returnId:id,at,by:ME.uid,byName:ME.dir.name})}}
+    bt.update(doc(DB,'stock_returns',id),{status:'confirmed',confirmedBy:ME.uid,confirmedByName:ME.dir.name,confirmedAt:at});
+    await bt.commit()}catch(e){if(m)m.textContent='Could not confirm: '+((e&&e.code)||'error')}}
+function popApr(){if(!canOut())return;
+  const pq=REQS.filter(r=>r.status==='pending'),pr=RETS.filter(r=>r.status==='pending'),ids=[...pq.map(r=>'q'+r.id),...pr.map(r=>'r'+r.id)];if(!ids.length)return;
+  let seen=[];try{seen=JSON.parse(sessionStorage.getItem('inv-pop')||'[]')}catch(e){}
+  if(!ids.some(x=>!seen.includes(x))||$('pop-ov'))return;
+  try{sessionStorage.setItem('inv-pop',JSON.stringify(ids))}catch(e){}
+  const ov=document.createElement('div');ov.className='iov';ov.id='pop-ov';
+  ov.innerHTML='<div class="imod"><b style="font-size:16px">🔔 Inventory needs your approval</b><div style="margin:8px 0 12px">'+(pq.length?'<div>'+pq.length+' stock out request'+(pq.length>1?'s':'')+' waiting</div>':'')+(pr.length?'<div>'+pr.length+' return'+(pr.length>1?'s':'')+' waiting to be confirmed</div>':'')+'</div><div class="row"><button class="pri" type="button" id="pop-go">Open Stock Out</button><button type="button" id="pop-x">Later</button></div></div>';
+  document.body.appendChild(ov);$('pop-x').onclick=()=>closeOv('pop-ov');ov.addEventListener('click',e=>{if(e.target===ov)closeOv('pop-ov')});
+  $('pop-go').onclick=()=>{closeOv('pop-ov');try{setMod('inv');show('iout')}catch(e){}}}
 
 /* ================= ADDITIONS: which features each employee can use ================= */
 const FEATS=[['hr','HR Forms'],['inv','Inventory'],['sch','Assets/Links'],['gam','Event Games'],['liq','Liquidation']];
