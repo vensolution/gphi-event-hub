@@ -632,7 +632,7 @@ var PER_CONFIG = {
           i = use[u]; var tag = 'P' + ('0' + (u + 1)).slice(-2);
           for (k = 0; k < pPh[i].length; k++) {
             done++; pm.textContent = 'Uploading photos (' + done + ' of ' + total + ')...';
-            await postRetry({ action: 'promoterPhoto', folderId: f.folderId, name: tag + '_' + ('0' + (k + 1)).slice(-2) + '.jpg', replace: done === 1, mime: 'image/jpeg', data: await toB64(pPh[i][k].blob) }, 2);
+            await postRetry({ action: 'promoterPhoto', folderId: f.folderId, promoterIndex: u + 1, index: k + 1, replace: done === 1, mime: 'image/jpeg', data: await toB64(pPh[i][k].blob) }, 2);
           }
           plist.push({ tag: tag, name: PRL[i].name, user: PRL[i].user || '', type: PRL[i].type || '' });
         }
