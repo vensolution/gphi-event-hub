@@ -1,8 +1,11 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
+<script src="../ui-extras.js"></script>
 <!-- This site is hosted on Netlify. Anyone can build and deploy a site
      like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=e3de3f5b-ec34-4a94-b16c-544d73683e54
      Netlify hosting facts for this site: static/SSR served via Netlify Edge. --><meta name="viewport" content="width=device-width,initial-scale=1"><title>ByBet Admin</title>
 <style>
+:root[data-theme="light"]{--bg:#f3f5f9;--c:#fff;--t:#111827;--m:#6b7280;--ln:#e5e7eb}
+:root[data-theme="dark"]{--bg:#0f1220;--c:#1a1f35;--t:#eef;--m:#9aa3b5;--ln:#2d3450}
 :root{--bg:#f3f5f9;--c:#fff;--t:#111827;--m:#6b7280;--a:#2563eb;--ok:#16a34a;--er:#dc2626;--ln:#e5e7eb}
 @media(prefers-color-scheme:dark){:root{--bg:#0f1220;--c:#1a1f35;--t:#eef;--m:#9aa3b5;--ln:#2d3450}}
 [hidden]{display:none!important}
@@ -233,7 +236,7 @@ function copy(t,b){try{navigator.clipboard.writeText(t);b.textContent='Copied âœ
 function modal(html){var m=document.createElement('div');m.className='dmo';m.innerHTML='<div>'+html+'</div>';m.onclick=function(e){if(e.target===m||e.target.dataset.x)m.remove()};document.body.appendChild(m);return m}
 function rowsFor(kind){
  if(kind=='w')return D.events.map(function(e){var L=D.spins.filter(function(s){return s.event==e.code}),a=ages(L);return{date:String(e.start||'').slice(0,10),name:e.name,code:e.code,total:L.length,o:a.o,u:a.u,k:a.k,live:isLive(e.start,e.end)}});
- return D.games.map(function(g){var seen={},L=D.glog.filter(function(l){if(/^VOID/.test(l.note||''))return false;var u=String(l.username||l.fullname||'').toLowerCase();if(seen[u])return false;seen[u]=1;return true}),a=ages(L);return{date:String(g.start||'').slice(0,10),name:g.name,code:g.code,total:L.length,o:a.o,u:a.u,k:a.k,live:isLive(g.start,g.end)}});
+ return D.games.map(function(g){var seen={},L=D.glog.filter(function(l){if(l.game!=g.code)return false;if(/^VOID/.test(l.note||''))return false;var u=String(l.username||l.fullname||'').toLowerCase();if(seen[u])return false;seen[u]=1;return true}),a=ages(L);return{date:String(g.start||'').slice(0,10),name:g.name,code:g.code,total:L.length,o:a.o,u:a.u,k:a.k,live:isLive(g.start,g.end)}});
 }
 var EQ={w:'',g:'',wu:false,gu:false},SYNC=null;
 window.edata=function(kind){
@@ -588,15 +591,21 @@ var PER_CONFIG = {
           '<label>Promoter\u2019s photo link (optional, filled in automatically when you create the Doc)</label><input type="text" data-pi="' + i + '" data-pf="photo" value="' + esc(p.docUrl || p.photo || '') + '">' +
           '<label>Promoter\u2019s photos</label><div class="drop" data-pdrop="' + i + '"><div class="big">\uD83D\uDCF7 Add photos of this promoter</div><div class="m">Tap, or drag and drop them here</div><input type="file" data-pfile="' + i + '" accept="image/*" multiple hidden></div>' +
           '<div class="grid" id="per-pgrid-' + i + '"></div><div class="m" id="per-pmsg-' + i + '"></div>' +
-          '<div class="btns" style="margin-top:6px"><button type="button" class="sav" data-pdoc="' + i + '">Create ONE Google Doc for all promoters</button></div><div class="lnks" id="per-plink-' + i + '"></div></div>';
-      }).join('');
+          '</div>';
+      }).join('') + docCard();
       PRL.forEach(function (p, i) { renderP(i); });
+    }
+    function docCard() {
+      var u = '';
+      for (var i = 0; i < PRL.length; i++) if (PRL[i].docUrl) { u = PRL[i].docUrl; break; }
+      return '<div style="border:2px solid #2563eb;border-radius:10px;padding:10px;margin:8px 0"><b>One Google Doc for all promoters</b>' +
+        '<div class="m" style="margin:4px 0 8px">All promoters and their photos go into one Google Doc, one section per promoter, in the order shown above. Photos are shrunk automatically and saved in one new Google Drive folder named like the report tab. Use \u25C0 \u25B6 on a photo to reorder it. Up to 20 photos fit neatly on one page. Optional.</div>' +
+        '<div class="btns"><button type="button" class="sav" data-pdocall="1">Create the Google Doc</button></div><div class="m" id="per-pall-msg"></div>' +
+        '<div class="lnks" id="per-pall-link">' + (u ? '<a class="lnk" target="_blank" rel="noopener" href="' + esc(u) + '">\uD83D\uDC65 Promoter photo Doc (all promoters)</a>' : '') + '</div></div>';
     }
     function renderP(i) {
       var g = $('per-pgrid-' + i); if (!g) return;
-      g.innerHTML = (pPh[i] || []).map(function (p, k) { return '<div class="th"><img src="' + p.url + '" alt=""><span class="no">' + (k + 1) + '</span><div class="tb"><button type="button" data-prm="' + i + ',' + k + '">\u2715</button></div></div>'; }).join('');
-      var o = PRL[i] || {};
-      $('per-plink-' + i).innerHTML = (o.docUrl ? '<a class="lnk" target="_blank" rel="noopener" href="' + esc(o.docUrl) + '">\uD83D\uDC64 Promoter photo Doc</a>' : '') + (o.folderUrl ? '<a class="lnk" target="_blank" rel="noopener" href="' + esc(o.folderUrl) + '">\uD83D\uDCC1 Promoter photos folder</a>' : '');
+      g.innerHTML = (pPh[i] || []).map(function (p, k) { return '<div class="th"><img src="' + p.url + '" alt=""><span class="no">' + (k + 1) + '</span><div class="tb"><button type="button" data-pmv="' + i + ',' + k + ',-1">\u25C0</button><button type="button" data-pmv="' + i + ',' + k + ',1">\u25B6</button><button type="button" data-prm="' + i + ',' + k + '">\u2715</button></div></div>'; }).join('');
     }
     async function addP(i, list) {
       var files = [].slice.call(list).filter(function (f) { return /^image\//.test(f.type) || /\.(jpe?g|png|webp|heic)$/i.test(f.name); }), bad = 0, pm = $('per-pmsg-' + i);
@@ -609,36 +618,37 @@ var PER_CONFIG = {
       }
       pm.textContent = bad ? bad + ' photo(s) could not be read (try JPG or PNG).' : (pPh[i].length ? pPh[i].length + ' photo' + (pPh[i].length > 1 ? 's' : '') + ' ready.' : '');
     }
-    async function makePDoc(i) {
-      var pm = $('per-pmsg-' + i), ready = [];
-      PRL.forEach(function (p, j) { if (p && p.name && (pPh[j] || []).length) ready.push(j); });
-      if (!ready.length) { pm.textContent = 'Enter a promoter name and add at least one photo first.'; return; }
-      var btns = [].slice.call(ov.querySelectorAll('[data-pdoc]')); btns.forEach(function (b) { b.disabled = true; });
+    async function makeAllDoc() {
+      var pm = $('per-pall-msg'), btn = ov.querySelector('[data-pdocall]'), use = [], total = 0, done = 0, u, i, k;
+      PRL.forEach(function (p, n) { if ((pPh[n] || []).length) { use.push(n); total += pPh[n].length; } });
+      if (!use.length) { pm.textContent = 'Add at least one photo to a promoter first.'; return; }
+      for (u = 0; u < use.length; u++) if (!PRL[use[u]].name) { pm.textContent = 'Enter the name of Promoter ' + (use[u] + 1) + ' first.'; return; }
+      btn.disabled = true;
       try {
-        var fu = (window.__perStatus && window.__perStatus(key).folderUrl) || '';
-        pm.textContent = 'Creating promoter folder...';
-        var f = await postRetry({ action: 'promoterFolder', eventName: ev.name, eventDateText: mdy(ev.date), parentFolderUrl: fu }, 1);
-        var plist = [];
-        for (var n = 0; n < ready.length; n++) {
-          var j = ready[n], L2 = pPh[j], p = PRL[j];
-          for (var k = 0; k < L2.length; k++) {
-            pm.textContent = 'Uploading ' + p.name + ' (' + (k + 1) + ' of ' + L2.length + ')...';
-            await postRetry({ action: 'promoterPhoto', folderId: f.folderId, promoterIndex: n + 1, index: k + 1, mime: 'image/jpeg', data: await toB64(L2[k].blob) }, 2);
+        var fu = (window.__perStatus && window.__perStatus(key).folderUrl) || '', plist = [];
+        pm.textContent = 'Creating folder...';
+        var f = await postRetry({ action: 'promoterFolder', eventName: ev.name, eventDateText: mdy(ev.date), parentFolderUrl: fu, promoter: '' }, 1);
+        for (u = 0; u < use.length; u++) {
+          i = use[u]; var tag = 'P' + ('0' + (u + 1)).slice(-2);
+          for (k = 0; k < pPh[i].length; k++) {
+            done++; pm.textContent = 'Uploading photos (' + done + ' of ' + total + ')...';
+            await postRetry({ action: 'promoterPhoto', folderId: f.folderId, name: tag + '_' + ('0' + (k + 1)).slice(-2) + '.jpg', replace: done === 1, mime: 'image/jpeg', data: await toB64(pPh[i][k].blob) }, 2);
           }
-          plist.push({ name: p.name, user: p.user || '', type: p.type || '' });
+          plist.push({ tag: tag, name: PRL[i].name, user: PRL[i].user || '', type: PRL[i].type || '' });
         }
-        pm.textContent = 'Creating ONE Google Doc for ' + plist.length + ' promoter' + (plist.length > 1 ? 's' : '') + '...';
+        pm.textContent = 'Creating the Google Doc...';
         var d = await postRetry({ action: 'promoterDoc', folderId: f.folderId, eventName: ev.name, location: val('venue'), dateLong: longDate(ev.date), promoters: plist }, 1);
-        ready.forEach(function (j) {
-          PRL[j].docUrl = d.docUrl; PRL[j].folderUrl = f.folderUrl || '';
-          var inp = ov.querySelector('[data-pi="' + j + '"][data-pf="photo"]'); if (inp) inp.value = d.docUrl;
+        use.forEach(function (n) {
+          PRL[n].docUrl = d.docUrl; PRL[n].folderUrl = f.folderUrl || '';
+          var inp = ov.querySelector('[data-pi="' + n + '"][data-pf="photo"]'); if (inp) inp.value = d.docUrl;
         });
-        savePrs(); PRL.forEach(function (_, j) { renderP(j); });
-        pm.innerHTML = '<span class="okk">\u2705 One Google Doc created for ' + plist.length + ' promoter' + (plist.length > 1 ? 's' : '') + '. The link is now in Event Details.</span>';
+        savePrs();
+        $('per-pall-link').innerHTML = '<a class="lnk" target="_blank" rel="noopener" href="' + esc(d.docUrl) + '">\uD83D\uDC65 Promoter photo Doc (all promoters)</a>' + (f.folderUrl ? '<a class="lnk" target="_blank" rel="noopener" href="' + esc(f.folderUrl) + '">\uD83D\uDCC1 Promoter photos folder</a>' : '');
+        pm.innerHTML = '<span class="okk">\u2705 One Doc created for ' + use.length + ' promoter' + (use.length > 1 ? 's' : '') + '. Its link is now in Event Details.</span>';
       } catch (e) {
-        pm.innerHTML = '<span class="bad">Could not create the Doc: ' + esc(e.message) + '. If it says unknown action, redeploy the Apps Script as a New version.</span>';
+        pm.innerHTML = '<span class="bad">Could not create the Doc: ' + esc(e.message) + '. If it says unknown action, update promoter-doc.gs in your Apps Script and redeploy a new version.</span>';
       }
-      btns.forEach(function (b) { b.disabled = false; });
+      btn.disabled = false;
     }
     function prInput(e) {
       var t = e.target; if (!t.dataset || t.dataset.pf == null) return;
@@ -651,10 +661,11 @@ var PER_CONFIG = {
     ['dragover', 'dragenter'].forEach(function (n) { ov.addEventListener(n, function (e) { var d = e.target.closest && e.target.closest('[data-pdrop]'); if (d) { e.preventDefault(); d.classList.add('over'); } }); });
     ['dragleave', 'drop'].forEach(function (n) { ov.addEventListener(n, function (e) { var d = e.target.closest && e.target.closest('[data-pdrop]'); if (d) { e.preventDefault(); d.classList.remove('over'); if (n === 'drop') addP(Number(d.dataset.pdrop), e.dataTransfer.files); } }); });
     ov.addEventListener('click', function (e) {
-      var t = e.target.closest('[data-padd],[data-prdel],[data-pdoc],[data-pdrop],[data-prm]'); if (!t) return;
+      var t = e.target.closest('[data-padd],[data-prdel],[data-pdocall],[data-pdrop],[data-prm],[data-pmv]'); if (!t) return;
       if (t.dataset.padd) { PRL.push({}); renderPrs(); savePrs(); }
       else if (t.dataset.prdel != null) { var i = Number(t.dataset.prdel); if (!confirm('Remove promoter ' + (i + 1) + '?')) return; (pPh[i] || []).forEach(function (x) { URL.revokeObjectURL(x.url); }); PRL.splice(i, 1); pPh.splice(i, 1); renderPrs(); savePrs(); }
-      else if (t.dataset.pdoc != null) makePDoc(Number(t.dataset.pdoc));
+      else if (t.dataset.pdocall != null) makeAllDoc();
+      else if (t.dataset.pmv != null) { var q = t.dataset.pmv.split(','), px = Number(q[0]), pk = Number(q[1]), pd = Number(q[2]), pj = pk + pd; if (pPh[px] && pj >= 0 && pj < pPh[px].length) { var tmp = pPh[px][pk]; pPh[px][pk] = pPh[px][pj]; pPh[px][pj] = tmp; renderP(px); } }
       else if (t.dataset.prm != null) { var a = t.dataset.prm.split(','), x = Number(a[0]), k = Number(a[1]); URL.revokeObjectURL(pPh[x][k].url); pPh[x].splice(k, 1); renderP(x); }
       else if (t.dataset.pdrop != null && e.target.tagName !== 'INPUT') ov.querySelector('[data-pfile="' + t.dataset.pdrop + '"]').click();
     });
